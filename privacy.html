@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy — APITestCenter</title>
+  <meta name="description" content="What APITestCenter does with your data: your tests stay on your computer.">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="./#features">Features</a>
+        <a href="./#download">Download</a>
+        <a href="./#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="./#download">Download</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap page">
+    <h1>Privacy</h1>
+    <p>Short version: <strong>your tests stay on your computer.</strong></p>
+
+    <h2>The app</h2>
+    <ul>
+      <li><strong>No account.</strong> You never sign up or sign in to use APITestCenter.</li>
+      <li><strong>No usage data.</strong> The app does not collect or send analytics, crash reports, or telemetry.</li>
+      <li><strong>Requests go only where you send them.</strong> When you press Send or run a load test, traffic goes from your computer straight to the API you entered — never through our servers.</li>
+      <li><strong>Results are files you own.</strong> Runs, compares, and saved requests are plain JSON files in your app-data folder (on Windows, <code>%APPDATA%\ApiTestCenter</code>). Open them, move them, or delete them; History can also delete them for you.</li>
+      <li><strong>Secrets are encrypted.</strong> Saved tokens and passwords are encrypted with a key protected by Windows, and are never written into those files in plain text.</li>
+    </ul>
+    <p>If we ever add optional usage statistics to improve the app, they will be <strong>off unless you turn them on</strong>, this page will list exactly what is sent, and it will never include your URLs, request contents, tokens, or results.</p>
+
+    <h2>This website</h2>
+    <ul>
+      <li>No cookies, no trackers, no analytics, no outside fonts.</li>
+      <li>The page asks GitHub's public API for the latest version number, and downloads come from GitHub Releases. GitHub sees those requests as it would for any visitor; see GitHub's privacy statement.</li>
+      <li>Your light or dark choice is remembered in your browser only.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>Questions: <a href="mailto:hello@apitestcenter.com">hello@apitestcenter.com</a></p>
+    <p class="fine">Last updated 16 October 2026.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="./#download">Download</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:hello@apitestcenter.com">Contact</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

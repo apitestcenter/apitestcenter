@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APITestCenter — load testing you can actually read</title>
+  <meta name="description" content="Free desktop app to send API requests, run load tests, and get a plain-language answer: is your API fast enough? Your tests stay on your computer.">
+  <meta property="og:title" content="APITestCenter — load testing you can actually read">
+  <meta property="og:description" content="Send a request, run a load test, and get a plain-language answer. Free for Windows. Your tests stay on your computer.">
+  <meta property="og:image" content="https://apitestcenter.com/assets/screens/report.png">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#07090d">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#download">Download</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="#download">Download</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="hero wrap">
+      <span class="eyebrow">Free desktop app for Windows</span>
+      <h1>Load testing you can actually read</h1>
+      <p class="lead">Send a request, run a load test, and get a plain-language answer: <strong>is your API fast enough, and will it hold up?</strong> No scripts to write, no account, and your tests never leave your computer.</p>
+      <div class="cta">
+        <a class="btn btn-primary" data-download="setup" href="#download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download for Windows
+        </a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="fine"><span data-version>Version 0.2</span> · Windows 10 and 11 · Free</p>
+      <figure class="shot">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/screens/report.png" width="1440" height="900" alt="APITestCenter showing a load test report: 45 requests per second, 40 ms response time, no failed requests, and a plain-language result saying it meets the performance goals.">
+      </figure>
+    </div>
+
+    <p class="strip"><span class="wrap" style="display:block">Load tests run on <strong>k6</strong>, the open-source load-testing engine — packaged inside the app, nothing to install or configure.</span></p>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Everything you need to know if your API is ready</h2>
+          <p>Built for developers and testers — and readable by everyone else on the team.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <h3>Answers in plain words</h3>
+            <p>“Meets your goals under this load” instead of a wall of numbers. Every term has a plain name, with the technical one beside it.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></div>
+            <h3>Send and load test in one place</h3>
+            <p>Paste a URL or a curl command, check the answer, then run it with hundreds of simulated users — same request, one click.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></div>
+            <h3>Reports you arrange yourself</h3>
+            <p>20 charts and numbers to choose from. Drag, resize, and save your own views — one for developers, one for managers.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg></div>
+            <h3>Real-world tests</h3>
+            <p>Sign in first and reuse the token, feed in users or IDs from a CSV file, set pass/fail goals, and check every answer is correct.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+            <h3>See if it got faster or slower</h3>
+            <p>Every run is kept. Pick a reference run and later runs show the change. Compare several APIs side by side under the same load.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <h3>Private by design</h3>
+            <p>Runs from your computer, so it reaches localhost and internal APIs. Results are plain files you own; saved secrets are encrypted.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>From URL to answer in three steps</h2>
+          <p>New to load testing? A built-in practice API and a one-minute tour get you started safely.</p>
+        </div>
+
+        <div class="row">
+          <div class="row-text">
+            <span class="step">Step 1</span>
+            <h3>Send one request and check it works</h3>
+            <p>Paste a URL — or a whole curl command from your browser — and press Send. Add checks like “status is 200” or “has a name field” so a fast-but-wrong answer still fails.</p>
+          </div>
+          <figure class="shot"><img src="assets/screens/send.png" width="1440" height="900" loading="lazy" alt="Sending a request to the practice API: 200 OK, both checks passed, and the JSON product list shown."></figure>
+        </div>
+
+        <div class="row flip">
+          <div class="row-text">
+            <span class="step">Step 2</span>
+            <h3>Run it under load</h3>
+            <p>Choose a preset — smoke, average day, stress, spike, or soak — or set your own users and duration. Watch response time and requests per second live.</p>
+            <ul>
+              <li>Simulated users, or a fixed request rate</li>
+              <li>Step-by-step ramps for real traffic shapes</li>
+              <li>Stops early if a goal is clearly missed</li>
+            </ul>
+          </div>
+          <figure class="shot"><img src="assets/screens/charts.png" width="1440" height="900" loading="lazy" alt="Load test charts: responses by outcome, response time distribution, where the time went, and pass/fail goals all met."></figure>
+        </div>
+
+        <div class="row">
+          <div class="row-text">
+            <span class="step">Step 3</span>
+            <h3>Read it, shape it, share it</h3>
+            <p>Get a plain result first, then the detail. Rearrange the report into your own view and export it as Excel, HTML, or JSON — or email a summary.</p>
+          </div>
+          <figure class="shot"><img src="assets/screens/builder.png" width="1440" height="900" loading="lazy" alt="Customizing the report: widgets on a grid that can be dragged and resized."></figure>
+        </div>
+
+        <div class="row flip">
+          <div class="row-text">
+            <span class="step">Beyond the basics</span>
+            <h3>Sign in first, then test</h3>
+            <p>Most real APIs need a token. Pick your sign-in request under <em>Run first</em>, choose the value to keep, and use it as <code>{{token}}</code> — on Send and for every request of a load test.</p>
+          </div>
+          <figure class="shot"><img src="assets/screens/chain.png" width="1440" height="900" loading="lazy" alt="The Run first tab: a saved sign-in request runs first and its token is used by the orders request."></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Download APITestCenter</h2>
+          <p>Free for Windows 10 and 11 (64-bit). No account, no sign-up.</p>
+        </div>
+        <div class="downloads">
+          <article class="card dl">
+            <h3>Installer <span class="fine" data-size="setup"></span></h3>
+            <p>Installs for your user account with a Start menu shortcut. Recommended.</p>
+            <a class="btn btn-primary" data-download="setup" href="#download">Download installer</a>
+          </article>
+          <article class="card dl">
+            <h3>Portable <span class="fine" data-size="portable"></span></h3>
+            <p>A single file that runs without installing — handy on locked-down machines.</p>
+            <a class="btn btn-ghost" data-download="portable" href="#download">Download portable</a>
+          </article>
+        </div>
+        <p class="note"><strong>Windows may say “Windows protected your PC”.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> → <em>Run anyway</em>. Signing is on the way.</p>
+        <p class="soon">macOS and Linux versions are planned. <a data-releases href="#download">All releases and notes</a></p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head"><h2>Questions</h2></div>
+        <div class="faq">
+          <details>
+            <summary>Is it really free?</summary>
+            <p>Yes. Sending requests, load tests, reports, history, and the command line are free. A paid Pro edition with extras for teams may come later; the free features stay free.</p>
+          </details>
+          <details>
+            <summary>Does it send my requests or results anywhere?</summary>
+            <p>No. Requests go straight from your computer to the API you are testing. Results are saved as plain files on your computer, which you can open, move, or delete. The app has no account and collects no usage data. See the <a href="privacy.html">privacy page</a>.</p>
+          </details>
+          <details>
+            <summary>Can I test APIs on localhost or my company network?</summary>
+            <p>Yes — because the app runs on your computer, it reaches anything your computer can: localhost, VPN, and internal services. Online load-testing services cannot.</p>
+          </details>
+          <details>
+            <summary>I have never done load testing. Where do I start?</summary>
+            <p>Open the app and choose “Try a simple request”. It uses a small practice API built into the app, so you can learn without touching a real system. The one-minute tour and the Help panel explain every term in plain words.</p>
+          </details>
+          <details>
+            <summary>How many users can it simulate?</summary>
+            <p>Up to 500 simulated users, or a fixed rate of up to 100,000 requests per second — limited mostly by your computer and network. The report shows when the machine itself was the bottleneck.</p>
+          </details>
+          <details>
+            <summary>Can I use it in CI?</summary>
+            <p>Yes. The <code>atc</code> command runs a saved request's load test without the window and writes JUnit, JSON, or HTML reports. It exits with an error when a goal is missed.</p>
+          </details>
+          <details>
+            <summary>Is it safe to load test any API?</summary>
+            <p>Only test systems you own or have permission to test. A load test is real traffic; against someone else's API it can look like an attack.</p>
+          </details>
+          <details>
+            <summary>How do I report a bug or ask for a feature?</summary>
+            <p>Open an issue on <a data-issues href="#faq">GitHub</a> or email <a href="mailto:hello@apitestcenter.com">hello@apitestcenter.com</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="#download">Download</a>
+        <a href="privacy.html">Privacy</a>
+        <a data-releases href="#download">Releases</a>
+        <a href="mailto:hello@apitestcenter.com">Contact</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
