@@ -49,7 +49,12 @@
       <p class="fine"><span data-version>Version 0.2</span> · Windows 10 and 11 · Free</p>
       <figure class="shot">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
-        <img src="assets/screens/report.png" width="1440" height="900" alt="APITestCenter showing a load test report: 45 requests per second, 40 ms response time, no failed requests, and a plain-language result saying it meets the performance goals.">
+        <video class="demo" autoplay muted loop playsinline preload="metadata" width="1280" height="800" poster="assets/demo-poster.jpg"
+          aria-label="Demo: typing a URL, sending one request with checks passing, running a load test with 12 simulated users and watching it live, then reading the report grouped by speed, reliability, and load.">
+          <source src="assets/demo.webm" type="video/webm">
+          <img src="assets/screens/report.png" width="1440" height="900" alt="APITestCenter showing a load test report: 45 requests per second, 40 ms response time, no failed requests, and a plain-language result.">
+        </video>
+        <figcaption class="fine" style="padding:8px 12px;margin:0;border-top:1px solid var(--line)">One minute with APITestCenter, against the practice API built into the app.</figcaption>
       </figure>
     </div>
 
@@ -163,9 +168,25 @@
             <p>A single file that runs without installing — handy on locked-down machines.</p>
             <a class="btn btn-ghost" data-download="portable" href="#download">Download portable</a>
           </article>
+          <article class="card dl" data-platform="mac" hidden>
+            <h3>macOS <span class="fine">preview</span></h3>
+            <p>Apple Silicon (M1 and later) or Intel. Not yet signed by Apple: right-click the app and choose <em>Open</em> the first time.</p>
+            <span class="cta" style="justify-content:flex-start">
+              <a class="btn btn-ghost" data-download="macArm" href="#download">Apple Silicon</a>
+              <a class="btn btn-ghost" data-download="macIntel" href="#download">Intel</a>
+            </span>
+          </article>
+          <article class="card dl" data-platform="linux" hidden>
+            <h3>Linux <span class="fine">preview</span></h3>
+            <p>AppImage runs on most distributions; the .deb is for Ubuntu and Debian. 64-bit Intel/AMD.</p>
+            <span class="cta" style="justify-content:flex-start">
+              <a class="btn btn-ghost" data-download="appimage" href="#download">AppImage</a>
+              <a class="btn btn-ghost" data-download="deb" href="#download">.deb</a>
+            </span>
+          </article>
         </div>
         <p class="note"><strong>Windows may say “Windows protected your PC”.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> → <em>Run anyway</em>. Signing is on the way.</p>
-        <p class="soon">macOS and Linux versions are planned. <a data-releases href="#download">All releases and notes</a></p>
+        <p class="soon"><span data-platform-note>macOS and Linux versions are on the way.</span> <a data-releases href="#download">All releases and notes</a></p>
       </div>
     </section>
 
@@ -179,7 +200,7 @@
           </details>
           <details>
             <summary>Does it send my requests or results anywhere?</summary>
-            <p>No. Requests go straight from your computer to the API you are testing. Results are saved as plain files on your computer, which you can open, move, or delete. The app has no account and collects no usage data. See the <a href="privacy.html">privacy page</a>.</p>
+            <p>No. Requests go straight from your computer to the API you are testing. Results are saved as plain files on your computer, which you can open, move, or delete. There is no account. The app asks once whether you'd share anonymous usage counts — say no and nothing is sent. See the <a href="privacy.html">privacy page</a>.</p>
           </details>
           <details>
             <summary>Can I test APIs on localhost or my company network?</summary>

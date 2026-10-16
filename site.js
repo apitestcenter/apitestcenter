@@ -4,7 +4,16 @@
 
 /** Public repo that holds the website and the release downloads. */
 const REPO = "apitestcenter/apitestcenter";
-const FILES = { setup: "APITestCenter-Setup.exe", portable: "APITestCenter-Portable.exe" };
+const FILES = {
+  setup: "APITestCenter-Setup.exe",
+  portable: "APITestCenter-Portable.exe",
+  macArm: "APITestCenter-mac-arm64.dmg",
+  macIntel: "APITestCenter-mac-x64.dmg",
+  appimage: "APITestCenter-linux-x64.AppImage",
+  deb: "APITestCenter-linux-x64.deb",
+};
+/** Which download cards need which file before they are shown. */
+const PLATFORM_FILES = { mac: [FILES.macArm, FILES.macIntel], linux: [FILES.appimage] };
 
 for (const [kind, name] of Object.entries(FILES)) {
   document.querySelectorAll(`[data-download="${kind}"]`).forEach((a) => {
@@ -13,7 +22,24 @@ for (const [kind, name] of Object.entries(FILES)) {
 }
 document.querySelectorAll("[data-releases]").forEach((a) => (a.href = `https://github.com/${REPO}/releases`));
 document.querySelectorAll("[data-issues]").forEach((a) => (a.href = `https://github.com/${REPO}/issues`));
+// Links that leave the page open in a new tab, so a visitor reading the page keeps their place.
+// In-page jumps (#…), email links, and the logo (home) stay in the same tab.
+document.querySelectorAll("a[href]").forEach((a) => {
+  const href = a.getAttribute("href") || "";
+  if (href.startsWith("#") || href.startsWith("mailto:") || a.classList.contains("brand")) return;
+  a.target = "_blank";
+  a.rel = "noopener";
+});
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = String(new Date().getFullYear())));
+
+// The demo video plays by itself unless the visitor asked for less motion.
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.querySelectorAll("video.demo").forEach((v) => {
+    v.removeAttribute("autoplay");
+    v.pause();
+    v.controls = true;
+  });
+}
 
 // Theme: follow the system until the visitor picks one.
 const root = document.documentElement;
@@ -51,6 +77,14 @@ fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers: { Accep
   .then((release) => {
     const version = String(release.tag_name || "").replace(/^v/, "");
     document.querySelectorAll("[data-version]").forEach((el) => (el.textContent = version ? `Version ${version}` : ""));
+    const names = new Set((release.assets || []).map((a) => a.name));
+    let shown = 0;
+    for (const [platform, files] of Object.entries(PLATFORM_FILES)) {
+      if (!files.some((f) => names.has(f))) continue;
+      document.querySelectorAll(`[data-platform="${platform}"]`).forEach((el) => (el.hidden = false));
+      shown++;
+    }
+    if (shown) document.querySelectorAll("[data-platform-note]").forEach((el) => (el.textContent = "macOS and Linux builds are previews — tell us how they work for you."));
     for (const asset of release.assets || []) {
       const kind = Object.keys(FILES).find((k) => FILES[k] === asset.name);
       if (!kind) continue;

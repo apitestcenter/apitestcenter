@@ -34,12 +34,13 @@
     <h2>The app</h2>
     <ul>
       <li><strong>No account.</strong> You never sign up or sign in to use APITestCenter.</li>
-      <li><strong>No usage data.</strong> The app does not collect or send analytics, crash reports, or telemetry.</li>
+      <li><strong>Usage counts only if you say yes.</strong> The app asks once. If you agree, once a day it sends: a random install number, the app version, your operating system, and four counts — requests sent, load tests run, compares, imports. Never URLs, request or response contents, results, names, tokens, or anything you type. Help shows the exact data before it is sent, and turns it off any time. If you say no, nothing is sent.</li>
+      <li><strong>Update checks.</strong> The app asks GitHub whether a newer version exists, a few times a day. That request carries no information about you or your tests.</li>
       <li><strong>Requests go only where you send them.</strong> When you press Send or run a load test, traffic goes from your computer straight to the API you entered — never through our servers.</li>
       <li><strong>Results are files you own.</strong> Runs, compares, and saved requests are plain JSON files in your app-data folder (on Windows, <code>%APPDATA%\ApiTestCenter</code>). Open them, move them, or delete them; History can also delete them for you.</li>
       <li><strong>Secrets are encrypted.</strong> Saved tokens and passwords are encrypted with a key protected by Windows, and are never written into those files in plain text.</li>
     </ul>
-    <p>If we ever add optional usage statistics to improve the app, they will be <strong>off unless you turn them on</strong>, this page will list exactly what is sent, and it will never include your URLs, request contents, tokens, or results.</p>
+    <p>The usage counts are stored without IP addresses, and the install number is scrambled before it is stored. They are used only to see how many people use the app, on which systems and versions, so we know what to build next.</p>
 
     <h2>This website</h2>
     <ul>

@@ -49,6 +49,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
@@ -98,6 +99,7 @@ h1 { font-size: clamp(36px, 6vw, 62px); line-height: 1.05; letter-spacing: -0.03
 .shot { margin: 48px auto 0; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; box-shadow: var(--shadow); background: var(--panel); }
 .shot .bar { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--panel-2); }
 .shot .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.shot video { display: block; width: 100%; height: auto; background: #07090d; }
 
 /* Sections */
 section { padding: 72px 0; }
