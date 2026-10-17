@@ -1,0 +1,221 @@
+{
+  "generatedAt": "2026-10-17T15:12:02.454Z",
+  "releases": [
+    {
+      "version": "0.4.0",
+      "date": "2026-10-17T14:09:50Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>Run a whole collection.</strong> Click ▶ next to a collection, or open <em>Run collection</em>. Every request is sent once, in the order you choose, and you see which passed — and why the others didn't. Save the result as HTML, JUnit (for CI dashboards), or JSON.</li><li><strong>Pass values from one request to the next.</strong> The new <em>Save values</em> tab takes a value from an answer — like the id of a new order — as <code>{{orderId}}</code> for the requests after it. Works in collection runs and between Sends.</li><li><strong>Honest reports when you're blocked.</strong> If a server or its firewall refuses your load test (429 &quot;too many requests&quot;, 403), the report now says so plainly, shows when it started and at what load, and stops praising response times that were really just fast error replies. Peak requests per second and average users are now measured correctly — older reports are corrected when you open them.</li><li><strong>About and Check for updates.</strong> See your version, check for a new one, and open your data folder — from &quot;Version … · About&quot; at the bottom of the sidebar.</li><li><strong>Practice API:</strong> create an order (<code>POST /orders</code>) and fetch it (<code>GET /orders/{id}</code>) to try passing values safely.</li></ul>\n<p>Already on 0.3.0 or 0.3.1? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.4.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.4.0.exe",
+          "size": 121374666,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.4.0/APITestCenter-Setup-0.4.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.4.0.exe",
+          "size": 121137492,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.4.0/APITestCenter-Portable-0.4.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.4.0-mac-arm64.dmg",
+          "size": 142594411,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.4.0/APITestCenter-0.4.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.4.0-mac-x64.dmg",
+          "size": 149420354,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.4.0/APITestCenter-0.4.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.4.0-linux-x86_64.AppImage",
+          "size": 150748364,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.4.0/APITestCenter-0.4.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.4.0-linux-amd64.deb",
+          "size": 121299164,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.4.0/APITestCenter-0.4.0-linux-amd64.deb"
+        }
+      ]
+    },
+    {
+      "version": "0.3.1",
+      "date": "2026-10-17T08:30:15Z",
+      "latest": false,
+      "notesHtml": "<ul><li><strong>HTML report matches your report.</strong> The exported HTML report now shows the same widgets, in the same order, as your report view, plus a short written debrief: what went well, what to look at, and what to try next. It is a single file that opens in any browser.</li><li><strong>New app icon.</strong> The taskbar, Start menu, and installer show the APITestCenter logo instead of the default one.</li><li><strong>Help bubbles no longer get cut off</strong> at the edge of a card.</li><li><strong>Usage counts: no means no.</strong> If you say no to usage counts, the app stops counting entirely and deletes any counts it was keeping. Details: <a href=\"https://apitestcenter.com/privacy.html\">https://apitestcenter.com/privacy.html</a></li></ul>\n<p>Already on 0.3.0? The app offers this update by itself (installer version); just restart when it asks. Coming from 0.2.0? Download and install this version once.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.3.1",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.3.1.exe",
+          "size": 121325238,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.1/APITestCenter-Setup-0.3.1.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.3.1.exe",
+          "size": 121088079,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.1/APITestCenter-Portable-0.3.1.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.3.1-mac-arm64.dmg",
+          "size": 142555527,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.1/APITestCenter-0.3.1-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.3.1-mac-x64.dmg",
+          "size": 149385750,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.1/APITestCenter-0.3.1-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.3.1-linux-x86_64.AppImage",
+          "size": 150694925,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.1/APITestCenter-0.3.1-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.3.1-linux-amd64.deb",
+          "size": 121262028,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.1/APITestCenter-0.3.1-linux-amd64.deb"
+        }
+      ]
+    },
+    {
+      "version": "0.3.0",
+      "date": "2026-10-16T06:46:22Z",
+      "latest": false,
+      "notesHtml": "<ul><li><strong>Import from Postman and OpenAPI.</strong> Bring in Postman collections and environments, or OpenAPI 3 / Swagger 2 files (JSON or YAML). Folders, auth, bodies, and variables come along; anything that can't is listed first.</li><li><strong>Single-number tiles and section headings.</strong> Put one big number anywhere on a report, group charts under headings, and try the new <em>By topic</em> view (Speed, Reliability, Load). Eight more numbers to choose from, in the order you pick.</li><li><strong>Formatted email report.</strong> Copy a designed summary into Outlook or Gmail, or download an email draft (.eml) with the full report attached.</li><li><strong>Updates.</strong> The installed app now checks for new versions and offers to restart into them. (Portable and macOS show a download link.)</li><li><strong>Optional usage counts.</strong> The app asks once whether to share anonymous counts. Say no and nothing is sent. Details: <a href=\"https://apitestcenter.com/privacy.html\">https://apitestcenter.com/privacy.html</a></li><li><strong>macOS and Linux previews</strong> (when attached below). Not yet signed: on macOS, right-click the app and choose <em>Open</em> the first time.</li></ul>\n<p>Coming from 0.2.0? Download and install this version once; after that, updates arrive by themselves.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.3.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.3.0.exe",
+          "size": 121294304,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.0/APITestCenter-Setup-0.3.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.3.0.exe",
+          "size": 121057624,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.0/APITestCenter-Portable-0.3.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.3.0-mac-arm64.dmg",
+          "size": 142500999,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.0/APITestCenter-0.3.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.3.0-mac-x64.dmg",
+          "size": 149339012,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.0/APITestCenter-0.3.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.3.0-linux-x86_64.AppImage",
+          "size": 150731788,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.0/APITestCenter-0.3.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.3.0-linux-amd64.deb",
+          "size": 121296272,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.3.0/APITestCenter-0.3.0-linux-amd64.deb"
+        }
+      ]
+    },
+    {
+      "version": "0.2.0",
+      "date": "2026-10-15T22:20:42Z",
+      "latest": false,
+      "notesHtml": "<p>The first public release of <strong>APITestCenter</strong> — load testing you can actually read.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.2.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup.exe",
+          "size": 121392081,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.2.0/APITestCenter-Setup.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable.exe",
+          "size": 121155365,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.2.0/APITestCenter-Portable.exe"
+        }
+      ]
+    }
+  ]
+}

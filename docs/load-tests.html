@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Load tests — APITestCenter guide</title>
+  <meta name="description" content="Send the same request many times at once to see how fast it stays and whether it holds up — with presets, simulated users or a fixed request rate, and goals.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html" aria-current="page">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Load tests</h1>
+        <p class="docs-lead">Send the same request many times at once to see how fast it stays and whether it holds up — with presets, simulated users or a fixed request rate, and goals.</p>
+        <p>A load test sends your request again and again, from many <strong>simulated users</strong> at the same time, for a while. It runs on your computer with <a href="https://k6.io">k6</a>, the open-source load-testing engine bundled with the app.</p>
+<p>Press <strong>Send</strong> first: before a load test starts, the app sends the request once and stops if the answer is not 2xx — so a wrong token never turns into thousands of failed requests.</p>
+<h2 id="presets">Presets</h2>
+<p>Open the <strong>Load</strong> tab and pick a preset — then change anything you like.</p>
+<div class="table-wrap"><table><thead><tr><th>Preset</th><th>What it does</th><th>Use it to</th></tr></thead><tbody><tr><td><strong>Smoke</strong></td><td>2 users for 30 seconds</td><td>Check the test works before anything bigger</td></tr><tr><td><strong>Average</strong></td><td>10 users for 5 minutes</td><td>See a normal day</td></tr><tr><td><strong>Stress</strong></td><td>Up to 20 users over 30 s, hold 1 min, back down</td><td>Go beyond normal</td></tr><tr><td><strong>Spike</strong></td><td>5 users, a sudden jump to 50, then back to 5</td><td>Does it survive a burst — and recover?</td></tr><tr><td><strong>Soak</strong></td><td>10 users for 30 minutes</td><td>Find slow leaks that only show over time</td></tr><tr><td><strong>Custom</strong></td><td>Your own numbers</td><td>Anything else</td></tr></tbody></table></div>
+<h2 id="simulated-users-or-requests-per-second">Simulated users or requests per second</h2>
+<p><strong>Drive load by</strong> chooses how the load is measured:</p>
+<ul><li><strong>Simulated users</strong> — each user sends a request, waits for the answer, optionally pauses (<strong>think time</strong>), and sends the next. A slow API therefore receives fewer requests. Good for “what do 50 people feel?”</li><li><strong>Requests per second</strong> — the app keeps a fixed rate, whatever the API does, adding users as needed up to <strong>Max simulated users</strong>. This is the honest way to find how much an API can take. If the API is too slow to keep up, the report shows <strong>Requests not sent</strong>.</li></ul>
+<aside class="callout callout-warning"><p><strong>Warning</strong> With simulated users and no think time, each user fires its next request the moment the last one returns. A few dozen users can mean <strong>thousands of requests per second</strong>. Public sites and APIs behind a CDN or firewall will usually answer with 429 or 403 and may block you for a while. Use <strong>Requests per second</strong> with a modest rate, or test a staging server.</p></aside>
+<h2 id="shape-over-time">Shape over time</h2>
+<ul><li><strong>Ramp · hold · down</strong> — go up to the target over <em>Ramp up</em>, stay for <em>Hold for</em>, come down over <em>Ramp down</em>.</li><li><strong>Step by step</strong> — a list of stages; each moves steadily to its target over its duration. Repeat a target to hold it.</li></ul>
+<p><strong>Think time</strong> (and <em>Random extra</em>) adds a pause between a user's requests, like a person reading the page. It does not apply when holding a request rate.</p>
+<h2 id="goals-pass-or-fail">Goals (pass or fail)</h2>
+<p>By default the app judges a run with starting rules (fewer than 1% failed requests, 95% of requests within 500 ms). The <strong>Goals</strong> tab lets you set your own:</p>
+<ul><li><strong>p95 must stay under (ms)</strong> and, optionally, <strong>p99 must stay under (ms)</strong>;</li><li><strong>Error rate must stay under (%)</strong>;</li><li><strong>Checks must pass at least (%)</strong> — used when the request has <a href="checks.html">checks</a>;</li><li><strong>Stop the test early if a target is clearly missed</strong> — after a 10-second warm-up, the run ends as soon as a goal fails.</li></ul>
+<p>Goals are remembered on this computer, drive the result and the report's colours, and are sent to k6 as thresholds — so a <a href="cli-and-ci.html">CI run</a> fails the same way.</p>
+<h2 id="while-it-runs">While it runs</h2>
+<p>The <strong>Load report</strong> fills in live: requests per second, response times, failures, and users, second by second. <strong>Stop</strong> ends it early; what ran so far is kept. Ask for a notification with <strong>Notify me when done</strong>, and carry on with other work.</p>
+<p>Every finished run is saved in <a href="history.html">History</a>. Reading the result: <a href="reading-the-report.html">Reading the report</a>.</p>
+<h2 id="good-habits">Good habits</h2>
+<ol><li><strong>Smoke first.</strong> A tiny run catches a wrong URL or token before a big one.</li><li><strong>Change one thing at a time</strong> — users, or the API version — and compare with a <a href="history.html#reference-runs">reference run</a>.</li><li><strong>Test from close to the API</strong> when you can. Your network and computer are part of every number.</li><li><strong>Only test what you're allowed to.</strong> Heavy load on someone else's system can look like an attack.</li></ol>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="checks.html"><span>Previous</span>Checks</a><a class="next" href="chaining.html"><span>Next</span>Chaining and test data</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#presets">Presets</a></li><li><a href="#simulated-users-or-requests-per-second">Simulated users or requests per second</a></li><li><a href="#shape-over-time">Shape over time</a></li><li><a href="#goals-pass-or-fail">Goals (pass or fail)</a></li><li><a href="#while-it-runs">While it runs</a></li><li><a href="#good-habits">Good habits</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

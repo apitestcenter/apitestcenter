@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Troubleshooting — APITestCenter guide</title>
+  <meta name="description" content="Fixes for the things people run into — install warnings, being blocked by a firewall (429/403), certificates, missing variables, and updates.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html" aria-current="page">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Help</p>
+        <h1>Troubleshooting</h1>
+        <p class="docs-lead">Fixes for the things people run into — install warnings, being blocked by a firewall (429/403), certificates, missing variables, and updates.</p>
+        <h2 id="installing">Installing</h2>
+<p><strong>Windows says “Windows protected your PC”.</strong> The app is new and not yet code-signed, so SmartScreen doesn't recognise it. Choose <strong>More info → Run anyway</strong>. This goes away as more people install it and once the app is signed.</p>
+<p><strong>macOS says the app can't be opened.</strong> The Mac version is a preview and not yet signed by Apple. <strong>Right-click the app → Open</strong>, then <strong>Open</strong> again. You only need to do this once.</p>
+<p><strong>Linux AppImage doesn't start.</strong> Make it executable — <code>chmod +x APITestCenter-*.AppImage</code> — and run it. Some distributions need <code>libfuse2</code> for AppImages; the <code>.deb</code> doesn't.</p>
+<p><strong>My company network blocks the website download.</strong> Ask IT to allow <code>github.com</code> downloads, or install from the Microsoft Store when it's listed. The installed app then updates itself.</p>
+<h2 id="blocked-429-or-403">Blocked: 429 or 403</h2>
+<p>The report says <strong>Blocked by a rate limit or firewall</strong>, or most requests failed with <strong>429 Too Many Requests</strong> or <strong>403 Forbidden</strong>.</p>
+<p>Something in front of the API — a CDN (Cloudflare, Akamai, CloudFront), an API gateway, or a firewall — decided the traffic looked like an attack and started refusing it. Often it keeps refusing <strong>for a while after</strong> the load drops, which the report calls a <em>lockout</em>.</p>
+<p>What to do:</p>
+<ol><li><strong>Don't repeat it against a public site or someone else's API.</strong> It can get your address blocked for longer.</li><li><strong>Test a staging server</strong> without the limit, or ask the API's owner to allow your computer's address for the test.</li><li><strong>Lower the load.</strong> Use <strong>Requests per second</strong> with a modest rate instead of many simulated users with no think time. The report shows the rate at which refusals started — stay below it.</li><li>If the API is yours: the 429 limit <em>is</em> a finding. It tells you what your gateway allows per caller.</li></ol>
+<h2 id="failures-and-errors">Failures and errors</h2>
+<p><strong><code>{{name}}</code> is not defined.</strong> The request uses a variable that has no value. Pick an <a href="environments.html">environment</a> that defines it, add it, or check for a typo. In a collection run, the message also says which earlier request should have saved it.</p>
+<p><strong>401 Unauthorized.</strong> The token is missing or expired. Use <a href="chaining.html#run-first">Run first</a> to sign in automatically, or update the token in your environment.</p>
+<p><strong>Certificate errors (self-signed, unknown issuer).</strong> Test servers often use certificates your computer doesn't trust. For those only, turn on <strong>Settings → Skip TLS certificate check</strong> on the request. Never use it for production.</p>
+<p><strong>Timeouts or “no answer”.</strong> The API didn't answer in time (default 60 seconds, in <strong>Settings → Timeout</strong>), the address is wrong, or a VPN or firewall is in the way. Try <strong>Send</strong> first: if a single request fails, a load test will too.</p>
+<p><strong>The load test didn't start because the first request failed.</strong> Before loading, the app sends the request once; if that fails, it stops so you don't send thousands of failing requests. Fix the single request, then run again.</p>
+<h2 id="the-app">The app</h2>
+<p><strong>“Engine offline” or “k6 missing”</strong> at the bottom of the sidebar. The app's engine runs in the background; restart the app. If k6 is missing, reinstall — it ships inside the app.</p>
+<p><strong>Check for updates says it couldn't reach GitHub.</strong> Updates come from github.com. A company firewall or proxy may block it. Download the latest version from the website instead; your requests and history stay as they are.</p>
+<p><strong>Where are my files? How do I start fresh?</strong> See <a href="privacy-and-data.html#where-your-files-are">Privacy and your data</a>. <strong>About → Open folder</strong> opens it. Close the app before moving or deleting files.</p>
+<p>Still stuck? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> with what you tried and, if you can, the exported JSON report.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="cli-and-ci.html"><span>Previous</span>Command line and CI</a><a class="next" href="privacy-and-data.html"><span>Next</span>Privacy and your data</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#installing">Installing</a></li><li><a href="#blocked-429-or-403">Blocked: 429 or 403</a></li><li><a href="#failures-and-errors">Failures and errors</a></li><li><a href="#the-app">The app</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

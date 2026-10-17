@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Environments and variables — APITestCenter guide</title>
+  <meta name="description" content="Write {{name}} in a request and switch between Dev, UAT, and Prod without editing it. Keep secrets out of files.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html" aria-current="page">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Environments and variables</h1>
+        <p class="docs-lead">Write {{name}} in a request and switch between Dev, UAT, and Prod without editing it. Keep secrets out of files.</p>
+        <h2 id="variables">Variables</h2>
+<p>Anywhere in a request — the URL, params, headers, body, or auth — you can write <code>{{name}}</code>. When you send, the app replaces it with a value. For example:</p>
+<pre><code>{{baseUrl}}/orders?status={{status}}
+Authorization: Bearer {{token}}</code></pre>
+<p>If a variable has no value, the request is not sent; the bar under the URL says which ones are missing, like <em>{{baseUrl}} not defined in UAT</em>. A typo never reaches your API.</p>
+<h2 id="environments">Environments</h2>
+<p>An <strong>environment</strong> is a named set of values — <em>Dev</em>, <em>UAT</em>, <em>Prod</em>. Pick one next to the URL; every request uses its values.</p>
+<ol><li>Click <strong>Manage</strong> next to the environment picker.</li><li>Add an environment and its variables (<code>baseUrl</code> = <code>https://uat.example.com</code>).</li><li>Mark a variable <strong>secret</strong> (the lock) for tokens and passwords.</li></ol>
+<p><strong>Secret</strong> values are encrypted with a key that your operating system protects (Windows DPAPI, macOS Keychain, Linux keyring). They are never written into the environment file or any export.</p>
+<h2 id="built-in-practiceapi">Built-in: <code>{{practiceApi}}</code></h2>
+<p><code>{{practiceApi}}</code> always points at the practice API inside the app, whatever port it is on. It is there so the examples work without setup.</p>
+<h2 id="values-saved-from-answers">Values saved from answers</h2>
+<p>A request can <strong>save values</strong> from its answer — the id of a new order, say — as <code>{{orderId}}</code> for the requests after it. After a Send, saved values appear next to the environment picker as <em>Saved from answers: {{orderId}}</em>, with <strong>Clear</strong>. They last until you close the app, and they win over an environment variable with the same name because they are newer. See <a href="chaining.html#save-values">Chaining</a>.</p>
+<h2 id="which-value-wins">Which value wins</h2>
+<p>From lowest to highest:</p>
+<ol><li><code>{{practiceApi}}</code> (built in)</li><li>The chosen environment</li><li>Values saved from answers (Send) — or, in a collection run, values saved earlier in that run</li><li>Values filled <strong>while a test runs</strong>: <a href="chaining.html#run-first">Run first</a> and <a href="chaining.html#test-data">Test data</a></li></ol>
+<p>On the command line, <code>--var name=value</code> sets or overrides a value — the way to pass CI secrets. See <a href="cli-and-ci.html">Command line and CI</a>.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="sending-requests.html"><span>Previous</span>Sending requests</a><a class="next" href="checks.html"><span>Next</span>Checks</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#variables">Variables</a></li><li><a href="#environments">Environments</a></li><li><a href="#built-in-practiceapi">Built-in: {{practiceApi}}</a></li><li><a href="#values-saved-from-answers">Values saved from answers</a></li><li><a href="#which-value-wins">Which value wins</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

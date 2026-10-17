@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Getting started — APITestCenter guide</title>
+  <meta name="description" content="Install APITestCenter, send your first request, and run your first load test — in about five minutes, without touching a real system.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html" aria-current="page">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Start here</p>
+        <h1>Getting started</h1>
+        <p class="docs-lead">Install APITestCenter, send your first request, and run your first load test — in about five minutes, without touching a real system.</p>
+        <h2 id="1-install">1. Install</h2>
+<p>Download from <a href="https://apitestcenter.com/#download">apitestcenter.com</a>. The page offers the right file for your computer.</p>
+<div class="table-wrap"><table><thead><tr><th>System</th><th>File</th><th>First start</th></tr></thead><tbody><tr><td>Windows 10 / 11</td><td><strong>Installer</strong> (recommended) or Portable</td><td>If Windows says <em>“Windows protected your PC”</em>, choose <strong>More info → Run anyway</strong>. The app is new and not yet code-signed.</td></tr><tr><td>macOS (preview)</td><td>Apple Silicon or Intel <code>.dmg</code></td><td>Drag it to Applications, then <strong>right-click → Open</strong> the first time.</td></tr><tr><td>Linux (preview)</td><td>AppImage or <code>.deb</code></td><td>Make the AppImage executable (<code>chmod +x</code>), or install the <code>.deb</code>.</td></tr></tbody></table></div>
+<p>The installed Windows app and the Linux AppImage <strong>update themselves</strong>. You can check any time in <strong>About</strong> (bottom of the sidebar).</p>
+<h2 id="2-send-your-first-request">2. Send your first request</h2>
+<p>The app has a small <strong>practice API</strong> built in — a pretend shop with products, sign-in and orders — so you can learn without testing anything that matters.</p>
+<ol><li>On the <strong>Test API</strong> page, choose <strong>Try a simple request</strong> on the welcome card. It fills in <code>{{practiceApi}}/products</code> with a check.</li><li>Press <strong>Send</strong> (or <strong>Ctrl+Enter</strong>).</li><li>The <strong>Response</strong> panel shows the status (<code>200 OK</code>), the time it took, and the answer. The <strong>Checks</strong> badge says whether your rule — <em>status is 2xx</em> — passed.</li></ol>
+<p><code>{{practiceApi}}</code> is a <strong>variable</strong>: the app fills in the practice API's address for you. You'll use the same idea for your own APIs — see <a href="environments.html">Environments and variables</a>.</p>
+<h2 id="3-run-your-first-load-test">3. Run your first load test</h2>
+<ol><li>Open the <strong>Load</strong> tab under the request. Leave the preset on <strong>Smoke</strong> — 2 simulated users for 30 seconds.</li><li>Press <strong>Run load test</strong> (<strong>Ctrl+Shift+Enter</strong>).</li><li>Watch the live charts. When it finishes, the <strong>Load report</strong> shows:</li></ol>
+<ul><li>a <strong>Result</strong> — <em>looks healthy</em>, <em>usable with caveats</em>, or <em>failing</em> — with the reasons underneath;</li><li><strong>key numbers</strong> — requests per second, response time (p95), failed requests;</li><li>charts of how it went second by second.</li></ul>
+<p><a href="reading-the-report.html">Reading the report</a> explains every number.</p>
+<h2 id="4-try-your-own-api">4. Try your own API</h2>
+<ul><li><strong>Paste a URL</strong> — or a whole <code>curl</code> command copied from your browser's DevTools — into the request bar.</li><li><strong>Coming from Postman or Swagger?</strong> Use <strong>Import</strong> in the saved-requests panel. Collections, environments and OpenAPI files come in as saved requests.</li><li>Press <strong>Ctrl+S</strong> to save a request into a <strong>collection</strong> (a folder).</li></ul>
+<aside class="callout callout-warning"><p><strong>Warning</strong> Only load-test systems you own or have permission to test. Public websites and APIs behind a CDN or firewall usually block heavy traffic with <strong>429</strong> or <strong>403</strong> — see <a href="troubleshooting.html#blocked-429-or-403">Troubleshooting</a>.</p></aside>
+<h2 id="where-to-next">Where to next</h2>
+<ul><li>Add rules for a correct answer: <a href="checks.html">Checks</a>.</li><li>Sign in first and reuse the token: <a href="chaining.html">Chaining and test data</a>.</li><li>Run a whole folder of requests: <a href="collection-runner.html">Run a collection</a>.</li></ul>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="index.html"><span>Previous</span>The APITestCenter guide</a><a class="next" href="sending-requests.html"><span>Next</span>Sending requests</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#1-install">1. Install</a></li><li><a href="#2-send-your-first-request">2. Send your first request</a></li><li><a href="#3-run-your-first-load-test">3. Run your first load test</a></li><li><a href="#4-try-your-own-api">4. Try your own API</a></li><li><a href="#where-to-next">Where to next</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

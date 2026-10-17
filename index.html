@@ -27,6 +27,8 @@
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
         <a href="#download">Download</a>
+        <a href="docs/">Docs</a>
+        <a href="whats-new.html">What&rsquo;s new</a>
         <a href="#faq">FAQ</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
@@ -40,13 +42,13 @@
       <h1>Load testing you can actually read</h1>
       <p class="lead">Send a request, run a load test, and get a plain-language answer: <strong>is your API fast enough, and will it hold up?</strong> No scripts to write, no account, and your tests never leave your computer.</p>
       <div class="cta">
-        <a class="btn btn-primary" data-download="setup" href="#download">
+        <a class="btn btn-primary" data-download="setup" data-primary href="#download">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-          Download for Windows
+          <span data-primary-label>Download for Windows</span>
         </a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <p class="fine"><span data-version>Version 0.2</span> · Windows 10 and 11 · Mac and Linux preview · Free</p>
+      <p class="fine"><span data-version>Latest version</span> · Windows 10 and 11 · Mac and Linux preview · Free</p>
       <figure class="shot">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
         <video class="demo" autoplay muted loop playsinline preload="metadata" width="1280" height="800" poster="assets/demo-poster.jpg"
@@ -157,36 +159,56 @@
           <h2>Download APITestCenter</h2>
           <p>Free for Windows 10 and 11 (64-bit), with Mac and Linux previews. No account, no sign-up.</p>
         </div>
-        <div class="downloads">
-          <article class="card dl">
-            <h3>Installer <span class="fine" data-size="setup"></span></h3>
-            <p>Installs for your user account with a Start menu shortcut. Recommended.</p>
-            <a class="btn btn-primary" data-download="setup" href="#download">Download installer</a>
-          </article>
-          <article class="card dl">
-            <h3>Portable <span class="fine" data-size="portable"></span></h3>
-            <p>A single file that runs without installing — handy on locked-down machines.</p>
-            <a class="btn btn-ghost" data-download="portable" href="#download">Download portable</a>
-          </article>
-          <article class="card dl" data-platform="mac" hidden>
-            <h3>macOS <span class="fine">preview</span></h3>
-            <p>Apple Silicon (M1 and later) or Intel. Not yet signed by Apple: right-click the app and choose <em>Open</em> the first time.</p>
-            <span class="cta" style="justify-content:flex-start">
-              <a class="btn btn-ghost" data-download="macArm" href="#download">Apple Silicon</a>
-              <a class="btn btn-ghost" data-download="macIntel" href="#download">Intel</a>
-            </span>
-          </article>
-          <article class="card dl" data-platform="linux" hidden>
-            <h3>Linux <span class="fine">preview</span></h3>
-            <p>AppImage runs on most distributions; the .deb is for Ubuntu and Debian. 64-bit Intel/AMD.</p>
-            <span class="cta" style="justify-content:flex-start">
-              <a class="btn btn-ghost" data-download="appimage" href="#download">AppImage</a>
-              <a class="btn btn-ghost" data-download="deb" href="#download">.deb</a>
-            </span>
-          </article>
+        <div class="dl-main">
+          <a class="btn btn-primary btn-lg" data-download="setup" data-primary href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><span data-primary-label>Download for Windows</span></a>
+          <p class="fine"><span data-version>Latest version</span> · <a href="whats-new.html">What&rsquo;s new</a> · <span data-primary-alt></span></p>
         </div>
-        <p class="note"><strong>Windows may say “Windows protected your PC”.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> → <em>Run anyway</em>. Signing is on the way.</p>
-        <p class="soon"><span data-platform-note>macOS and Linux versions are on the way.</span> <a data-releases href="#download">All releases and notes</a></p>
+        <div class="dl-table-wrap">
+          <table class="dl-table">
+            <caption class="sr-only">All downloads for the latest version</caption>
+            <thead><tr><th scope="col">System</th><th scope="col">File</th><th scope="col">Size</th><th scope="col"><span class="sr-only">Download</span></th></tr></thead>
+            <tbody>
+            <tr data-row="setup">
+              <td class="dl-platform">Windows</td>
+              <td><strong>Installer</strong><span class="dl-detail">Windows 10 and 11, 64-bit — recommended</span></td>
+              <td class="dl-size" data-size="setup"></td>
+              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="setup" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
+            </tr>
+            <tr data-row="portable">
+              <td class="dl-platform">Windows</td>
+              <td><strong>Portable</strong><span class="dl-detail">One file, no install — handy on locked-down machines</span></td>
+              <td class="dl-size" data-size="portable"></td>
+              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="portable" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
+            </tr>
+            <tr data-row="macArm">
+              <td class="dl-platform">macOS</td>
+              <td><strong>Apple Silicon</strong><span class="dl-detail">M1 and later · preview</span></td>
+              <td class="dl-size" data-size="macArm"></td>
+              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="macArm" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
+            </tr>
+            <tr data-row="macIntel">
+              <td class="dl-platform">macOS</td>
+              <td><strong>Intel</strong><span class="dl-detail">Intel Macs · preview</span></td>
+              <td class="dl-size" data-size="macIntel"></td>
+              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="macIntel" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
+            </tr>
+            <tr data-row="appimage">
+              <td class="dl-platform">Linux</td>
+              <td><strong>AppImage</strong><span class="dl-detail">Most distributions, 64-bit · preview</span></td>
+              <td class="dl-size" data-size="appimage"></td>
+              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="appimage" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
+            </tr>
+            <tr data-row="deb">
+              <td class="dl-platform">Linux</td>
+              <td><strong>.deb</strong><span class="dl-detail">Ubuntu and Debian, 64-bit · preview</span></td>
+              <td class="dl-size" data-size="deb"></td>
+              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="deb" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note"><strong>Windows may say &ldquo;Windows protected your PC&rdquo;.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> &rarr; <em>Run anyway</em>. On a Mac, right-click the app and choose <em>Open</em> the first time.</p>
+        <p class="soon">Need an earlier version? <a href="whats-new.html">All versions and what changed in each &rarr;</a></p>
       </div>
     </section>
 
@@ -236,8 +258,9 @@
       <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="#download">Download</a>
+        <a href="docs/">Docs</a>
         <a href="privacy.html">Privacy</a>
-        <a data-releases href="#download">Releases</a>
+        <a href="whats-new.html">What&rsquo;s new</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
         <a href="mailto:hello@apitestcenter.com">Contact</a>
       </nav>

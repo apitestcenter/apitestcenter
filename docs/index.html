@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APITestCenter guide</title>
+  <meta name="description" content="Everything the app does, in plain words — from your first request to load tests, collection runs, and CI.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="page">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./" aria-current="page">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Guide</p>
+        <h1>The APITestCenter guide</h1>
+        <p class="docs-lead">Everything the app does, in plain words — from your first request to load tests, collection runs, and CI.</p>
+        <p>APITestCenter sends requests to your API, load-tests it, and tells you in plain language whether it is fast enough and holds up. Everything runs on your computer; nothing is uploaded.</p>
+<h2 id="new-here-start-with-these">New here? Start with these</h2>
+<ol><li><a href="getting-started.html">Getting started</a> — install, send your first request, run your first load test. About 5 minutes, using the practice API built into the app.</li><li><a href="reading-the-report.html">Reading the report</a> — what every number means and how the app decides pass or fail.</li><li><a href="load-tests.html">Load tests</a> — presets, simulated users or requests per second, and goals.</li></ol>
+<h2 id="everything-in-the-guide">Everything in the guide</h2>
+<div class="table-wrap"><table><thead><tr><th>Topic</th><th>What you'll learn</th></tr></thead><tbody><tr><td><a href="sending-requests.html">Sending requests</a></td><td>The request bar, params, headers, auth, body, saving and importing</td></tr><tr><td><a href="environments.html">Environments and variables</a></td><td><code>{{variables}}</code>, Dev/UAT/Prod values, secrets, values saved from answers</td></tr><tr><td><a href="checks.html">Checks</a></td><td>Rules for a correct answer — status, JSON fields, headers, time</td></tr><tr><td><a href="load-tests.html">Load tests</a></td><td>Presets, users vs request rate, stages, think time, goals</td></tr><tr><td><a href="reading-the-report.html">Reading the report</a></td><td>Every number, the result, the written debrief, status codes</td></tr><tr><td><a href="chaining.html">Chaining and test data</a></td><td>Run first (sign in), Save values, CSV test data</td></tr><tr><td><a href="collection-runner.html">Run a collection</a></td><td>Send a whole folder in order and see what passed</td></tr><tr><td><a href="compare.html">Compare APIs</a></td><td>Two or more APIs, side by side, under the same load</td></tr><tr><td><a href="history.html">History and reference runs</a></td><td>Earlier runs, trends, “did it get slower?”</td></tr><tr><td><a href="exports.html">Exports and sharing</a></td><td>HTML, Excel, JSON, Zip, email, JUnit</td></tr><tr><td><a href="cli-and-ci.html">Command line and CI</a></td><td>Run tests in a pipeline and fail the build when an API breaks</td></tr><tr><td><a href="troubleshooting.html">Troubleshooting</a></td><td>SmartScreen, blocked by a firewall (429/403), proxies, updates</td></tr><tr><td><a href="privacy-and-data.html">Privacy and your data</a></td><td>Where files live, what is sent (almost nothing), secrets</td></tr></tbody></table></div>
+<aside class="callout callout-tip"><p><strong>Tip</strong> In the app, press <strong>Ctrl+K</strong> (⌘K on a Mac) for every command, and open <strong>Help</strong> in the sidebar for what each word means.</p></aside>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><span></span><a class="next" href="getting-started.html"><span>Next</span>Getting started</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#new-here-start-with-these">New here? Start with these</a></li><li><a href="#everything-in-the-guide">Everything in the guide</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy and your data — APITestCenter guide</title>
+  <meta name="description" content="Your requests, results, and secrets stay on your computer. Here is where they live, how secrets are protected, and the little the app ever sends.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html" aria-current="page">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Help</p>
+        <h1>Privacy and your data</h1>
+        <p class="docs-lead">Your requests, results, and secrets stay on your computer. Here is where they live, how secrets are protected, and the little the app ever sends.</p>
+        <h2 id="everything-stays-on-your-computer">Everything stays on your computer</h2>
+<p>Requests are sent <strong>from your computer</strong> straight to the API you test — that's what lets the app reach internal and VPN-only APIs. There is no APITestCenter server in between, no account, and nothing about your requests, answers, or results is uploaded.</p>
+<h2 id="where-your-files-are">Where your files are</h2>
+<p>Saved requests, environments, collection run orders, and history are plain files in one folder:</p>
+<div class="table-wrap"><table><thead><tr><th>System</th><th>Folder</th></tr></thead><tbody><tr><td>Windows (installer or portable)</td><td><code>%APPDATA%\ApiTestCenter</code></td></tr><tr><td>Windows (Microsoft Store version)</td><td><code>Documents\APITestCenter</code></td></tr><tr><td>macOS</td><td><code>~/Library/Application Support/ApiTestCenter</code></td></tr><tr><td>Linux</td><td><code>~/.local/share/apitestcenter</code></td></tr></tbody></table></div>
+<p><strong>About → Open folder</strong> opens it. You can back it up, copy it to another computer, or keep saved requests in a Git repository for <a href="cli-and-ci.html">CI</a>.</p>
+<h2 id="secrets">Secrets</h2>
+<p>Tokens, passwords, and API keys — in saved requests and in secret environment variables — are <strong>never written into those files</strong>. They are encrypted with a key your operating system protects (Windows DPAPI, macOS Keychain, Linux keyring), so another user of the computer cannot read them. Exports never contain them either; auth appears as a type only.</p>
+<p>Values saved from answers (Save values) are kept in memory until you close the app.</p>
+<h2 id="what-the-app-sends-the-complete-list">What the app sends — the complete list</h2>
+<ol><li><strong>Your requests</strong>, to the APIs you choose to test.</li><li><strong>An update check</strong> (installed Windows app and Linux AppImage): it downloads a small file from GitHub describing the latest version. Nothing about you or your tests is sent.</li><li><strong>Usage counts — only if you say yes.</strong> Once a day: how many requests, load tests, compares, and imports you ran, plus the app version and operating system, with a random install number. Never URLs, results, names, or anything you type. Say no and nothing is counted or sent; change your mind any time in <strong>Help</strong>.</li></ol>
+<p>Details, and the exact data: <a href="../privacy.html">apitestcenter.com/privacy</a>.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="troubleshooting.html"><span>Previous</span>Troubleshooting</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#everything-stays-on-your-computer">Everything stays on your computer</a></li><li><a href="#where-your-files-are">Where your files are</a></li><li><a href="#secrets">Secrets</a></li><li><a href="#what-the-app-sends-the-complete-list">What the app sends — the complete list</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

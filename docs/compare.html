@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compare APIs — APITestCenter guide</title>
+  <meta name="description" content="Put two or more APIs side by side — the same request, the same load — and see which is faster, which fails more, and whether their answers match.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html" aria-current="page">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Results</p>
+        <h1>Compare APIs</h1>
+        <p class="docs-lead">Put two or more APIs side by side — the same request, the same load — and see which is faster, which fails more, and whether their answers match.</p>
+        <p>Use <strong>Compare</strong> for questions like <em>“is the new version faster than the old one?”</em>, <em>“is UAT as fast as production?”</em>, or <em>“which of these two services should we use?”</em></p>
+<h2 id="set-it-up">Set it up</h2>
+<ol><li>Open <strong>Compare</strong> in the sidebar. Each API gets a <strong>tab</strong>; double-click a tab to rename it.</li><li>Fill in each tab like a normal request — or <strong>Load saved request</strong>.</li><li>Choose the load in the <strong>Load</strong> tab; every API gets the same load.</li></ol>
+<h2 id="send-all">Send all</h2>
+<p><strong>Send all</strong> sends every API once and compares their answers: status, time, and the <strong>structure</strong> of the response — fields that are missing, extra, or of a different type. It is a quick way to spot a breaking change before you load anything.</p>
+<h2 id="compare-load">Compare load</h2>
+<p><strong>Compare load</strong> runs the load test on every API. <strong>Run mode</strong> decides how:</p>
+<ul><li><strong>One after another</strong> — fair: each API has your computer and network to itself;</li><li><strong>All at once</strong> — faster, but the APIs share your computer's capacity.</li></ul>
+<p>The <strong>Result summary</strong> names the winner on response time (p95) and on requests per second, and shows each API's own result — judged by your <a href="load-tests.html#goals-pass-or-fail">goals</a> or the starting rules. The charts are overlaid, so you can see where one pulls ahead.</p>
+<h2 id="compare-runs-from-history">Compare runs from History</h2>
+<p>Already have runs? In <a href="history.html">History</a>, tick 2 to 6 load tests and choose <strong>Overlay these runs on Compare</strong>.</p>
+<h2 id="save-and-share">Save and share</h2>
+<p>Compares are saved in History. Export them as <strong>Excel</strong> or a <strong>Zip</strong> of every file, or share by email — see <a href="exports.html">Exports and sharing</a>.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="reading-the-report.html"><span>Previous</span>Reading the report</a><a class="next" href="history.html"><span>Next</span>History and reference runs</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#set-it-up">Set it up</a></li><li><a href="#send-all">Send all</a></li><li><a href="#compare-load">Compare load</a></li><li><a href="#compare-runs-from-history">Compare runs from History</a></li><li><a href="#save-and-share">Save and share</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

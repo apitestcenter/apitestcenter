@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sending requests — APITestCenter guide</title>
+  <meta name="description" content="Build a request, send it once, read the answer, and keep it in a collection — or bring your requests in from Postman, OpenAPI, or curl.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html" aria-current="page">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Sending requests</h1>
+        <p class="docs-lead">Build a request, send it once, read the answer, and keep it in a collection — or bring your requests in from Postman, OpenAPI, or curl.</p>
+        <h2 id="the-request-bar">The request bar</h2>
+<p>Pick the method (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS), type or paste the URL, and press <strong>Send</strong> (<strong>Ctrl+Enter</strong>).</p>
+<p>You can paste more than a URL:</p>
+<ul><li><strong>A curl command</strong> — for example from your browser's DevTools (<em>Copy as cURL</em>). The method, headers, body, and auth are filled in for you.</li><li><strong>A URL with a query string</strong> — the parameters appear in the <strong>Params</strong> tab, where you can edit them one by one.</li></ul>
+<p>Press <strong>/</strong> to jump to the URL from anywhere on the page.</p>
+<h2 id="the-tabs-under-the-request">The tabs under the request</h2>
+<div class="table-wrap"><table><thead><tr><th>Tab</th><th>What it does</th></tr></thead><tbody><tr><td><strong>Params</strong></td><td>Query parameters (<code>?page=2</code>). <em>Edit origin and path separately</em> splits the URL into a base URL and a path.</td></tr><tr><td><strong>Headers</strong></td><td>Extra request headers, such as <code>Accept</code> or <code>X-Request-Id</code>.</td></tr><tr><td><strong>Auth</strong></td><td>How the request proves who it is: <strong>Bearer</strong> token, <strong>Basic</strong> (username and password), or an <strong>API key</strong> sent in a header or the query.</td></tr><tr><td><strong>Body</strong></td><td>For POST, PUT and PATCH: <strong>JSON</strong> (checked as you type — <em>Valid JSON</em>) or plain <strong>text</strong>.</td></tr><tr><td><strong>Checks</strong></td><td>Rules for a correct answer. See <a href="checks.html">Checks</a>.</td></tr><tr><td><strong>Save values</strong></td><td>Take values from the answer for the next requests. See <a href="chaining.html#save-values">Chaining</a>.</td></tr><tr><td><strong>Run first</strong></td><td>Send another saved request first, usually signing in. See <a href="chaining.html#run-first">Chaining</a>.</td></tr><tr><td><strong>Test data</strong></td><td>Rows from a CSV file as variables. See <a href="chaining.html#test-data">Chaining</a>.</td></tr><tr><td><strong>Load</strong> and <strong>Goals</strong></td><td>The load test and its pass/fail limits. See <a href="load-tests.html">Load tests</a>.</td></tr><tr><td><strong>Settings</strong></td><td>Timeout, maximum redirects, reusing connections, and skipping the TLS certificate check (for test servers with self-signed certificates only).</td></tr></tbody></table></div>
+<p>A small badge on a tab shows what is set — for example <strong>Checks 2/3</strong> means two of three checks passed on the last Send.</p>
+<h2 id="reading-the-answer">Reading the answer</h2>
+<p>The <strong>Response</strong> panel shows:</p>
+<ul><li>the <strong>status</strong> (<code>200 OK</code>, <code>404 Not Found</code>…), the <strong>time</strong>, and the <strong>size</strong>;</li><li><strong>Body</strong> — <em>Pretty</em> formats JSON with colours; <em>Raw</em> shows it exactly as it came. You can search, copy, or download it;</li><li><strong>Headers</strong> — response headers. Sign-in headers such as <code>Authorization</code> and <code>Set-Cookie</code> are hidden as <em>[redacted]</em>;</li><li><strong>Checks</strong> — each rule with ✓ or ✕.</li></ul>
+<p>If the request used <strong>Run first</strong>, a line under the status says what ran first and which values it found.</p>
+<h2 id="saving-requests-and-collections">Saving requests and collections</h2>
+<p>Press <strong>Ctrl+S</strong> (or <strong>Save as…</strong>) to keep a request. Give it a name and, optionally, a <strong>collection</strong> — a folder that groups related requests, like <em>Orders API</em>. Saved requests appear in the <strong>Saved requests</strong> panel on the left; click one to open it, and search them by name, URL, or method.</p>
+<p>Saved requests are plain files on your computer. Secrets in them (tokens, passwords, API keys) are kept encrypted, never in the file — see <a href="privacy-and-data.html">Privacy and your data</a>.</p>
+<h2 id="importing-from-postman-openapi-or-swagger">Importing from Postman, OpenAPI, or Swagger</h2>
+<p>Click <strong>Import</strong> (the arrow icon in the Saved requests panel) and drop a file:</p>
+<ul><li><strong>Postman</strong> collections (v2.0 and v2.1) and Postman <strong>environments</strong>;</li><li><strong>OpenAPI 3</strong> and <strong>Swagger 2</strong> files, as JSON or YAML.</li></ul>
+<p>Before anything is saved, the app lists what it found — requests, folders, environments — and anything it could not bring across (for example, Postman scripts). Folders become collections; variables stay as <code>{{variables}}</code>.</p>
+<aside class="callout callout-tip"><p><strong>Tip</strong> After importing an OpenAPI file, set its server address once as a variable in an <a href="environments.html">environment</a>, and every imported request uses it.</p></aside>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="getting-started.html"><span>Previous</span>Getting started</a><a class="next" href="environments.html"><span>Next</span>Environments and variables</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-request-bar">The request bar</a></li><li><a href="#the-tabs-under-the-request">The tabs under the request</a></li><li><a href="#reading-the-answer">Reading the answer</a></li><li><a href="#saving-requests-and-collections">Saving requests and collections</a></li><li><a href="#importing-from-postman-openapi-or-swagger">Importing from Postman, OpenAPI, or Swagger</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

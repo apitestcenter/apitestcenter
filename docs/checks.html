@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checks — APITestCenter guide</title>
+  <meta name="description" content="Rules for a correct answer. A fast answer with an error inside should still fail — checks make sure it does.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html" aria-current="page">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Checks</h1>
+        <p class="docs-lead">Rules for a correct answer. A fast answer with an error inside should still fail — checks make sure it does.</p>
+        <p>Open the <strong>Checks</strong> tab and add rules. Each Send shows ✓ or ✕ for every rule, and a load test applies them to <strong>every</strong> request, so the report says what share of answers were correct — not just fast.</p>
+<h2 id="kinds-of-checks">Kinds of checks</h2>
+<div class="table-wrap"><table><thead><tr><th>Check</th><th>Passes when</th><th>Example</th></tr></thead><tbody><tr><td><strong>Status</strong></td><td>The status matches. Use one code, several, a range, or a class.</td><td><code>200</code> · <code>200, 201</code> · <code>200-299</code> · <code>2xx</code></td></tr><tr><td><strong>JSON field</strong></td><td>A field exists, equals, does not equal, or contains a value.</td><td><code>data.items[0].id</code> exists · <code>status</code> equals <code>active</code></td></tr><tr><td><strong>Body text</strong></td><td>The answer contains — or does not contain — some text.</td><td>does not contain <code>error</code></td></tr><tr><td><strong>Header</strong></td><td>A response header exists, equals, or contains a value.</td><td><code>content-type</code> contains <code>json</code></td></tr><tr><td><strong>Response time</strong></td><td>The answer arrived within a time, in milliseconds.</td><td>within <code>500</code> ms</td></tr></tbody></table></div>
+<p><strong>JSON paths</strong> start from the top of the answer: <code>name</code>, <code>data.user.id</code>, <code>items[2].price</code>. A leading <code>$.</code> is fine too.</p>
+<h2 id="how-checks-affect-results">How checks affect results</h2>
+<ul><li><strong>Send:</strong> the <strong>Checks</strong> badge shows how many passed (for example <strong>2/3</strong>), and each rule is listed in the response.</li><li><strong>Load test:</strong> the report shows the share of passing checks and which check failed most often. By default the result fails if fewer than <strong>99%</strong> of checks pass; you can change that under <strong>Goals</strong>.</li><li><strong>Collection run:</strong> a request with checks passes only when <strong>all</strong> of them pass. A request without checks passes on any 2xx or 3xx status.</li></ul>
+<aside class="callout callout-tip"><p><strong>Tip</strong> Start with a <strong>status</strong> check and one <strong>JSON field</strong> check on something that must be there. That catches most “fast but wrong” answers — like a <code>200</code> with an error message inside.</p></aside>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="environments.html"><span>Previous</span>Environments and variables</a><a class="next" href="load-tests.html"><span>Next</span>Load tests</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#kinds-of-checks">Kinds of checks</a></li><li><a href="#how-checks-affect-results">How checks affect results</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
