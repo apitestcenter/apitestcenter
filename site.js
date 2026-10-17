@@ -20,14 +20,24 @@ for (const [kind, name] of Object.entries(FILES)) {
 }
 document.querySelectorAll("[data-releases]").forEach((a) => (a.href = `https://github.com/${REPO}/releases`));
 document.querySelectorAll("[data-issues]").forEach((a) => (a.href = `https://github.com/${REPO}/issues`));
-// Links that leave the page open in a new tab, so a visitor reading the page keeps their place.
-// In-page jumps (#…), email links, and the logo (home) stay in the same tab.
-document.querySelectorAll("a[href]").forEach((a) => {
-  const href = a.getAttribute("href") || "";
-  if (href.startsWith("#") || href.startsWith("mailto:") || a.classList.contains("brand")) return;
-  a.target = "_blank";
-  a.rel = "noopener";
-});
+// Links to other websites open in a new tab, so a visitor keeps their place here. Pages of this
+// site (the guide, What's new) open normally, and downloads stay put — a file download doesn't
+// leave the page. Runs again for links added later (the version list).
+function externalLinksInNewTab(scope = document) {
+  scope.querySelectorAll("a[href]").forEach((a) => {
+    if (a.hasAttribute("data-download") || a.hasAttribute("data-primary") || a.closest(".dl-table")) return;
+    let url;
+    try {
+      url = new URL(a.getAttribute("href") || "", location.href);
+    } catch {
+      return;
+    }
+    if (!/^https?:$/.test(url.protocol) || url.origin === location.origin) return;
+    a.target = "_blank";
+    a.rel = "noopener";
+  });
+}
+externalLinksInNewTab();
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = String(new Date().getFullYear())));
 
 // Guide pages: on a phone the page menu starts folded so the guide itself comes first.
@@ -153,6 +163,7 @@ if (document.querySelector("[data-version], [data-size], [data-release-list]")) 
     }
     document.querySelectorAll("[data-release-list]").forEach((list) => {
       list.replaceChildren(...releases.map(releaseArticle));
+      externalLinksInNewTab(list);
       if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
     });
   })
