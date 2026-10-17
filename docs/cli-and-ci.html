@@ -41,48 +41,52 @@
         <p class="docs-kicker">Automation</p>
         <h1>Command line and CI</h1>
         <p class="docs-lead">Run load tests and collection runs from a pipeline and fail the build when an API breaks or gets slower.</p>
-        <aside class="callout callout-note"><p><strong>Note</strong> The command-line tool (<code>atc</code>) is in <strong>preview</strong> and not published yet. It will be installable with one command (<code>npx apitestcenter …</code>). This page describes how it works so you can plan; we'll announce it on the <a href="../whats-new.html">What's new</a> page.</p></aside>
+        <aside class="callout callout-note"><p><strong>Note</strong> The command-line tool is being published to npm as <strong><code>apitestcenter</code></strong> — run it with <code>npx apitestcenter …</code>, no install step. Until it appears on <a href="https://www.npmjs.com/package/apitestcenter">npmjs.com/package/apitestcenter</a>, this page describes how it works so you can plan.</p></aside>
 <h2 id="two-commands">Two commands</h2>
 <pre><code class="lang-bash"># Send every request in a collection once and check each one
 atc suite &quot;Orders API&quot; --env UAT --junit results.xml
 
 # Run a saved request's load test with pass/fail targets
 atc run &quot;Orders API/List orders&quot; --env UAT --preset smoke --p95 500 --errors 1 --junit results.xml</code></pre>
-<p>Both use the same engine, checks, and rules as the app, so a pipeline run and a run in the app mean the same thing. They read your saved requests, environments, and <a href="collection-runner.html">collection run order</a>.</p>
+<p>Both use the same engine, checks, and rules as the app, so a pipeline run and a run in the app mean the same thing. They read your saved requests, environments, and <a href="collection-runner.html">collection run order</a>. <code>atc</code> is the short name; <code>apitestcenter</code> works too.</p>
+<p>Requirements: Node.js 20 or later. <code>suite</code> needs nothing else. <code>run</code> uses <a href="https://k6.io">k6</a>: if it is not installed, the first <code>run</code> downloads the official k6 release once, checks it against k6's published checksums, and keeps it in a cache folder. Set <code>K6_BIN</code> to use your own k6.</p>
 <h2 id="exit-codes">Exit codes</h2>
-<div class="table-wrap"><table><thead><tr><th>Code</th><th><code>atc suite</code></th><th><code>atc run</code></th></tr></thead><tbody><tr><td><strong>0</strong></td><td>Every request passed</td><td>Every target met and the result is not <em>failing</em></td></tr><tr><td><strong>1</strong></td><td>A request failed or could not run</td><td>A target was missed or the result failed</td></tr><tr><td><strong>2</strong></td><td>Could not start: unknown collection or environment, bad arguments</td><td>Could not start: bad arguments, a missing variable, the first request not 2xx, k6 missing</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Code</th><th><code>atc suite</code></th><th><code>atc run</code></th></tr></thead><tbody><tr><td><strong>0</strong></td><td>Every request passed</td><td>Every target met and the result is not <em>failing</em></td></tr><tr><td><strong>1</strong></td><td>A request failed or could not run</td><td>A target was missed or the result failed</td></tr><tr><td><strong>2</strong></td><td>Could not start: unknown collection or environment, bad arguments</td><td>Could not start: bad arguments, a missing variable, the first request not 2xx, k6 could not be found or downloaded</td></tr></tbody></table></div>
 <p>A pipeline step that runs <code>atc</code> fails on any code other than 0 — that is how a broken or slow API stops a release.</p>
 <h2 id="options">Options</h2>
-<div class="table-wrap"><table><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--env &lt;name&gt;</code></td><td>The environment for <code>{{variables}}</code></td></tr><tr><td><code>--var key=value</code></td><td>Set or override a variable (repeatable) — use this for CI secrets</td></tr><tr><td><code>--junit &lt;file&gt;</code> · <code>--html &lt;file&gt;</code> · <code>--json &lt;file&gt;</code></td><td>Write the report</td></tr><tr><td><code>--stop-on-fail</code></td><td><code>suite</code>: stop at the first request that fails</td></tr><tr><td>`--preset smoke\</td><td>average\</td><td>stress\</td><td>spike\</td><td>soak`</td><td><code>run</code>: start from a preset</td></tr><tr><td><code>--vus</code>, <code>--duration</code>, <code>--rps</code>, <code>--max-vus</code></td><td><code>run</code>: change the load</td></tr><tr><td><code>--p95 &lt;ms&gt;</code>, <code>--p99 &lt;ms&gt;</code>, <code>--errors &lt;%&gt;</code>, <code>--checks &lt;%&gt;</code>, <code>--abort</code></td><td><code>run</code>: pass/fail targets; <code>--abort</code> stops early when one is clearly missed</td></tr><tr><td><code>--quiet</code></td><td>Only the final summary</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Option</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--data &lt;folder&gt;</code></td><td>Where your saved requests are — a copy of the app's data folder in your repository (default: this computer's APITestCenter folder)</td></tr><tr><td><code>--env &lt;name&gt;</code></td><td>The environment for <code>{{variables}}</code></td></tr><tr><td><code>--var key=value</code></td><td>Set or override a variable (repeatable) — use this for CI secrets</td></tr><tr><td><code>--junit &lt;file&gt;</code> · <code>--html &lt;file&gt;</code> · <code>--json &lt;file&gt;</code></td><td>Write the report</td></tr><tr><td><code>--stop-on-fail</code></td><td><code>suite</code>: stop at the first request that fails</td></tr><tr><td>`--preset smoke\</td><td>average\</td><td>stress\</td><td>spike\</td><td>soak`</td><td><code>run</code>: start from a preset</td></tr><tr><td><code>--vus</code>, <code>--duration</code>, <code>--rps</code>, <code>--max-vus</code></td><td><code>run</code>: change the load</td></tr><tr><td><code>--p95 &lt;ms&gt;</code>, <code>--p99 &lt;ms&gt;</code>, <code>--errors &lt;%&gt;</code>, <code>--checks &lt;%&gt;</code>, <code>--abort</code></td><td><code>run</code>: pass/fail targets; <code>--abort</code> stops early when one is clearly missed</td></tr><tr><td><code>--quiet</code></td><td>Only the final summary</td></tr><tr><td><code>--version</code></td><td>Print the version</td></tr></tbody></table></div>
 <h2 id="secrets-in-a-pipeline">Secrets in a pipeline</h2>
 <p>Secrets saved in the app are encrypted with your computer's key, so a build agent cannot read them. Write <code>{{token}}</code> in the request and pass the value from your CI's secret store:</p>
 <pre><code class="lang-bash">atc suite &quot;Orders API&quot; --env UAT --var token=$ORDERS_TOKEN --junit results.xml</code></pre>
 <h2 id="examples">Examples</h2>
 <p><strong>GitHub Actions</strong></p>
 <pre><code class="lang-yaml">- name: API checks
-  run: npx apitestcenter suite &quot;Orders API&quot; --env UAT --var token=${{ secrets.ORDERS_TOKEN }} --junit atc.xml
+  run: npx apitestcenter suite &quot;Orders API&quot; --data api-tests --env UAT --var token=${{ secrets.ORDERS_TOKEN }} --junit atc.xml
 - uses: actions/upload-artifact@v4
   if: always()
   with: { name: api-checks, path: atc.xml }</code></pre>
 <p><strong>GitLab CI</strong></p>
 <pre><code class="lang-yaml">api-checks:
   script:
-    - npx apitestcenter suite &quot;Orders API&quot; --env UAT --var token=$ORDERS_TOKEN --junit atc.xml
+    - npx apitestcenter suite &quot;Orders API&quot; --data api-tests --env UAT --var token=$ORDERS_TOKEN --junit atc.xml
   artifacts:
     when: always
     reports:
       junit: atc.xml</code></pre>
 <p><strong>Azure DevOps</strong></p>
-<pre><code class="lang-yaml">- script: npx apitestcenter suite &quot;Orders API&quot; --env UAT --var token=$(ORDERS_TOKEN) --junit atc.xml
+<pre><code class="lang-yaml">- script: npx apitestcenter suite &quot;Orders API&quot; --data api-tests --env UAT --var token=$(ORDERS_TOKEN) --junit atc.xml
 - task: PublishTestResults@2
   condition: always()
   inputs: { testResultsFormat: JUnit, testResultsFiles: atc.xml }</code></pre>
-<p>Keep the saved requests your pipeline needs in your repository (they are plain JSON files) and point the tool at them with <code>ATC_DATA_DIR</code>.</p>
+<h2 id="your-requests-in-the-repository">Your requests in the repository</h2>
+<p>A pipeline can't see the app on your computer, so keep a copy of what it needs in your repository:</p>
+<ol><li>In the app, <strong>About → Open folder</strong>.</li><li>Copy the <code>requests</code> folder (or just the collections you need, inside it), <code>environments.json</code>, and <code>suites.json</code> (the run order) into a folder in your repository, for example <code>api-tests/</code>.</li><li>Run with <code>--data api-tests</code>.</li></ol>
+<p>Secret values are never in those files, so they are safe to commit; pass secrets with <code>--var</code>. Update the copy when you change requests in the app.</p>
       </article>
       <nav class="docs-pager" aria-label="Previous and next"><a href="exports.html"><span>Previous</span>Exports and sharing</a><a class="next" href="troubleshooting.html"><span>Next</span>Troubleshooting</a></nav>
       <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
     </main>
-    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#two-commands">Two commands</a></li><li><a href="#exit-codes">Exit codes</a></li><li><a href="#options">Options</a></li><li><a href="#secrets-in-a-pipeline">Secrets in a pipeline</a></li><li><a href="#examples">Examples</a></li></ul></nav>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#two-commands">Two commands</a></li><li><a href="#exit-codes">Exit codes</a></li><li><a href="#options">Options</a></li><li><a href="#secrets-in-a-pipeline">Secrets in a pipeline</a></li><li><a href="#examples">Examples</a></li><li><a href="#your-requests-in-the-repository">Your requests in the repository</a></li></ul></nav>
   </div>
 
   <footer class="site-footer">
