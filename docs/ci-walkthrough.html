@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From the app to your pipeline — APITestCenter guide</title>
+  <meta name="description" content="Step by step — build a test suite in the app, put it in your repository, and have every push checked automatically, with a red build when an API breaks or gets slower.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="ci-walkthrough.html" aria-current="page">From the app to your pipeline</a></li><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Automation</p>
+        <h1>From the app to your pipeline</h1>
+        <p class="docs-lead">Step by step — build a test suite in the app, put it in your repository, and have every push checked automatically, with a red build when an API breaks or gets slower.</p>
+        <p>By the end of this page, every push to your repository runs three kinds of checks, and the build goes red when one fails:</p>
+<div class="table-wrap"><table><thead><tr><th>Check</th><th>Question it answers</th><th>Command</th></tr></thead><tbody><tr><td><strong>Suite</strong></td><td>Does every request still work and give correct answers?</td><td><code>apitestcenter suite</code></td></tr><tr><td><strong>Load test with goals</strong></td><td>Is it fast enough under load?</td><td><code>apitestcenter run --p95 … --errors …</code></td></tr><tr><td><strong>Baseline</strong></td><td>Did it get <em>slower</em> than before?</td><td><code>apitestcenter run --baseline … --max-slower …</code></td></tr></tbody></table></div>
+<p>Start with the suite — it's the one most teams run on every push. Add the other two when you're ready.</p>
+<h2 id="step-1-build-the-suite-in-the-app">Step 1 — Build the suite in the app</h2>
+<p>A suite is just a <strong>collection</strong> of saved requests.</p>
+<ol><li>On <strong>Test API</strong>, build each request and press <strong>Ctrl+S</strong> to save it into a collection, for example <em>Orders API</em>. (Or <a href="sending-requests.html#importing-from-postman-openapi-or-swagger">import</a> your Postman collection.)</li><li>Give each request <a href="checks.html">checks</a> — at least <em>status is 2xx</em> and one JSON field that must be there. A request without checks only fails on 4xx/5xx.</li><li>If requests need to sign in, add the sign-in request as <a href="chaining.html#run-first">Run first</a>. It runs once per suite run.</li><li>If one request creates something the next ones need (an order id), use <a href="chaining.html#save-values">Save values</a>.</li><li>Open <strong>Run collection</strong>, put the requests in order, and press <strong>Run</strong> until everything is green.</li></ol>
+<h2 id="step-2-use-variables-for-anything-secret-or-different-per-environment">Step 2 — Use variables for anything secret or different per environment</h2>
+<p>The pipeline can't see secrets saved on your computer, so:</p>
+<ul><li>Write the server address as <code>{{baseUrl}}</code> and keep its value in an <a href="environments.html">environment</a> such as <em>UAT</em>.</li><li>Write tokens, passwords, and keys as <code>{{token}}</code>, <code>{{password}}</code> — never typed straight into the request. In the pipeline you'll pass them from your CI's secret store.</li></ul>
+<p>Run the collection once more with the <em>UAT</em> environment selected, to be sure every <code>{{variable}}</code> has a value.</p>
+<h2 id="step-3-download-for-ci">Step 3 — Download for CI</h2>
+<p>On <strong>Run collection</strong>, with your collection and environment selected, press <strong>Download for CI</strong>. You get a zip that unzips into the root of your repository:</p>
+<pre><code>api-tests/
+  requests/Orders API/…json     your saved requests (no secrets)
+  environments.json             environment values (secret ones left empty)
+  suites.json                   the run order
+  README.md                     the command to run, and which secrets it needs
+.github/workflows/api-checks.yml   a ready GitHub Actions pipeline</code></pre>
+<p>Requests that a request in the collection uses as <strong>Run first</strong> — even from another collection — are included. If a request still has a secret typed straight into it, the app tells you, and the README lists it: change it to a <code>{{variable}}</code> (step 2) and download again.</p>
+<p>Unzip it into your repository and commit it.</p>
+<h2 id="step-4-add-your-secrets-to-the-ci">Step 4 — Add your secrets to the CI</h2>
+<p>In GitHub: <strong>your repository → Settings → Secrets and variables → Actions → New repository secret</strong>, for example <code>ORDERS_TOKEN</code>. Then pass it in <code>.github/workflows/api-checks.yml</code> by adding <code>--var</code> to the command:</p>
+<pre><code class="lang-yaml">run: npx --yes apitestcenter suite &quot;Orders API&quot; --data api-tests --env &quot;UAT&quot; --var token=${{ secrets.ORDERS_TOKEN }} --junit atc-results.xml</code></pre>
+<p><code>--var</code> also overrides any environment value — handy for pointing the same suite at a preview deployment: <code>--var baseUrl=https://pr-123.example.com</code>.</p>
+<h2 id="step-5-push-and-read-the-result">Step 5 — Push, and read the result</h2>
+<p>Push the commit. In GitHub, open <strong>Actions → API checks</strong>:</p>
+<ul><li><strong>Green</strong> — every request passed (exit code 0).</li><li><strong>Red</strong> — at least one failed or could not run (exit code 1), or it could not start (exit code 2: a wrong collection or environment name, for example).</li></ul>
+<p>The log says exactly what happened, request by request:</p>
+<pre><code>suite  Orders API · 4 requests · UAT
+  ✓ POST   Sign in        200  182 ms
+  ✕ POST   Create order   200   88 ms
+      {{orderId}} was not found in the answer (looked for $.id)
+  ! GET    Get order
+      {{orderId}} should come from &quot;Create order&quot;, which failed
+  ✓ GET    List products  200   41 ms
+
+FAIL  2 of 4 passed · 1 failed · 1 could not run</code></pre>
+<p>The JUnit file <code>atc-results.xml</code> is kept as a build artifact, with one test case per request — test-report tools in GitHub, GitLab, Jenkins, and Azure DevOps show it as a list of passed and failed tests.</p>
+<h2 id="step-6-add-a-load-test-with-goals-optional">Step 6 — Add a load test with goals (optional)</h2>
+<p>Pick the request that matters most and add a step that load-tests it, with pass/fail goals:</p>
+<pre><code class="lang-yaml">- name: Speed check
+  run: npx --yes apitestcenter run &quot;Orders API/List orders&quot; --data api-tests --env &quot;UAT&quot; --var token=${{ secrets.ORDERS_TOKEN }} --preset smoke --p95 500 --errors 1 --junit atc-speed.xml</code></pre>
+<p>It fails when 95% of requests take longer than 500 ms, or more than 1% fail. Start small (<code>--preset smoke</code>, 2 users for 30 seconds) — a pipeline should not hammer a shared environment. k6, the load engine, is downloaded automatically the first time.</p>
+<h2 id="step-7-fail-when-it-gets-slower-optional">Step 7 — Fail when it gets slower (optional)</h2>
+<p>Goals catch an API that is slow. A <strong>baseline</strong> catches one that got <strong>slower</strong> than it was.</p>
+<ol><li>Save a good run as the baseline, once, and commit it:</li></ol>
+<p>``<code>bash npx apitestcenter run &quot;Orders API/List orders&quot; --data api-tests --env UAT --save-baseline api-tests/baseline.json </code>``</p>
+<ol><li>Compare every later run with it:</li></ol>
+<p>```yaml</p>
+<ul><li>name: Did it get slower? run: npx --yes apitestcenter run &quot;Orders API/List orders&quot; --data api-tests --env &quot;UAT&quot; --var token=${{ secrets.ORDERS_TOKEN }} --preset smoke --baseline api-tests/baseline.json --max-slower 10 --junit atc-baseline.xml ```</li></ul>
+<p>It fails when the run is more than 10% slower than the baseline, or fails more often. Use the <strong>same load</strong> as the baseline — otherwise it's not a fair comparison and is skipped. When a slower speed is expected (a heavier feature), save a new baseline.</p>
+<h2 id="the-complete-pipeline">The complete pipeline</h2>
+<pre><code class="lang-yaml">name: API checks
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  api-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Every request works
+        run: npx --yes apitestcenter suite &quot;Orders API&quot; --data api-tests --env &quot;UAT&quot; --var token=${{ secrets.ORDERS_TOKEN }} --junit atc-results.xml
+
+      - name: Fast enough, and not slower than before
+        run: npx --yes apitestcenter run &quot;Orders API/List orders&quot; --data api-tests --env &quot;UAT&quot; --var token=${{ secrets.ORDERS_TOKEN }} --preset smoke --p95 500 --errors 1 --baseline api-tests/baseline.json --max-slower 10 --junit atc-speed.xml
+
+      - name: Keep the results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-check-results
+          path: atc-*.xml</code></pre>
+<p>GitLab CI and Azure DevOps versions, and every option: <a href="cli-and-ci.html">Command line and CI</a>.</p>
+<h2 id="keeping-it-up-to-date">Keeping it up to date</h2>
+<p>The app is where you edit; the repository holds a copy. After changing requests, checks, or the run order in the app, press <strong>Download for CI</strong> again and commit the new files. Review the change in your pull request like any other code.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="exports.html"><span>Previous</span>Exports and sharing</a><a class="next" href="cli-and-ci.html"><span>Next</span>Command line and CI</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#step-1-build-the-suite-in-the-app">Step 1 — Build the suite in the app</a></li><li><a href="#step-2-use-variables-for-anything-secret-or-different-per-environment">Step 2 — Use variables for anything secret or different per environment</a></li><li><a href="#step-3-download-for-ci">Step 3 — Download for CI</a></li><li><a href="#step-4-add-your-secrets-to-the-ci">Step 4 — Add your secrets to the CI</a></li><li><a href="#step-5-push-and-read-the-result">Step 5 — Push, and read the result</a></li><li><a href="#step-6-add-a-load-test-with-goals-optional">Step 6 — Add a load test with goals (optional)</a></li><li><a href="#step-7-fail-when-it-gets-slower-optional">Step 7 — Fail when it gets slower (optional)</a></li><li><a href="#the-complete-pipeline">The complete pipeline</a></li><li><a href="#keeping-it-up-to-date">Keeping it up to date</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
