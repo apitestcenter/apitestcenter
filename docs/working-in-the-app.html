@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Working in the app — APITestCenter guide</title>
+  <meta name="description" content="The command palette, keyboard shortcuts, light and dark themes, the Help panel and tour, the welcome card, and notifications when a run ends.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li><li><a href="working-in-the-app.html" aria-current="page">Working in the app</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="collection-runner.html">Run a collection</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="ci-walkthrough.html">From the app to your pipeline</a></li><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Start here</p>
+        <h1>Working in the app</h1>
+        <p class="docs-lead">The command palette, keyboard shortcuts, light and dark themes, the Help panel and tour, the welcome card, and notifications when a run ends.</p>
+        <h2 id="finding-your-way">Finding your way</h2>
+<p>The sidebar on the left has the pages: <strong>Test API</strong>, <strong>Run collection</strong>, <strong>Compare</strong>, <strong>History</strong>, and <strong>Open report</strong>. At the bottom are <strong>Help · what words mean</strong>, <strong>Commands</strong>, the theme switch, and the engine status with <strong>About</strong> (version, updates, and where your files are).</p>
+<p><strong>Collapse sidebar</strong> (the panel icon at the top) shrinks it to icons. The app remembers your choice.</p>
+<h2 id="the-command-palette">The command palette</h2>
+<p>Press <strong>Ctrl+K</strong> (<strong>⌘K</strong> on a Mac) anywhere, or click <strong>Commands</strong> in the sidebar. Type a few letters of what you want — letters can be anywhere in the name, so <code>ord</code> finds <em>Orders API / List orders</em>. Use <strong>↑</strong> and <strong>↓</strong> to move, <strong>Enter</strong> to run, <strong>Esc</strong> to close.</p>
+<div class="table-wrap"><table><thead><tr><th>Group</th><th>What's in it</th></tr></thead><tbody><tr><td><strong>Go to</strong></td><td><strong>Test API</strong>, <strong>Run collection</strong>, <strong>Compare</strong>, <strong>History</strong>, <strong>Open report</strong></td></tr><tr><td><strong>Actions</strong></td><td><strong>Import from Postman or OpenAPI</strong>. On Test API and Compare also <strong>Send request</strong> and <strong>Run load test</strong> (on Compare: <strong>Compare load</strong>).</td></tr><tr><td><strong>Help</strong></td><td><strong>Help: what do these words mean?</strong>, <strong>About APITestCenter — version and updates</strong>, <strong>Take the 1-minute tour</strong></td></tr><tr><td><strong>Saved requests</strong></td><td>Every saved request, as <em>Collection / Name</em>. Pick one to open it on Test API.</td></tr><tr><td><strong>Environment</strong></td><td><strong>Use no environment</strong>, and <strong>Use environment: …</strong> for each one. The current one is marked <em>current</em>.</td></tr><tr><td><strong>Theme</strong></td><td><strong>Theme: System</strong>, <strong>Theme: Light</strong>, <strong>Theme: Dark</strong></td></tr></tbody></table></div>
+<h2 id="keyboard-shortcuts">Keyboard shortcuts</h2>
+<p>On a Mac, use <strong>⌘</strong> where the table says <strong>Ctrl</strong>.</p>
+<div class="table-wrap"><table><thead><tr><th>Keys</th><th>What it does</th><th>Where</th></tr></thead><tbody><tr><td><strong>Ctrl+K</strong></td><td>Open or close the command palette</td><td>Anywhere</td></tr><tr><td><strong>Ctrl+Enter</strong></td><td>Send the request once</td><td>Test API, Compare</td></tr><tr><td><strong>Ctrl+Shift+Enter</strong></td><td>Run the load test (on Compare: compare under load)</td><td>Test API, Compare</td></tr><tr><td><strong>Ctrl+S</strong></td><td>Save the request</td><td>Test API</td></tr><tr><td><strong>/</strong></td><td>Jump to the URL, when you're not typing in a field</td><td>Test API, Compare</td></tr><tr><td><strong>Ctrl+F</strong></td><td>Find in the response body (click the body first)</td><td>Response panel</td></tr><tr><td><strong>Esc</strong></td><td>Close the palette, a dialog, a menu, or the tour</td><td>Anywhere</td></tr><tr><td><strong>←</strong> / <strong>→</strong></td><td>Previous / next step</td><td>The tour</td></tr></tbody></table></div>
+<p>Page shortcuts don't work while a dialog is open.</p>
+<p>While you <a href="reading-the-report.html#customize-a-view">customize a report view</a>, more keys work:</p>
+<div class="table-wrap"><table><thead><tr><th>Keys</th><th>What it does</th></tr></thead><tbody><tr><td><strong>Ctrl+Z</strong></td><td>Undo</td></tr><tr><td><strong>Ctrl+Shift+Z</strong> or <strong>Ctrl+Y</strong></td><td>Redo</td></tr><tr><td><strong>Arrow keys</strong></td><td>Move the selected widget</td></tr><tr><td><strong>Shift + arrow keys</strong></td><td>Resize the selected widget</td></tr><tr><td><strong>Enter</strong></td><td>Open the widget's settings</td></tr><tr><td><strong>Delete</strong></td><td>Remove the widget</td></tr><tr><td><strong>Ctrl+D</strong></td><td>Duplicate the widget</td></tr></tbody></table></div>
+<h2 id="light-and-dark">Light and dark</h2>
+<p>Choose <strong>System</strong>, <strong>Light</strong>, or <strong>Dark</strong> with the theme switch at the bottom of the sidebar, or with <em>Theme:</em> in the command palette. <strong>System</strong> follows your computer's setting. When the sidebar is collapsed, the switch is a single button that moves to the next choice each time you click it.</p>
+<h2 id="the-welcome-card">The welcome card</h2>
+<p>When you first open <strong>Test API</strong>, the right-hand panel shows <em>New here? Start with something safe to test</em>. It uses the practice API built into the app, so nothing real is touched:</p>
+<div class="table-wrap"><table><thead><tr><th>Choice</th><th>What it does</th></tr></thead><tbody><tr><td><strong>Try a simple request</strong></td><td>Fills in <code>{{practiceApi}}/products</code> with two checks. Press <strong>Send</strong>.</td></tr><tr><td><strong>Try a sign-in example</strong></td><td>Adds two requests to a <strong>Practice</strong> collection: <strong>Sign in</strong>, and <strong>My orders</strong>, which signs in first and uses the token. See <a href="chaining.html">Chaining</a>.</td></tr><tr><td><strong>Take the 1-minute tour</strong></td><td>Starts the tour (below).</td></tr></tbody></table></div>
+<p>The practice choices are greyed out while the engine is offline.</p>
+<p>The card disappears once you send a request. To hide it for good, press <strong>✕</strong> in its corner. To bring it back, open <strong>Help</strong> and choose <strong>Show the getting-started guide on Test API again</strong>.</p>
+<h2 id="the-tour">The tour</h2>
+<p><strong>Take the 1-minute tour</strong> points out, one at a time: where the request goes, what to send, trying it once with <strong>Send</strong>, testing it under load, reading the result, <strong>History</strong>, and <strong>Help</strong>. Use <strong>Next</strong> and <strong>Back</strong> (or <strong>→</strong> and <strong>←</strong>), <strong>Done</strong> on the last step, and <strong>Skip tour</strong> to leave early. Start it from the welcome card, the <strong>Help</strong> panel, or the command palette.</p>
+<h2 id="the-help-panel">The Help panel</h2>
+<p>Click <strong>Help · what words mean</strong> in the sidebar. The panel has:</p>
+<ul><li><strong>Take the 1-minute tour</strong>;</li><li><strong>Show the getting-started guide on Test API again</strong> — brings back the welcome card;</li><li><strong>Share anonymous usage counts</strong> — on or off. <strong>Show exactly what would be sent</strong> shows the data. Only the desktop app sends these; see <a href="privacy-and-data.html">Privacy and your data</a>;</li><li><strong>About APITestCenter — version, updates, your files</strong>;</li><li>a link to this user guide;</li><li><strong>the glossary</strong> — every word the app uses, in plain language, grouped into <em>Setting up a test</em>, <em>Reading results</em>, and <em>About the app</em>. Type in <strong>What does … mean?</strong> to search it.</li></ul>
+<h2 id="notifications">Notifications</h2>
+<p>When a load test or a compare ends, the app tells you:</p>
+<ul><li><strong>In the app</strong>, a short message appears in the bottom-right corner.</li><li><strong>When the app is not in front</strong>, the window or tab title changes — for example to <em>✓ Load test finished</em>, or with ✕ when the run failed — until you come back.</li><li><strong>A system notification</strong>, if you turned it on with <strong>Notify me when done</strong> on a running test. Click the notification to bring the app back. Notifications are only shown when you're looking at something else.</li></ul>
+<p>While a run is going, the title shows the time left, such as <em>0:42 left</em>. More: <a href="load-tests.html#while-it-runs">Load tests</a>.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="getting-started.html"><span>Previous</span>Getting started</a><a class="next" href="sending-requests.html"><span>Next</span>Sending requests</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#finding-your-way">Finding your way</a></li><li><a href="#the-command-palette">The command palette</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li><li><a href="#light-and-dark">Light and dark</a></li><li><a href="#the-welcome-card">The welcome card</a></li><li><a href="#the-tour">The tour</a></li><li><a href="#the-help-panel">The Help panel</a></li><li><a href="#notifications">Notifications</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

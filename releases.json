@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-18T05:07:32.355Z",
+  "generatedAt": "2026-10-18T15:55:01.577Z",
   "releases": [
+    {
+      "version": "0.6.0",
+      "date": "2026-10-18T15:55:00Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>Everything from the command line — no desktop app needed.</strong> <code>npx apitestcenter ui</code> opens the full app in your browser on any folder, so you can build tests on a build server or a locked-down laptop. <code>npx apitestcenter init</code> starts a test folder in your repository with a starter request and a ready GitHub Actions pipeline. Guide: apitestcenter.com/docs/cli-and-ci.html</li><li><strong>Pick the server, type the path.</strong> A <strong>Base URL</strong> picker sits between the method and the URL. It lists the web addresses in your environment and the web servers running on your computer right now, each with its program and http or https (<em>localhost:5176 · Orders.Api · http</em>). Background services are left out, and nothing leaves your computer.</li><li><strong>Save an address as a base URL.</strong> Sent a request to a full address? One click keeps the server in an environment as <code>{{baseUrl}}</code>, and can switch your other saved requests that use it too.</li><li><strong>A clearer Compare.</strong> Results open full width, with a Comparison tab and a tab for each API's full report. When runs had different load or length, Compare says so, names the odd one out, and doesn't call a winner. Charts mark where a shorter run ended, and the error-rate chart no longer runs past 100%.</li><li><strong>Dropdowns that match the app</strong>, with keyboard support, instead of the operating system's lists.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.6.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.6.0.exe",
+          "size": 121389822,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.6.0/APITestCenter-Setup-0.6.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.6.0.exe",
+          "size": 121152648,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.6.0/APITestCenter-Portable-0.6.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.6.0-mac-arm64.dmg",
+          "size": 142601669,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.6.0/APITestCenter-0.6.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.6.0-mac-x64.dmg",
+          "size": 149428092,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.6.0/APITestCenter-0.6.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.6.0-linux-x86_64.AppImage",
+          "size": 150768776,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.6.0/APITestCenter-0.6.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.6.0-linux-amd64.deb",
+          "size": 121322796,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.6.0/APITestCenter-0.6.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.5.0",
       "date": "2026-10-18T05:07:31Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>Before / after: did your release make it slower?</strong> Every report of a request you've run before now compares with your reference run (or the previous one) in one plain sentence — <em>&quot;After is 18% slower&quot;</em>, or <em>&quot;About the same&quot;</em> — with every measure marked better, worse, or about the same, and both runs on the same charts. Small run-to-run differences don't count, and a comparison with different load is called unfair instead of judged.</li><li><strong>Compare any runs, side by side.</strong> <em>Add to compare</em> on any report collects runs in a tray at the bottom of the page — different APIs, different days. <em>Compare</em> opens them together, with a tab for each run's full report.</li><li><strong>Download for CI.</strong> On <em>Run collection</em>, one click gives you a zip for your repository: the collection (never secrets), and a ready GitHub Actions pipeline. A new guide walks you through it: apitestcenter.com/docs/ci-walkthrough.html</li><li><strong>Fail the build when an API gets slower.</strong> The command line (<code>npx apitestcenter</code>) gains <code>--baseline</code>, <code>--max-slower</code>, and <code>--save-baseline</code>, with the comparison as its own JUnit test case.</li><li><strong>Better reports.</strong> The HTML export has a Before / after section, lays out cards without gaps, and keeps chart labels readable; the response-time distribution fits its card; words no longer break in the middle.</li><li><strong>About</strong> now links to the user guide.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.5.0",
       "files": [
