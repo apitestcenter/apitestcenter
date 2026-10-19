@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-18T15:55:01.577Z",
+  "generatedAt": "2026-10-19T02:41:29.539Z",
   "releases": [
+    {
+      "version": "0.7.0",
+      "date": "2026-10-19T02:41:28Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>Folders that sign in once.</strong> Collections now nest (<code>Orders/Admin</code>), and a folder can hold auth, headers and variables that every request inside uses. New requests take their folder's sign-in by default. Postman imports keep their folders and folder auth.</li><li><strong>Every common way to sign in — and it works under load too.</strong> OAuth 2.0 (client credentials, password, authorization code with PKCE, tokens renewed by themselves), Digest, NTLM (Windows sign-in), AWS Signature (API Gateway, S3, Lambda URLs), JWTs the app signs with your secret or private key, and client certificates (mutual TLS) per host. Load tests keep tokens fresh and sign every request — long tests don't start failing with 401.</li><li><strong>Honest numbers with Digest and NTLM.</strong> The sign-in exchange is no longer counted as requests or errors in load reports.</li><li><strong>Auth type is a list with a hint for each</strong>, and secrets — client secrets, private keys, passphrases — are kept encrypted on your computer, never in files or exports.</li><li><strong>Command line:</strong> <code>--cert</code> for client certificates in CI; OAuth tokens signed in from the app are reused.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.7.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.7.0.exe",
+          "size": 121742984,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.7.0/APITestCenter-Setup-0.7.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.7.0.exe",
+          "size": 121505808,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.7.0/APITestCenter-Portable-0.7.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.7.0-mac-arm64.dmg",
+          "size": 143045840,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.7.0/APITestCenter-0.7.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.7.0-mac-x64.dmg",
+          "size": 149884179,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.7.0/APITestCenter-0.7.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.7.0-linux-x86_64.AppImage",
+          "size": 151232191,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.7.0/APITestCenter-0.7.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.7.0-linux-amd64.deb",
+          "size": 121816536,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.7.0/APITestCenter-0.7.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.6.0",
       "date": "2026-10-18T15:55:00Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>Everything from the command line — no desktop app needed.</strong> <code>npx apitestcenter ui</code> opens the full app in your browser on any folder, so you can build tests on a build server or a locked-down laptop. <code>npx apitestcenter init</code> starts a test folder in your repository with a starter request and a ready GitHub Actions pipeline. Guide: apitestcenter.com/docs/cli-and-ci.html</li><li><strong>Pick the server, type the path.</strong> A <strong>Base URL</strong> picker sits between the method and the URL. It lists the web addresses in your environment and the web servers running on your computer right now, each with its program and http or https (<em>localhost:5176 · Orders.Api · http</em>). Background services are left out, and nothing leaves your computer.</li><li><strong>Save an address as a base URL.</strong> Sent a request to a full address? One click keeps the server in an environment as <code>{{baseUrl}}</code>, and can switch your other saved requests that use it too.</li><li><strong>A clearer Compare.</strong> Results open full width, with a Comparison tab and a tab for each API's full report. When runs had different load or length, Compare says so, names the odd one out, and doesn't call a winner. Charts mark where a shorter run ended, and the error-rate chart no longer runs past 100%.</li><li><strong>Dropdowns that match the app</strong>, with keyboard support, instead of the operating system's lists.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.6.0",
       "files": [
