@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-19T06:54:27.602Z",
+  "generatedAt": "2026-10-19T16:45:03.866Z",
   "releases": [
+    {
+      "version": "0.10.0",
+      "date": "2026-10-19T16:45:02Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>See exactly what was sent.</strong> A new <strong>Request sent</strong> tab shows the request as it went out — after variables, folders, OAuth, signing and cookies — with every header, the body and any redirects. Secrets stay hidden until you choose <em>Show secrets</em>.</li><li><strong>Copy it as code</strong> — curl, PowerShell, JavaScript, Python, C#, Java, Go, or as a ready k6 load-test script.</li><li><strong>Built-in values:</strong> <code>{{$uuid}}</code>, <code>{{$timestamp}}</code>, <code>{{$isoTimestamp}}</code>, <code>{{$randomInt(1,100)}}</code>, <code>{{$randomString}}</code>, <code>{{$randomEmail}}</code>, random names and more — a fresh value for every request, in load tests too. Postman's <code>{{$guid}}</code> and <code>{{$timestamp}}</code> now work as imported.</li><li><strong>JSON schema checks.</strong> Make one from the last response in one click, then every answer must have that shape; a mismatch says where (<em>$.items[0].id should be integer</em>). Plus new checks: more/less than, type, length, patterns, valid JSON, header does not exist.</li><li><strong>Failed checks say why</strong> — <em>got 404</em>, <em>is &quot;pending&quot;</em> — in the app and in CI output.</li><li><strong>Response cookies</strong> in their own tab, and <strong>image answers</strong> shown as pictures.</li><li><strong>Running local servers are found reliably</strong> in the Base URL picker, with a refresh button.</li><li><strong>Skip TLS certificate check is now on for new requests</strong>, so test servers with their own certificates just work. Requests you saved keep their setting; turn it off to check certificates when testing production.</li><li><strong>Fixes:</strong> typing an address with a port (<code>http://localhost:8080/...</code>) no longer loses the port; <code>atc ui</code> shows the app icon.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.10.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.10.0.exe",
+          "size": 122503600,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.10.0/APITestCenter-Setup-0.10.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.10.0.exe",
+          "size": 122265724,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.10.0/APITestCenter-Portable-0.10.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.10.0-mac-arm64.dmg",
+          "size": 144014496,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.10.0/APITestCenter-0.10.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.10.0-mac-x64.dmg",
+          "size": 150821330,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.10.0/APITestCenter-0.10.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.10.0-linux-x86_64.AppImage",
+          "size": 152175446,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.10.0/APITestCenter-0.10.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.10.0-linux-amd64.deb",
+          "size": 122422260,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.10.0/APITestCenter-0.10.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.9.0",
       "date": "2026-10-19T06:54:26Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>GraphQL.</strong> A GraphQL body with a query editor, variables and a schema explorer that loads the API's schema for you. A response with GraphQL <code>errors</code> counts as a failure, in load tests too.</li><li><strong>Import browser recordings and Insomnia.</strong> Bring in a HAR file saved from your browser's developer tools, or an Insomnia export (v4 JSON or v5 YAML) with its folders, environments and auth.</li><li><strong><code>atc</code> comes with the desktop app.</strong> The Windows installer adds the command line to your PATH (open a new terminal); the Linux .deb adds <code>/usr/bin/atc</code>; on macOS link it once (see the docs). Same version as the app, no Node.js needed.</li><li><strong><code>atc ui</code> opens in its own window,</strong> and Ctrl+C in the terminal closes it. A browser tab says when it was stopped. <code>--browser</code> opens a tab instead.</li><li><strong>Fix:</strong> an imported request's own Authorization header is kept again, and <em>Use {{token}} as Bearer</em> shows when it should.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.9.0",
       "files": [
