@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mocks — testing without the real API — Learn API testing — APITestCenter</title>
+  <meta name="description" content="A mock is a pretend API that answers with prepared responses. When to use one, what it can and can't tell you, and how to keep mocks honest.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html" aria-current="page">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Mocks — testing without the real API</h1>
+        <p class="docs-lead">A mock is a pretend API that answers with prepared responses. When to use one, what it can and can't tell you, and how to keep mocks honest.</p>
+        <p>Sometimes the API you need isn't there: it isn't built yet, it's down, it's slow, it charges per call, or it belongs to another company and you can't create test data in it. A <strong>mock</strong> is a stand-in: a small server that answers requests with <strong>prepared answers</strong>, so everything that depends on the API can keep going.</p>
+<h2 id="mocks-stubs-fakes">Mocks, stubs, fakes</h2>
+<p>People use these words loosely. Roughly:</p>
+<ul><li>a <strong>stub</strong> answers fixed responses — <em>&quot;GET /orders/1 always returns this&quot;</em>;</li><li>a <strong>mock</strong> is a stub that's also checked — <em>&quot;was it called, and with what?&quot;</em>;</li><li>a <strong>fake</strong> is a working, simplified version — an in-memory shop that really stores orders.</li></ul>
+<p>In API work, &quot;mock server&quot; usually means the first: a server that answers each request with an <strong>example</strong> response. That's what this lesson is about.</p>
+<h2 id="when-a-mock-helps">When a mock helps</h2>
+<ul><li><strong>Building against an API that doesn't exist yet.</strong> The frontend team and the API team agree on the contract (an <a href="contract-testing.html">OpenAPI file</a>); the frontend builds against a mock made from it, and switches to the real API when it's ready. Neither team waits for the other.</li><li><strong>Testing the hard cases.</strong> A real payment API rarely declines on demand. A mock can answer <code>402 Payment Required</code>, a <code>500</code>, an empty list, or a 10-second delay — whenever you want — so you can test how <em>your</em> app handles them.</li><li><strong>Cutting a dependency out of a test.</strong> A test of <em>your</em> API shouldn't fail because <em>someone else's</em> API had a bad afternoon. Mock the outside service, and your test checks only your code.</li><li><strong>Demos and workshops</strong>, without real systems or data.</li></ul>
+<h2 id="what-a-mock-cant-tell-you">What a mock can't tell you</h2>
+<p>A mock only ever says what you told it to. So:</p>
+<ul><li>it can't tell you the real API <strong>works</strong> — only that your side handles the answers you prepared;</li><li>it can't tell you about <strong>performance</strong> — a mock answers in a millisecond; the real thing may not. Never load-test a mock and conclude anything about the real API;</li><li>it can <strong>drift</strong> — the real API changes, the mock doesn't, and your tests stay green while production breaks.</li></ul>
+<h2 id="keeping-a-mock-honest">Keeping a mock honest</h2>
+<ul><li><strong>Make it from the contract, or from real answers.</strong> An example generated from the OpenAPI file, or saved from a real response, is far more likely to be right than one typed from memory.</li><li><strong>Check the real API against the same contract.</strong> Run <a href="contract-testing.html">schema checks</a> against the real API too. If both pass the same schema, the mock and the real thing agree on the shape.</li><li><strong>Use realistic examples</strong> — real-looking ids, long names, empty and full lists — not <code>&quot;string&quot;</code> and <code>0</code>.</li><li><strong>Prefer the real API when you can.</strong> A mock is a tool for when the real one isn't available, not a replacement for testing it.</li></ul>
+<h2 id="dynamic-answers">Dynamic answers</h2>
+<p>Good mock servers can fill values into answers: the id from the path (<code>/orders/A-77</code> answers with <code>&quot;id&quot;: &quot;A-77&quot;</code>), a fresh unique id for each create, the current time. That makes a frontend built against the mock behave more like it will against the real thing.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — mock the practice shop.</p>
+<ol><li>Send <code>GET {{practiceApi}}/products/3</code>, then press <strong>Save as example</strong> on the response. Save the request in a folder called <em>Shop</em>.</li><li>Open the folder's <strong>⋯</strong> menu → <strong>Mock server for this folder</strong>, and <strong>Start</strong> it (port 4010).</li><li>In your browser, open <code>http://127.0.0.1:4010/products/3</code> — the mock answers with the saved example. Try <code>/products/4</code>: <code>404</code>, because the mock only knows the paths you saved. (Save a request as <code>{{practiceApi}}/products/{{id}}</code> instead, and the mock answers for <strong>any</strong> id — and can put that id into its answer.)</li><li>On the request's <strong>Example</strong> tab, change the status to <code>500</code> and save. Ask the mock again: now it fails — how would <em>your</em> app cope?</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>A <strong>mock</strong> is a pretend API answering with prepared examples — for building early, testing hard cases, and cutting out dependencies.</li><li>It can't tell you the real API works or how <strong>fast</strong> it is — and it can <strong>drift</strong> from the real thing.</li><li>Make mocks from the <strong>contract or real answers</strong>, and check the real API against the <strong>same contract</strong>.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/mock-server.html">Mock server</a></p>
+<p><strong>Next:</strong> <a href="api-tests-in-ci.html">API tests in a pipeline</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="contract-testing.html"><span>Previous</span>Contracts and schemas</a><a class="next" href="api-tests-in-ci.html"><span>Next</span>API tests in a pipeline</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#mocks-stubs-fakes">Mocks, stubs, fakes</a></li><li><a href="#when-a-mock-helps">When a mock helps</a></li><li><a href="#what-a-mock-cant-tell-you">What a mock can't tell you</a></li><li><a href="#keeping-a-mock-honest">Keeping a mock honest</a></li><li><a href="#dynamic-answers">Dynamic answers</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

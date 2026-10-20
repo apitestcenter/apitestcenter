@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why test performance — Learn API testing — APITestCenter</title>
+  <meta name="description" content="An API that's right but slow — or right until a busy day — still fails people. What performance and load testing are, the kinds of load test (smoke, load, stress, spike, soak), and what each one answers.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html" aria-current="page">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Performance and load testing</p>
+        <h1>Why test performance</h1>
+        <p class="docs-lead">An API that's right but slow — or right until a busy day — still fails people. What performance and load testing are, the kinds of load test (smoke, load, stress, spike, soak), and what each one answers.</p>
+        <p>The <a href="what-is-api-testing.html">Testing APIs</a> lessons ask <em>is the answer right?</em> Performance testing asks the next question: <strong>is it right fast enough — and does it stay that way when many people use it at once?</strong></p>
+<p>An API can pass every functional test and still fail on the first busy morning:</p>
+<ul><li>the sale starts, 3,000 people arrive in a minute, and checkout takes 40 seconds — then answers <code>503</code>;</li><li>everything is fine at 9 am, slow by noon, and down by 4 pm, because something fills up a little with every request;</li><li>the API is quick, but the database behind it handles one query at a time, so the 51st user waits for the other 50.</li></ul>
+<p>None of that shows up when one tester sends one request. It only shows up under <strong>load</strong>: many requests, at the same time, for a while.</p>
+<h2 id="load-testing-in-one-paragraph">Load testing in one paragraph</h2>
+<p>A <strong>load test</strong> pretends to be many users. A tool sends the same requests real users would, from many <strong>simulated users</strong> at once (or at a set number of <strong>requests per second</strong>), for minutes or hours, and measures every answer: how long it took, and whether it worked. The result says how the API behaves at that load — and, if you push hard enough, where it starts to fail.</p>
+<h2 id="the-kinds-of-load-test">The kinds of load test</h2>
+<p>The same idea, with different shapes — each answers a different question:</p>
+<div class="table-wrap"><table><thead><tr><th>Kind</th><th>Shape</th><th>Answers</th><th>Typical</th></tr></thead><tbody><tr><td><strong>Smoke</strong></td><td>A handful of users, briefly</td><td><em>Does the test itself work?</em> (Right URL, valid token, checks pass)</td><td>2 users, 30 s</td></tr><tr><td><strong>Load</strong> (average load)</td><td>The load you expect on a normal day</td><td><em>Is it fast enough on a normal day?</em></td><td>Your usual users, 5–15 min</td></tr><tr><td><strong>Stress</strong></td><td>Ramp up beyond normal</td><td><em>How far can it go, and how does it fail?</em></td><td>2–5× normal, rising</td></tr><tr><td><strong>Spike</strong></td><td>A sudden jump, then back down</td><td><em>Does it survive a burst — and recover after?</em></td><td>5 → 50 → 5 users</td></tr><tr><td><strong>Soak</strong> (endurance)</td><td>Normal load for a long time</td><td><em>Does it stay fast over hours?</em> — memory leaks, filling disks, growing queues</td><td>Normal load, 1–8 h</td></tr><tr><td><strong>Capacity</strong> / <strong>breakpoint</strong></td><td>Keep raising until it breaks</td><td><em>What's the most it can take?</em></td><td>Rising requests per second</td></tr></tbody></table></div>
+<h3 id="always-smoke-first">Always smoke first</h3>
+<p>Before any big test, run a <strong>smoke</strong> test: a tiny load for half a minute. It catches the boring mistakes — wrong address, expired token, a check that never passes — in 30 seconds instead of after half an hour of useless load.</p>
+<h3 id="what-normal-load-means">What &quot;normal load&quot; means</h3>
+<p>To run a load test you need a number: how many users, or requests per second, is normal? Find it from production <strong>logs or monitoring</strong> (requests per minute at the busiest hour), from the business (<em>&quot;we expect 2,000 orders an hour during the sale&quot;</em>), or from an estimate you write down and revisit. A test at a made-up load measures something — just not necessarily something that matters.</p>
+<h2 id="what-you-get-out-of-it">What you get out of it</h2>
+<p>A load test answers questions people actually ask:</p>
+<ul><li><strong>&quot;Will it cope with the sale?&quot;</strong> — a load test at the expected peak.</li><li><strong>&quot;How many servers do we need?&quot;</strong> — capacity tests, before and after adding one.</li><li><strong>&quot;Did this release make it slower?&quot;</strong> — the same test before and after, compared (<a href="performance-goals.html">goals and regressions</a>).</li><li><strong>&quot;Why does it fall over at lunchtime?&quot;</strong> — a soak test that shows what grows over time.</li><li><strong>&quot;What fails first?&quot;</strong> — a stress test, watched alongside the server's own monitoring (<a href="finding-bottlenecks.html">finding the bottleneck</a>).</li></ul>
+<h2 id="a-word-before-you-start">A word before you start</h2>
+<p>A load test is <strong>real traffic</strong>. Against a system you don't own, it can look like an attack, get your network blocked, or take the system down for real users. Read <a href="testing-safely.html">testing safely and realistically</a> before you point a load test at anything shared.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — your first load test, safely.</p>
+<ol><li>Send <code>GET {{practiceApi}}/products</code> once, with a check: <em>Status</em> is <code>2xx</code>.</li><li>Open the <strong>Load</strong> tab and pick <strong>Smoke</strong> (2 users, 30 seconds). Press <strong>Run load test</strong>.</li><li>Watch the <strong>Load report</strong> fill in live: requests per second, response times, failures.</li><li>Then try <strong>Spike</strong> on <code>{{practiceApi}}/slow?ms=200</code>, which answers after 200 ms: watch the response times jump when the users do — and settle when they drop.</li></ol>
+<p>The practice API runs on your own computer, so the numbers describe your computer — perfect for learning, not for real conclusions.</p></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>Functional tests ask <em>is it right?</em>; <strong>performance tests</strong> ask <em>is it right fast enough, under real load, for long enough?</em></li><li><strong>Smoke</strong> (does the test work) → <strong>load</strong> (a normal day) → <strong>stress</strong> (beyond normal) → <strong>spike</strong> (a burst) → <strong>soak</strong> (hours) → <strong>capacity</strong> (the breaking point).</li><li>Base &quot;normal load&quot; on <strong>real numbers</strong>, smoke-test first, and only load-test what you're allowed to.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/load-tests.html">Load tests</a> · <a href="../docs/load-tests.html#presets">Presets</a></p>
+<p><strong>Next:</strong> <a href="users-and-requests-per-second.html">Users and requests per second</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="api-tests-in-ci.html"><span>Previous</span>API tests in a pipeline</a><a class="next" href="users-and-requests-per-second.html"><span>Next</span>Users and requests per second</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#load-testing-in-one-paragraph">Load testing in one paragraph</a></li><li><a href="#the-kinds-of-load-test">The kinds of load test</a></li><li><a href="#what-you-get-out-of-it">What you get out of it</a></li><li><a href="#a-word-before-you-start">A word before you start</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

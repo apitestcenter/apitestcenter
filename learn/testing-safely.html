@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Testing safely and realistically — Learn API testing — APITestCenter</title>
+  <meta name="description" content="A load test is real traffic and can do real harm — or produce numbers that mean nothing. Permission, where to test, data, rate limits, and how to make a test look like real use.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html" aria-current="page">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Performance and load testing</p>
+        <h1>Testing safely and realistically</h1>
+        <p class="docs-lead">A load test is real traffic and can do real harm — or produce numbers that mean nothing. Permission, where to test, data, rate limits, and how to make a test look like real use.</p>
+        <p>A load test sends real requests to a real system. Done carelessly, it can take a system down for real users, get your network blocked, fill a database with junk — or cost a day and produce numbers that describe nothing real. A few habits prevent all of that.</p>
+<h2 id="permission-first">Permission first</h2>
+<ul><li><strong>Only load-test systems you own, or have written permission to test.</strong> To the system, a load test and an attack look the same. Testing someone else's API without permission can break its terms of use — and, in many countries, the law.</li><li><strong>Tell the people who run it.</strong> Operations, the database team, whoever is on call: when you'll test, from where, how hard. Otherwise they may spend an hour chasing your &quot;incident&quot; — or block you halfway through.</li><li><strong>Third-party APIs inside your system</strong> (payments, SMS, maps) usually have their own rules and costs. Mock them or use their test mode — never load-test a payment provider's live API.</li></ul>
+<h2 id="where-to-test">Where to test</h2>
+<div class="table-wrap"><table><thead><tr><th>Environment</th><th>Good for</th><th>Careful with</th></tr></thead><tbody><tr><td><strong>Your computer</strong></td><td>Learning, checking the test works</td><td>Numbers describe your laptop</td></tr><tr><td><strong>Test / staging</strong></td><td>Most load tests</td><td>Often smaller than production; shared with others</td></tr><tr><td><strong>A dedicated performance environment</strong></td><td>Serious capacity tests</td><td>Costs money; must resemble production</td></tr><tr><td><strong>Production</strong></td><td>The only fully real numbers</td><td>Real users are affected; only with care, at quiet times, with a stop plan</td></tr></tbody></table></div>
+<p>Testing production <em>can</em> be right — some problems only exist there — but plan it: start small, ramp slowly, watch monitoring, know how to stop, and have someone from operations with you.</p>
+<h2 id="firewalls-cdns-and-rate-limits">Firewalls, CDNs and rate limits</h2>
+<p>Public APIs and sites usually sit behind protection — a <strong>CDN</strong> (Cloudflare, Akamai), a <strong>WAF</strong> (web application firewall) or an <strong>API gateway</strong> — that limits how many requests one address may send. Exceed it and you'll get <strong>429 Too Many Requests</strong> or <strong>403 Forbidden</strong>, sometimes for every request, sometimes after a burst — and your address may stay blocked for a while.</p>
+<p>When that happens, the numbers describe the <strong>guard, not the API</strong>: 429s come back instantly, so response times look superb. A good report calls this out. To test the API itself, test from <strong>inside</strong> the protection (a staging address, an allowed list for your test machines) — ask the team that runs it.</p>
+<h2 id="data-and-side-effects">Data and side effects</h2>
+<ul><li><strong>GET is safe; POST isn't.</strong> A thousand POSTs create a thousand orders, send a thousand emails, charge a thousand cards. Know what each request <strong>does</strong>.</li><li>Use <strong>test accounts</strong> and <strong>test data</strong> made for the purpose — never real customers.</li><li><strong>Clean up</strong> what the test creates, or test in an environment you can reset.</li><li>Watch for <strong>side effects</strong> downstream: notifications, webhooks, reports, analytics — they all see your test traffic.</li></ul>
+<h2 id="making-it-realistic">Making it realistic</h2>
+<p>A test that doesn't look like real use measures something else:</p>
+<ul><li><strong>Mix the requests like real users do.</strong> Real traffic is mostly reads with some writes — say 80% browsing, 15% searching, 5% ordering. Hammering only the login endpoint tests the login endpoint.</li><li><strong>Vary the data.</strong> The same product a thousand times is served from a cache. Use <a href="chaining-and-test-data.html">test data</a> and <a href="environments-and-variables.html">built-in values</a> so requests differ.</li><li><strong>Pause like people.</strong> Realistic <a href="users-and-requests-per-second.html">think time</a> — or, for capacity tests, a realistic <strong>rate</strong>.</li><li><strong>Ramp up</strong>, don't switch on at full force (unless a spike <em>is</em> the question).</li><li><strong>Test long enough</strong> to get past warm-up: minutes, not seconds — and hours for soak tests.</li><li><strong>Test from where users are</strong>, when the network matters — or close to the API when you want to measure the API alone.</li></ul>
+<h2 id="have-a-stop-button">Have a stop button</h2>
+<p>Before any test of a shared system, know: <strong>how to stop it</strong> (and that stop works), <strong>what makes you stop</strong> (error rate above X, response times above Y — or a phone call), and <strong>who to call</strong> if something breaks. Tools that can <strong>abort automatically</strong> when a goal is clearly missed are a good safety net.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — the safe habits, in the app.</p>
+<ol><li>Point a request at any address that isn't on your own computer, choose <strong>Stress</strong>, and press <strong>Run load test</strong>: the app asks you to confirm, and reminds you to only test systems you're allowed to.</li><li>On <strong>Goals</strong>, tick <strong>Stop the test early if a target is clearly missed</strong> — a built-in stop button.</li><li>Run <strong>Smoke</strong> first, always. Then go bigger.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>Permission first</strong>, and tell the people who run the system — a load test looks like an attack.</li><li>429s and 403s mean a <strong>guard</strong> is answering, not your API; test from <strong>inside</strong> the protection.</li><li>Know what each request <strong>does</strong> (POST creates), use <strong>test data</strong>, and make the load <strong>realistic</strong>: a mix of requests, varied data, pauses, ramp-up — and always a <strong>stop plan</strong>.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/load-tests.html#good-habits">Good habits</a> · <a href="../docs/troubleshooting.html#blocked-429-or-403">Blocked: 429 or 403</a> · <a href="../docs/load-tests.html#before-it-starts">Before it starts</a></p>
+<p><strong>Next:</strong> <a href="glossary.html">Glossary, A to Z</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="performance-goals.html"><span>Previous</span>Goals and regressions</a><a class="next" href="glossary.html"><span>Next</span>Glossary, A to Z</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#permission-first">Permission first</a></li><li><a href="#where-to-test">Where to test</a></li><li><a href="#firewalls-cdns-and-rate-limits">Firewalls, CDNs and rate limits</a></li><li><a href="#data-and-side-effects">Data and side effects</a></li><li><a href="#making-it-realistic">Making it realistic</a></li><li><a href="#have-a-stop-button">Have a stop button</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

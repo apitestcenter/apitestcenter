@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Goals and regressions — Learn API testing — APITestCenter</title>
+  <meta name="description" content="&quot;Fast enough&quot; needs a number. How to set performance goals (SLOs) people can agree on, turn them into pass/fail targets, and catch an API getting slower from one release to the next.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html" aria-current="page">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Performance and load testing</p>
+        <h1>Goals and regressions</h1>
+        <p class="docs-lead">&quot;Fast enough&quot; needs a number. How to set performance goals (SLOs) people can agree on, turn them into pass/fail targets, and catch an API getting slower from one release to the next.</p>
+        <p>A load test without a goal ends with a shrug: <em>&quot;p95 was 340 ms… is that good?&quot;</em> A goal turns the result into an answer.</p>
+<h2 id="slis-slos-and-slas">SLIs, SLOs and SLAs</h2>
+<p>Three related words you'll hear:</p>
+<ul><li>An <strong>SLI</strong> (<em>service level indicator</em>) is <strong>what you measure</strong>: p95 response time, error rate, availability.</li><li>An <strong>SLO</strong> (<em>service level objective</em>) is <strong>the target</strong> for it: <em>&quot;p95 under 300 ms; fewer than 0.1% errors&quot;</em>. It's the team's own promise.</li><li>An <strong>SLA</strong> (<em>service level agreement</em>) is a <strong>contract</strong> with a customer, usually looser than the SLO, with consequences (refunds) if it's broken.</li></ul>
+<p>For load testing, what you need is SLOs — goals specific enough to pass or fail.</p>
+<h2 id="writing-a-good-goal">Writing a good goal</h2>
+<p>A useful performance goal says <strong>what</strong>, <strong>how fast</strong>, <strong>for how many</strong>, and <strong>under what load</strong>:</p>
+<aside class="callout callout-note"><p><em>GET /orders: 95% of requests within 300 ms and 99% within 800 ms, with fewer than 0.5% errors, at 200 requests per second.</em></p></aside>
+<ul><li><strong>Use percentiles</strong>, not averages (<a href="reading-results.html">reading results</a>) — p95 for &quot;almost everyone&quot;, p99 for the tail.</li><li><strong>Include errors.</strong> A fast API that fails 3% of the time hasn't met any reasonable goal.</li><li><strong>Tie it to a load.</strong> &quot;Under 300 ms&quot; at 5 users and at 500 users are different promises.</li><li><strong>Different endpoints, different goals.</strong> A search can take longer than a product page; a report export longer than both. One number for everything fits nothing.</li><li><strong>Start from the person.</strong> How long will the user wait on that screen? How many API calls are behind it? Work backwards to each call's share.</li><li><strong>Start from reality, then improve.</strong> If today's p95 is 900 ms, a 100 ms goal will just fail forever. Write down today's numbers, agree on a target, move towards it.</li></ul>
+<h2 id="from-goals-to-passfail">From goals to pass/fail</h2>
+<p>Load-test tools turn goals into <strong>thresholds</strong>: limits checked during and after the run. Breaking one fails the test — and in a pipeline, fails the build (<a href="api-tests-in-ci.html">API tests in a pipeline</a>). Some tools can <strong>stop early</strong> when a goal is clearly missed, which saves time and stops hammering a system that's already struggling.</p>
+<p>Remember the checks too: a goal like <em>&quot;at least 99.9% of answers pass their checks&quot;</em> makes sure speed isn't bought with wrong answers.</p>
+<h2 id="regressions-getting-slower-without-anyone-noticing">Regressions: getting slower without anyone noticing</h2>
+<p>A <strong>performance regression</strong> is when a change makes the API slower — a new feature adds a query, a library update is less efficient, a config change shrinks a pool. Each one is small; nobody notices; six months later the API is twice as slow.</p>
+<p>The defence is <strong>comparing against a baseline</strong>:</p>
+<ol><li>Run a load test you trust — same request, same load, same environment — and keep it as the <strong>baseline</strong> (a <strong>reference run</strong>).</li><li>After each change, run the <strong>same</strong> test again and compare: p95, p99, errors, throughput.</li><li>Decide in advance what counts as worse — <em>&quot;more than 10% slower at p95&quot;</em> — so the comparison is a decision, not a debate.</li></ol>
+<p>A few cautions:</p>
+<ul><li><strong>Compare like with like</strong> — same load, same environment, same data, similar time of day. Otherwise you're comparing the conditions, not the code.</li><li><strong>Expect noise.</strong> Two identical runs differ by a few percent. Small differences mean nothing; look for clear changes, or repeat the run.</li><li><strong>Look at the trend</strong>, not just the last pair: a slow creep over ten releases is invisible between any two of them.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong> — a goal, and a regression.</p>
+<ol><li>On the <strong>Goals</strong> tab tick <strong>Use my own performance targets</strong>: p95 under <code>250</code> ms, errors under <code>1</code> %.</li><li>Run <strong>Smoke</strong> on <code>{{practiceApi}}/slow?ms=100</code> — it passes. In the report, choose <strong>Use as reference run</strong>.</li><li>&quot;Release&quot; a slower version: change the URL to <code>?ms=300</code> and run again. It <strong>fails</strong> the p95 goal — and the report's <strong>Before / after</strong> shows exactly how much slower it got than the reference.</li><li>On the command line, the same goal is <code>--p95 250 --errors 1</code> — and <code>--baseline</code> with <code>--max-slower 10</code> fails the build when it's more than 10% slower than a saved run.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>SLI</strong> = what you measure, <strong>SLO</strong> = your target, <strong>SLA</strong> = the contract. Load tests need SLOs.</li><li>A good goal: <strong>percentiles + errors + a load</strong>, per endpoint, starting from today's reality.</li><li>Catch <strong>regressions</strong> by running the <strong>same test</strong> against a <strong>baseline</strong> after every change, with a limit decided in advance.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/load-tests.html#goals-pass-or-fail">Goals (pass or fail)</a> · <a href="../docs/history.html#reference-runs">Reference runs</a> · <a href="../docs/cli-and-ci.html">Command line and CI</a></p>
+<p><strong>Next:</strong> <a href="testing-safely.html">Testing safely and realistically</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="finding-bottlenecks.html"><span>Previous</span>Finding the bottleneck</a><a class="next" href="testing-safely.html"><span>Next</span>Testing safely and realistically</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#slis-slos-and-slas">SLIs, SLOs and SLAs</a></li><li><a href="#writing-a-good-goal">Writing a good goal</a></li><li><a href="#from-goals-to-passfail">From goals to pass/fail</a></li><li><a href="#regressions-getting-slower-without-anyone-noticing">Regressions: getting slower without anyone noticing</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

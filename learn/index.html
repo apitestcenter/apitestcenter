@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn API testing — APITestCenter</title>
+  <meta name="description" content="Free lessons on APIs, API testing and load testing — what each idea is, why it matters, and how to try it yourself in a few minutes.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="page">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./" aria-current="page">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Learn</p>
+        <h1>Learn API testing, from zero</h1>
+        <p class="docs-lead">Free lessons on APIs, API testing and load testing — what each idea is, why it matters, and how to try it yourself in a few minutes.</p>
+        <p>These lessons take you from <em>&quot;what is an API?&quot;</em> to finding out why an API slows down under load. Each one explains an idea in plain words, shows real examples, and ends with something to <strong>try yourself</strong> — on a practice API that runs on your own computer, so you can't break anything and need no server of your own.</p>
+<p>Nobody is expected to know the words already. When a lesson uses a term for the first time, it explains it; the <a href="glossary.html">glossary</a> has them all.</p>
+<h2 id="how-to-follow-along">How to follow along</h2>
+<p>The <em>Try it</em> boxes use <strong>APITestCenter</strong>, a free app for sending API requests and running load tests. <a href="../index.html#download">Download it</a>, or run <code>npx apitestcenter ui</code> if you have Node.js. It has a small <strong>practice API</strong> built in — a pretend shop with products, sign-in and orders. In the app it's written <code>{{practiceApi}}</code>, so <code>{{practiceApi}}/products</code> means &quot;the practice shop's product list&quot;.</p>
+<p>The ideas aren't tied to one tool: what you learn here works with any API and any testing tool.</p>
+<h2 id="the-lessons">The lessons</h2>
+<h3 id="apis-from-zero">APIs from zero</h3>
+<ol><li><a href="what-is-an-api.html">What an API is</a> — programs asking other programs for things</li><li><a href="http-requests.html">Requests: addresses and methods</a> — GET, POST and the rest</li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a> — everything a request carries</li><li><a href="status-codes.html">Status codes</a> — 200, 404, 500 and what to do about each</li><li><a href="json.html">JSON</a> — the language most APIs answer in</li><li><a href="authentication.html">Signing in: authentication</a> — API keys, tokens, OAuth, cookies, certificates</li><li><a href="api-styles.html">Kinds of APIs</a> — REST, GraphQL, WebSockets, events, SOAP, gRPC</li></ol>
+<h3 id="testing-apis">Testing APIs</h3>
+<ol><li><a href="what-is-api-testing.html">What API testing is</a> — and why &quot;it answered&quot; isn't enough</li><li><a href="checks-and-assertions.html">Checks: deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a> — one test, many servers</li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a> — real flows, many inputs</li><li><a href="contract-testing.html">Contracts and schemas</a> — does the API still match its documentation?</li><li><a href="mocking.html">Mocks: testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a> — tests that run on every change</li></ol>
+<h3 id="performance-and-load-testing">Performance and load testing</h3>
+<ol><li><a href="why-performance-testing.html">Why test performance</a> — and the kinds of load tests</li><li><a href="users-and-requests-per-second.html">Users and requests per second</a> — how load is made</li><li><a href="reading-results.html">Reading results: response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a> — why APIs slow down, and how to find out</li><li><a href="performance-goals.html">Goals and regressions</a> — fast enough for whom, and staying that way</li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ol>
+<h3 id="reference">Reference</h3>
+<ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul>
+<h2 id="a-suggested-path">A suggested path</h2>
+<ul><li><strong>New to APIs?</strong> Read 1 to 5 in order — about an hour, with the <em>Try it</em> boxes.</li><li><strong>You use APIs, and want to test them well?</strong> Start at 8, and dip back into 4 and 6 when needed.</li><li><strong>You need to load-test something this week?</strong> Read 15, 16 and 17, then 20 before you start.</li></ul>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><span></span><a class="next" href="what-is-an-api.html"><span>Next</span>What an API is</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#how-to-follow-along">How to follow along</a></li><li><a href="#the-lessons">The lessons</a></li><li><a href="#a-suggested-path">A suggested path</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

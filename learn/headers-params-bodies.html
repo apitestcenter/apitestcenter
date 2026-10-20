@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Headers, query parameters and bodies — Learn API testing — APITestCenter</title>
+  <meta name="description" content="Besides the address and method, a request carries details — headers about the request, query parameters for options, and a body with the data. What goes where.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html" aria-current="page">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">APIs from zero</p>
+        <h1>Headers, query parameters and bodies</h1>
+        <p class="docs-lead">Besides the address and method, a request carries details — headers about the request, query parameters for options, and a body with the data. What goes where.</p>
+        <p>A request is more than its address and method. It carries three kinds of detail: <strong>query parameters</strong>, <strong>headers</strong> and a <strong>body</strong>. Responses carry headers and a body too.</p>
+<h2 id="query-parameters-options-in-the-address">Query parameters: options in the address</h2>
+<p>You met them in the URL: everything after <code>?</code>, as <code>name=value</code> pairs.</p>
+<pre><code>GET /products?category=lamps&amp;sort=price&amp;page=2&amp;limit=20</code></pre>
+<p>They're for <strong>options about what you're asking for</strong>: filters (<code>category=lamps</code>), sorting (<code>sort=price</code>), pages (<code>page=2&amp;limit=20</code>), search (<code>q=desk</code>), or which fields to include (<code>fields=id,name</code>).</p>
+<p>Because they're part of the address, they show up in browser history and server logs — so <strong>never put secrets in query parameters</strong> if you can help it. (Some APIs still want an API key there; it works, but a header is safer.)</p>
+<p>Some characters can't appear in a URL as they are: a space becomes <code>%20</code>, <code>&amp;</code> inside a value becomes <code>%26</code>. This is <strong>URL encoding</strong>. Tools usually do it for you.</p>
+<h2 id="headers-notes-about-the-request">Headers: notes about the request</h2>
+<p>Headers are <code>Name: value</code> lines sent before the body. They describe the request itself, not the thing you're asking for:</p>
+<pre><code class="lang-http">GET /orders HTTP/1.1
+Host: api.shop.example.com
+Accept: application/json
+Authorization: Bearer eyJhbGciOi...
+User-Agent: MyApp/2.1
+Accept-Language: en-IN</code></pre>
+<p>The ones you'll meet most often:</p>
+<div class="table-wrap"><table><thead><tr><th>Header</th><th>Says</th><th>Example</th></tr></thead><tbody><tr><td><code>Accept</code></td><td>What format I'd like the answer in</td><td><code>application/json</code></td></tr><tr><td><code>Content-Type</code></td><td>What format my <strong>body</strong> is in</td><td><code>application/json</code></td></tr><tr><td><code>Authorization</code></td><td>Who I am (see <a href="authentication.html">signing in</a>)</td><td><code>Bearer eyJ…</code></td></tr><tr><td><code>User-Agent</code></td><td>Which program is asking</td><td><code>MyApp/2.1</code></td></tr><tr><td><code>Accept-Language</code></td><td>Which language I'd like</td><td><code>en-IN</code></td></tr><tr><td><code>Cookie</code></td><td>Cookies the server gave me earlier</td><td><code>session=abc123</code></td></tr><tr><td><code>X-Request-Id</code>, <code>X-Correlation-Id</code></td><td>An id to trace this request through logs</td><td><code>3f2b…</code></td></tr></tbody></table></div>
+<p>Header names don't care about upper and lower case: <code>content-type</code> and <code>Content-Type</code> are the same header. Headers starting with <code>X-</code> are custom ones an API invented.</p>
+<p>Responses have headers too: <code>Content-Type</code> (the format of the answer), <code>Set-Cookie</code> (a cookie for you to send back), <code>Cache-Control</code> (how long it may be kept), <code>Location</code> (where a new thing was created, or where to go instead), <code>Retry-After</code> (wait this long before trying again).</p>
+<h2 id="the-body-the-data-itself">The body: the data itself</h2>
+<p>GET requests usually have no body — the address says everything. POST, PUT and PATCH carry the data in the <strong>body</strong>:</p>
+<pre><code class="lang-http">POST /orders
+Content-Type: application/json
+
+{ &quot;productId&quot;: 3, &quot;quantity&quot;: 2, &quot;giftWrap&quot;: true }</code></pre>
+<p>The <code>Content-Type</code> header must match what the body is, or the server can't read it. Common types:</p>
+<div class="table-wrap"><table><thead><tr><th>Content-Type</th><th>Body looks like</th><th>Used for</th></tr></thead><tbody><tr><td><code>application/json</code></td><td><code>{ &quot;productId&quot;: 3, &quot;quantity&quot;: 2 }</code></td><td>Most modern APIs (<a href="json.html">JSON</a>)</td></tr><tr><td><code>application/x-www-form-urlencoded</code></td><td><code>username=ann&amp;password=demo</code></td><td>HTML forms, many sign-in (OAuth) endpoints</td></tr><tr><td><code>multipart/form-data</code></td><td>Several parts, each with its own type</td><td>File uploads</td></tr><tr><td><code>application/xml</code>, <code>text/xml</code></td><td><code>&lt;order&gt;&lt;productId&gt;3&lt;/productId&gt;&lt;/order&gt;</code></td><td>Older APIs, SOAP</td></tr><tr><td><code>text/plain</code></td><td>Any text</td><td>Rarely</td></tr></tbody></table></div>
+<h2 id="where-should-a-value-go">Where should a value go?</h2>
+<p>Designing or testing an API, you'll often ask which part a value belongs in:</p>
+<ul><li><strong>Which thing?</strong> → the <strong>path</strong>: <code>/orders/A-1001</code>.</li><li><strong>Options about what to return?</strong> → <strong>query parameters</strong>: <code>?status=paid&amp;page=2</code>.</li><li><strong>About the request itself</strong> — format, identity, tracing? → <strong>headers</strong>.</li><li><strong>The data to create or change?</strong> → the <strong>body</strong>.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong> — see every part travel.</p>
+<ol><li>Send <code>POST {{practiceApi}}/login</code> with the JSON body <code>{ &quot;username&quot;: &quot;you&quot;, &quot;password&quot;: &quot;demo&quot; }</code>. Open the <strong>Request sent</strong> tab of the response: it shows exactly what went out — the address, every header (including <code>content-type: application/json</code>, which the app added because the body is JSON) and the body.</li><li>Open the response's <strong>Headers</strong> tab: the server's headers, like <code>content-type</code>.</li><li>On the request's <strong>Headers</strong> tab add <code>X-Request-Id</code> with the value <code>{{$uuid}}</code> and send again. In <em>Request sent</em> you'll see a fresh random id — a <a href="../docs/environments.html#built-in-values-uuid-timestamp">built-in value</a>, new for every request.</li><li>Change the body to <code>{ &quot;username&quot;: &quot;you&quot; }</code> (no password) and send: <code>401</code> — the server read the body and said no.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>Query parameters</strong> are options in the address (<code>?page=2</code>) — not for secrets.</li><li><strong>Headers</strong> are notes about the request — format (<code>Accept</code>, <code>Content-Type</code>), identity (<code>Authorization</code>), tracing. Names aren't case-sensitive.</li><li>The <strong>body</strong> carries the data for POST, PUT and PATCH, and <strong><code>Content-Type</code> must say what it is</strong>.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests.html#the-tabs-under-the-request">The tabs under the request</a> · <a href="../docs/sending-requests.html#request-sent-what-actually-went-out">Request sent</a></p>
+<p><strong>Next:</strong> <a href="status-codes.html">Status codes</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="http-requests.html"><span>Previous</span>Requests — addresses and methods</a><a class="next" href="status-codes.html"><span>Next</span>Status codes</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#query-parameters-options-in-the-address">Query parameters: options in the address</a></li><li><a href="#headers-notes-about-the-request">Headers: notes about the request</a></li><li><a href="#the-body-the-data-itself">The body: the data itself</a></li><li><a href="#where-should-a-value-go">Where should a value go?</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

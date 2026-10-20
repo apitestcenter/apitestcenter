@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checks — deciding what a correct answer is — Learn API testing — APITestCenter</title>
+  <meta name="description" content="A check (or assertion) is a rule a correct answer must follow. Which checks to write, how strict to be, and how scripts go further when a rule needs code.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html" aria-current="page">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Checks — deciding what a correct answer is</h1>
+        <p class="docs-lead">A check (or assertion) is a rule a correct answer must follow. Which checks to write, how strict to be, and how scripts go further when a rule needs code.</p>
+        <p>A <strong>check</strong> — in many tools called an <strong>assertion</strong> — is a rule a correct answer must follow: <em>the status is 201</em>, <em><code>total</code> is more than 0</em>, <em>the answer arrives within 500 ms</em>. A test is a request plus its checks. Without checks, a tool can only tell you the request <em>got an answer</em>; with them, it tells you the answer was <em>right</em>.</p>
+<h2 id="the-kinds-of-check">The kinds of check</h2>
+<div class="table-wrap"><table><thead><tr><th>Check on</th><th>Example rule</th><th>Catches</th></tr></thead><tbody><tr><td><strong>Status</strong></td><td>is <code>200</code>; is <code>2xx</code>; is <code>201</code></td><td>Failures, wrong success codes</td></tr><tr><td><strong>A field's value</strong></td><td><code>status</code> equals <code>&quot;paid&quot;</code></td><td>Wrong data</td></tr><tr><td><strong>A field exists / doesn't</strong></td><td><code>data.token</code> exists; <code>errors</code> does not exist</td><td>Missing data, hidden errors</td></tr><tr><td><strong>A number</strong></td><td><code>total</code> is more than <code>0</code>; <code>quantity</code> is less than <code>100</code></td><td>Nonsense values</td></tr><tr><td><strong>A type</strong></td><td><code>price</code> is a <code>number</code>; <code>items</code> is an <code>array</code></td><td><code>&quot;45&quot;</code> instead of <code>45</code></td></tr><tr><td><strong>A length</strong></td><td><code>items</code> has length <code>&gt; 0</code></td><td>Empty lists</td></tr><tr><td><strong>A pattern</strong></td><td><code>id</code> matches <code>^A-\d+$</code></td><td>Badly formed ids, dates, emails</td></tr><tr><td><strong>The body</strong></td><td>contains <code>&quot;inStock&quot;</code>; is valid JSON</td><td>Error pages, HTML instead of JSON</td></tr><tr><td><strong>A header</strong></td><td><code>content-type</code> contains <code>json</code>; <code>x-powered-by</code> does not exist</td><td>Wrong formats, leaking server details</td></tr><tr><td><strong>The time</strong></td><td>within <code>500</code> ms</td><td>Slowness</td></tr><tr><td><strong>The shape</strong></td><td>matches a JSON schema</td><td>Renamed, missing or retyped fields</td></tr></tbody></table></div>
+<h2 id="how-strict-should-a-check-be">How strict should a check be?</h2>
+<p>Too loose, and broken answers pass. Too strict, and correct answers fail — and people learn to ignore red tests.</p>
+<ul><li><strong>Check what must be true, not everything that happens to be.</strong> <code>items</code> has length <code>&gt; 0</code> survives a new product being added; <code>items</code> has length <code>12</code> breaks the day someone adds one.</li><li><strong>Don't check values that change every time</strong> — timestamps, generated ids, prices that update — for equality. Check their <strong>type</strong> or <strong>pattern</strong> instead: <code>createdAt</code> matches <code>^\d{4}-\d\d-\d\d</code>.</li><li><strong>Check the thing the test is about.</strong> A test of <em>&quot;create an order&quot;</em> should check the order was created (<code>201</code>, an <code>id</code>, the right <code>productId</code>) — not the customer's address.</li><li><strong>Always check the status, and at least one thing in the body.</strong> That pair catches most &quot;fast but wrong&quot; answers, like a <code>200</code> with an error inside.</li><li><strong>Time checks need headroom.</strong> If an answer usually takes 80 ms, a 100 ms limit fails on a busy afternoon. Pick a number that means <em>too slow for a person</em>, like 500 ms or 1 s.</li></ul>
+<h2 id="many-checks-one-answer">Many checks, one answer</h2>
+<p>A request can have many checks, and each one is reported separately. That matters: <em>&quot;3 of 4 checks passed — <code>$.items[0].price should be number</code>&quot;</em> tells you exactly what broke, where <em>&quot;test failed&quot;</em> doesn't.</p>
+<h2 id="when-a-rule-needs-code-test-scripts">When a rule needs code: test scripts</h2>
+<p>Some rules don't fit a single check: <em>the total is the sum of the line items</em>; <em>every item in the list is in stock</em>; <em>the dates are in order</em>. For those, tools let you write a short <strong>test script</strong>. In APITestCenter (and Postman) it looks like this:</p>
+<pre><code class="lang-js">pm.test(&quot;total is the sum of the items&quot;, () =&gt; {
+  const order = pm.response.json();
+  const sum = order.items.reduce((s, i) =&gt; s + i.price * i.quantity, 0);
+  pm.expect(order.total).to.equal(sum);
+});</code></pre>
+<p><code>pm.test(name, fn)</code> is one named check; inside it, <code>pm.expect(value).to…</code> states the rule. Reach for scripts when a check can't say it — simple checks are easier to read later.</p>
+<h2 id="checks-under-load">Checks under load</h2>
+<p>The same checks can run on <strong>every</strong> request of a load test. That turns <em>&quot;the API handled 500 requests a second&quot;</em> into <em>&quot;the API handled 500 requests a second <strong>and 99.8% of the answers were correct</strong>&quot;</em> — because under pressure, APIs don't only slow down; some start answering wrongly: empty lists, timeouts disguised as errors, someone else's data from a broken cache.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — catch a broken answer.</p>
+<ol><li>Send <code>GET {{practiceApi}}/products</code>. On <strong>Checks</strong> add: <em>Status</em> is <code>2xx</code>; <em>JSON field</em> <code>items</code> <em>has length</em> <code>&gt;0</code>; <em>JSON field</em> <code>items[0].price</code> <em>is of type</em> <code>number</code>; <em>Response time</em> within <code>500</code> ms. Send — all pass.</li><li>Now break one on purpose: change the type check to <code>string</code>. Send — it fails, and says why: <em>is a number</em>.</li><li>Open <strong>Scripts → Tests</strong> and press <strong>Add → A list is not empty</strong>. Send: the script's test appears next to the checks.</li><li>Run a quick load test (<strong>Run load test</strong> with the Smoke preset): the report shows the pass rate of every check across all the requests.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>A <strong>check</strong> is a rule a correct answer must follow — status, values, types, lengths, patterns, headers, time, shape.</li><li>Be <strong>strict about what must be true</strong>, loose about what may change; check <strong>type or pattern</strong> for values that vary.</li><li>Use <strong>test scripts</strong> for rules a single check can't express — and run your checks <strong>under load</strong> too.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/checks.html">Checks</a> · <a href="../docs/scripts.html">Scripts</a></p>
+<p><strong>Next:</strong> <a href="environments-and-variables.html">Environments and variables</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="what-is-api-testing.html"><span>Previous</span>What API testing is</a><a class="next" href="environments-and-variables.html"><span>Next</span>Environments and variables</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-kinds-of-check">The kinds of check</a></li><li><a href="#how-strict-should-a-check-be">How strict should a check be?</a></li><li><a href="#many-checks-one-answer">Many checks, one answer</a></li><li><a href="#when-a-rule-needs-code-test-scripts">When a rule needs code: test scripts</a></li><li><a href="#checks-under-load">Checks under load</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

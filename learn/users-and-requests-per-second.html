@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Users and requests per second — Learn API testing — APITestCenter</title>
+  <meta name="description" content="There are two ways to make load — a number of simulated users, or a fixed number of requests per second — and they answer different questions. Plus think time, ramp-up, and why a few users can mean thousands of requests.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html" aria-current="page">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Performance and load testing</p>
+        <h1>Users and requests per second</h1>
+        <p class="docs-lead">There are two ways to make load — a number of simulated users, or a fixed number of requests per second — and they answer different questions. Plus think time, ramp-up, and why a few users can mean thousands of requests.</p>
+        <p>&quot;Run it with 100 users&quot; sounds clear, but it hides a choice that changes the result completely. A load tool can make load in two ways.</p>
+<h2 id="way-1-simulated-users-a-closed-model">Way 1: simulated users (a closed model)</h2>
+<p>Each <strong>simulated user</strong> (also called a <strong>virtual user</strong>, <strong>VU</strong>) does what a person would: send a request, <strong>wait for the answer</strong>, maybe pause, send the next one — over and over.</p>
+<pre><code>user 1:  [request ──── answer] pause [request ──── answer] pause …
+user 2:     [request ──── answer] pause [request ──── answer] …</code></pre>
+<p>The number of users stays fixed. <strong>The number of requests depends on how fast the API answers</strong>: if an answer takes 100 ms, one user with no pause sends about 10 requests a second; if the API slows to 1 s per answer, the same user sends 1.</p>
+<p>That is both the strength and the trap:</p>
+<ul><li><strong>Strength:</strong> it behaves like a fixed group of people — <em>&quot;what do 50 people at once experience?&quot;</em></li><li><strong>Trap:</strong> when the API slows down, the test <strong>automatically sends less</strong>. A struggling API gets a gentler test, exactly when you wanted to know how it copes. The report can look calmer than reality.</li></ul>
+<h3 id="think-time">Think time</h3>
+<p>Real people pause between requests — they read the page, type, decide. A pause between a simulated user's requests is <strong>think time</strong>. With no think time, a user fires its next request the instant the last answer arrives — far harder than any person:</p>
+<div class="table-wrap"><table><thead><tr><th>Users</th><th>Answer takes</th><th>Think time</th><th>Requests per second</th></tr></thead><tbody><tr><td>50</td><td>50 ms</td><td>none</td><td>about <strong>1,000</strong></td></tr><tr><td>50</td><td>50 ms</td><td>1 s</td><td>about <strong>48</strong></td></tr><tr><td>50</td><td>50 ms</td><td>5 s</td><td>about <strong>10</strong></td></tr></tbody></table></div>
+<p>The same &quot;50 users&quot; is 1,000 requests per second or 10 — depending only on think time. That's why <strong>&quot;50 users&quot; on its own isn't a meaningful number</strong>; say the think time too. Adding a little <strong>random</strong> extra think time stops all users acting in lockstep.</p>
+<p>The rule of thumb: requests per second ≈ users ÷ (response time + think time), with times in seconds.</p>
+<h2 id="way-2-requests-per-second-an-open-model">Way 2: requests per second (an open model)</h2>
+<p>Here you set the <strong>arrival rate</strong> — <em>&quot;200 requests every second&quot;</em> — and the tool keeps that rate <strong>whatever the API does</strong>, starting more users if answers slow down (up to a limit you set).</p>
+<pre><code>every second: 200 requests start — whether or not earlier ones have finished</code></pre>
+<p>This is how the real internet behaves: new customers don't wait for earlier customers' pages to finish loading before they arrive. If the API slows, requests <strong>pile up</strong> — just like in real life — and the test shows it.</p>
+<ul><li><strong>Use it to find capacity:</strong> <em>&quot;can it handle 300 a second?&quot;</em> — the honest answer, because the load doesn't back off.</li><li>If the API is so slow that the tool runs out of users to start requests with, those requests are <strong>not sent</strong> — and a good report counts them. <em>&quot;Requests not sent&quot;</em> is a sign that the API (or the computer running the test) couldn't keep up.</li></ul>
+<h2 id="which-to-use">Which to use</h2>
+<div class="table-wrap"><table><thead><tr><th>Question</th><th>Use</th></tr></thead><tbody><tr><td>&quot;What do 50 people at once experience?&quot;</td><td>Users, with realistic think time</td></tr><tr><td>&quot;Can it handle the sale's 300 orders a second?&quot;</td><td>Requests per second</td></tr><tr><td>&quot;Where does it break?&quot;</td><td>Requests per second, rising step by step</td></tr><tr><td>&quot;Does a slow dependency make it fall over?&quot;</td><td>Requests per second — users would back off</td></tr></tbody></table></div>
+<p>When in doubt about capacity, use <strong>requests per second</strong>.</p>
+<h2 id="ramp-up-dont-start-at-full-speed">Ramp-up: don't start at full speed</h2>
+<p>Starting 500 users in the same instant is a spike test whether you meant it or not — and it hits cold caches and pools that haven't warmed up yet. A <strong>ramp-up</strong> adds users (or raises the rate) gradually: <em>up to 200 users over 2 minutes, hold for 10, down over 1</em>. You also learn more: watching the response time <em>as</em> load rises shows where it starts to bend.</p>
+<h2 id="where-the-load-comes-from">Where the load comes from</h2>
+<p>The tool's computer does real work: every request is a connection, encryption, a body to read. A laptop can produce a few thousand simple requests per second; beyond that, <strong>the laptop becomes the bottleneck</strong> — and the numbers describe it, not the API. Signs: the tool's computer at 100% CPU, <em>requests not sent</em>, response times that rise for <em>every</em> request at once. For big tests, run the load from a powerful machine close to the API, or from several machines.</p>
+<p>Your network matters too: from home over a VPN, every response time includes the trip there and back.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — the same users, very different load.</p>
+<ol><li>Request <code>GET {{practiceApi}}/slow?ms=100</code> (it answers after 100 ms).</li><li><strong>Load</strong> tab → <strong>Custom</strong>: 10 users for 30 s, no think time. Run it: about <strong>100 requests per second</strong> (10 users × 10 answers a second each).</li><li>Open <strong>Pacing options</strong>, set <strong>Think time</strong> to <code>1000</code> ms, and run again: about <strong>9 a second</strong>. Same 10 users.</li><li>Now switch <strong>Drive load by</strong> to <strong>Requests per second</strong>, 50 a second. Change the URL to <code>?ms=500</code>, run, and compare: the rate stays at 50 while the app adds users to keep up.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>Simulated users</strong> wait for each answer: the load <strong>backs off when the API slows</strong> — good for &quot;what do N people experience?&quot;</li><li><strong>Requests per second</strong> keeps the rate whatever happens — the honest way to test <strong>capacity</strong>; <em>requests not sent</em> means it couldn't keep up.</li><li>&quot;<strong>50 users</strong>&quot; means nothing without <strong>think time</strong>; <strong>ramp up</strong> gradually; and make sure the <strong>test machine</strong> isn't the bottleneck.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/load-tests.html#simulated-users-or-requests-per-second">Simulated users or requests per second</a> · <a href="../docs/load-tests.html#shape-over-time">Shape over time</a> · <a href="../docs/load-tests.html#pacing-options">Pacing options</a></p>
+<p><strong>Next:</strong> <a href="reading-results.html">Reading results</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="why-performance-testing.html"><span>Previous</span>Why test performance</a><a class="next" href="reading-results.html"><span>Next</span>Reading results — response times, percentiles, errors</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#way-1-simulated-users-a-closed-model">Way 1: simulated users (a closed model)</a></li><li><a href="#way-2-requests-per-second-an-open-model">Way 2: requests per second (an open model)</a></li><li><a href="#which-to-use">Which to use</a></li><li><a href="#ramp-up-dont-start-at-full-speed">Ramp-up: don't start at full speed</a></li><li><a href="#where-the-load-comes-from">Where the load comes from</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

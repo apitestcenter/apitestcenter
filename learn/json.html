@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON — Learn API testing — APITestCenter</title>
+  <meta name="description" content="Most APIs send and receive data as JSON. How to read it, the six kinds of value, and how to point at one value inside a big answer with a path.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html" aria-current="page">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">APIs from zero</p>
+        <h1>JSON</h1>
+        <p class="docs-lead">Most APIs send and receive data as JSON. How to read it, the six kinds of value, and how to point at one value inside a big answer with a path.</p>
+        <p><strong>JSON</strong> (<em>JavaScript Object Notation</em>, said &quot;jay-son&quot;) is the format most APIs use for data, in both directions. It's plain text that both people and programs can read:</p>
+<pre><code class="lang-json">{
+  &quot;id&quot;: &quot;A-1001&quot;,
+  &quot;status&quot;: &quot;paid&quot;,
+  &quot;total&quot;: 45.5,
+  &quot;giftWrap&quot;: false,
+  &quot;note&quot;: null,
+  &quot;customer&quot;: { &quot;name&quot;: &quot;Ann&quot;, &quot;city&quot;: &quot;Pune&quot; },
+  &quot;items&quot;: [
+    { &quot;sku&quot;: &quot;LAMP-1&quot;, &quot;quantity&quot;: 1, &quot;price&quot;: 39 },
+    { &quot;sku&quot;: &quot;NOTE-2&quot;, &quot;quantity&quot;: 2, &quot;price&quot;: 3.25 }
+  ]
+}</code></pre>
+<h2 id="the-six-kinds-of-value">The six kinds of value</h2>
+<div class="table-wrap"><table><thead><tr><th>Kind</th><th>Looks like</th><th>Notes</th></tr></thead><tbody><tr><td><strong>string</strong> (text)</td><td><code>&quot;paid&quot;</code>, <code>&quot;A-1001&quot;</code></td><td>Always in <strong>double</strong> quotes</td></tr><tr><td><strong>number</strong></td><td><code>45.5</code>, <code>2</code>, <code>-3</code>, <code>1e6</code></td><td>No quotes. One kind for whole and decimal numbers</td></tr><tr><td><strong>boolean</strong></td><td><code>true</code>, <code>false</code></td><td>Lowercase, no quotes</td></tr><tr><td><strong>null</strong></td><td><code>null</code></td><td>&quot;No value&quot; — different from an empty string <code>&quot;&quot;</code> or <code>0</code></td></tr><tr><td><strong>object</strong></td><td><code>{ &quot;name&quot;: &quot;Ann&quot;, &quot;city&quot;: &quot;Pune&quot; }</code></td><td>Named values (&quot;fields&quot;, &quot;keys&quot;, &quot;properties&quot;) in <code>{ }</code></td></tr><tr><td><strong>array</strong> (list)</td><td><code>[1, 2, 3]</code>, <code>[{ … }, { … }]</code></td><td>Values in order, in <code>[ ]</code></td></tr></tbody></table></div>
+<p>Objects and arrays nest: an order <em>object</em> has an <code>items</code> <em>array</em> of item <em>objects</em>. That's how one answer describes a whole order.</p>
+<h3 id="small-rules-that-trip-people-up">Small rules that trip people up</h3>
+<ul><li>Names are in double quotes too: <code>{ &quot;status&quot;: &quot;paid&quot; }</code>, not <code>{ status: &quot;paid&quot; }</code> and not <code>{ 'status': 'paid' }</code>.</li><li>No comma after the last item: <code>[1, 2, 3]</code>, not <code>[1, 2, 3,]</code>.</li><li>No comments.</li><li><code>&quot;45&quot;</code> (a string) and <code>45</code> (a number) are <strong>different</strong>. An API that suddenly sends prices as strings can break every app that does arithmetic with them — a classic thing for tests to catch.</li><li>A missing field and a field set to <code>null</code> are different too: <code>{ &quot;note&quot;: null }</code> says &quot;there's no note&quot;; <code>{}</code> doesn't mention notes at all.</li></ul>
+<h2 id="pointing-at-one-value-paths">Pointing at one value: paths</h2>
+<p>Answers can be long. To talk about one value inside — in a test, or to save it for the next request — you write a <strong>path</strong> from the top:</p>
+<div class="table-wrap"><table><thead><tr><th>Path</th><th>In the order above</th><th>Value</th></tr></thead><tbody><tr><td><code>status</code></td><td>the order's status</td><td><code>&quot;paid&quot;</code></td></tr><tr><td><code>customer.name</code></td><td>the customer, then their name</td><td><code>&quot;Ann&quot;</code></td></tr><tr><td><code>items[0].sku</code></td><td>the items, the first one (counting from <strong>0</strong>), its sku</td><td><code>&quot;LAMP-1&quot;</code></td></tr><tr><td><code>items[1].quantity</code></td><td>the second item's quantity</td><td><code>2</code></td></tr><tr><td><code>items</code></td><td>the whole list</td><td>the array</td></tr></tbody></table></div>
+<p>A dot goes into an object; <code>[n]</code> picks the n-th entry of an array, <strong>starting at 0</strong>. Many tools write a <code>$</code> for &quot;the top&quot;: <code>$.items[0].sku</code> is the same path. (This style comes from <em>JSONPath</em>, which has more tricks, like <code>$..sku</code> for every sku anywhere — handy, but the simple form covers most needs.)</p>
+<h2 id="json-in-requests">JSON in requests</h2>
+<p>When you send JSON, say so with the header <code>Content-Type: application/json</code>. Most tools add it when you choose a JSON body. If the server answers <code>400 Bad Request</code> to a POST, invalid JSON is the first suspect — a missing quote or a trailing comma.</p>
+<h2 id="jsons-relatives">JSON's relatives</h2>
+<p>You'll occasionally meet <strong>XML</strong> (older APIs and SOAP: <code>&lt;order&gt;&lt;status&gt;paid&lt;/status&gt;&lt;/order&gt;</code>), <strong>form encoding</strong> (<code>status=paid&amp;total=45.5</code>, for sign-ins and HTML forms), and <strong>YAML</strong> (indented text, used for configuration and API descriptions like OpenAPI files). They all describe data; JSON is simply the most common for APIs today.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — read an answer and pick out values.</p>
+<ol><li>Send <code>GET {{practiceApi}}/products</code>. In the response, <strong>Pretty</strong> lays the JSON out with colours: names in one colour, strings in another, numbers and <code>true</code>/<code>false</code> in others.</li><li>The answer is an object with <code>items</code> (a list) and <code>total</code>. What's the path to the <strong>name of the third product</strong>? (<code>items[2].name</code>.) Check it: on the <strong>Checks</strong> tab, add <em>JSON field</em>, path <code>items[2].name</code>, <em>exists</em> — Send, and it passes.</li><li>Add another JSON check: path <code>total</code>, <em>is of type</em> <code>number</code>. Then path <code>items</code>, <em>has length</em> <code>12</code>. Send — all three pass.</li><li>Press <strong>Raw</strong> to see the JSON exactly as it came over the wire — on one line, the way programs send it.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>JSON has six kinds of value: <strong>string, number, boolean, null, object, array</strong> — and <code>&quot;45&quot;</code> is not <code>45</code>.</li><li>A <strong>path</strong> points at one value: <code>customer.name</code>, <code>items[0].sku</code> — arrays count from <strong>0</strong>.</li><li>Send JSON with <code>Content-Type: application/json</code>; a <code>400</code> to a POST often means broken JSON.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/checks.html#kinds-of-checks">Kinds of checks</a> · <a href="../docs/sending-requests.html#the-body">The body</a></p>
+<p><strong>Next:</strong> <a href="authentication.html">Signing in: authentication</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="status-codes.html"><span>Previous</span>Status codes</a><a class="next" href="authentication.html"><span>Next</span>Signing in — authentication</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-six-kinds-of-value">The six kinds of value</a></li><li><a href="#pointing-at-one-value-paths">Pointing at one value: paths</a></li><li><a href="#json-in-requests">JSON in requests</a></li><li><a href="#jsons-relatives">JSON's relatives</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

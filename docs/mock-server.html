@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Testing APIs</p>
         <h1>Mock server</h1>
         <p class="docs-lead">Answer a collection's requests with example responses on your computer — build the frontend before the API exists, or keep testing while it's down.</p>
-        <p>The mock server pretends to be your API. It answers the requests of a collection (or folder) with each request's <strong>example</strong> response, on a port of your computer — so a frontend, a mobile app or another team's tests can work against it before the real API is ready, while it's down, or without touching shared test data.</p>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/mocking.html">mocks, and when not to trust them</a>.</p></aside>
+<p>The mock server pretends to be your API. It answers the requests of a collection (or folder) with each request's <strong>example</strong> response, on a port of your computer — so a frontend, a mobile app or another team's tests can work against it before the real API is ready, while it's down, or without touching shared test data.</p>
 <h2 id="give-requests-an-example">Give requests an example</h2>
 <p>Each saved request can have one example: the status, headers and body the mock answers with.</p>
 <ul><li><strong>From a real answer:</strong> send the request, then choose <strong>Save as example</strong> at the top of the response. Save the request to keep it.</li><li><strong>By hand:</strong> the <strong>Example</strong> tab — set the status, headers (one per line, <code>Name: value</code>), the body, and a wait before answering if you want it to feel like a slow server.</li><li><strong>From an OpenAPI file:</strong> <a href="sending-requests.html#importing-from-postman-insomnia-a-browser-recording-or-openapi">imported</a> requests already have one — the file's example for the success answer, or one made from its schema.</li></ul>
@@ -68,7 +70,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

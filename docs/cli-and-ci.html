@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Automation</p>
         <h1>Command line and CI</h1>
         <p class="docs-lead">Run load tests and collection runs from a pipeline and fail the build when an API breaks or gets slower.</p>
-        <aside class="callout callout-tip"><p><strong>Tip</strong> Setting this up for the first time? Follow <a href="ci-walkthrough.html">From the app to your pipeline</a> — step by step, with a ready pipeline file. This page is the reference.</p></aside>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/api-tests-in-ci.html">API tests in a pipeline</a>.</p></aside>
+<aside class="callout callout-tip"><p><strong>Tip</strong> Setting this up for the first time? Follow <a href="ci-walkthrough.html">From the app to your pipeline</a> — step by step, with a ready pipeline file. This page is the reference.</p></aside>
 <aside class="callout callout-tip"><p><strong>Tip</strong> The command line is on npm as <a href="https://www.npmjs.com/package/apitestcenter"><strong>apitestcenter</strong></a>. Run it with <code>npx apitestcenter …</code> — nothing to install first. Build and save your requests in the desktop app, then run them here.</p></aside>
 <h2 id="build-tests-without-the-desktop-app">Build tests without the desktop app</h2>
 <p>Everything works from the command line, with a window when you want one:</p>
@@ -70,6 +72,7 @@ npx apitestcenter run &quot;Orders API/List orders&quot; --env UAT --preset smok
 <p>The desktop app comes with <code>atc</code>, the same version as the app, using the app's own runtime and k6 — no Node.js needed.</p>
 <div class="table-wrap"><table><thead><tr><th>Installed with</th><th><code>atc</code> in a terminal</th></tr></thead><tbody><tr><td>Windows installer</td><td>Added to your PATH. Open a <strong>new</strong> terminal after installing. Uninstalling takes it off again.</td></tr><tr><td>Linux <code>.deb</code></td><td>Linked as <code>/usr/bin/atc</code></td></tr><tr><td>macOS</td><td>Link it once: <code>sudo ln -s &quot;/Applications/APITestCenter.app/Contents/Resources/bin/atc&quot; /usr/local/bin/atc</code></td></tr><tr><td>Windows portable, AppImage, Microsoft Store</td><td>Not added to PATH — use <code>npx apitestcenter …</code>, or <code>npm install -g apitestcenter</code></td></tr></tbody></table></div>
 <p>If you also installed it with <code>npm install -g</code>, the one earlier in your PATH runs; <code>atc --version</code> tells you which version that is.</p>
+<p>Requests that use the <a href="getting-started.html#the-practice-api">practice API</a> (<code>{{practiceApi}}</code>) run from the command line too: <code>suite</code> and <code>run</code> start it on a free port of this computer when a request needs it.</p>
 <p>Requirements (npm package): Node.js 20 or later. <code>suite</code> needs nothing else. <code>run</code> uses <a href="https://k6.io">k6</a>: if it is not installed, the first <code>run</code> downloads the official k6 release once, checks it against k6's published checksums, and keeps it in a cache folder. Set <code>K6_BIN</code> to use your own k6.</p>
 <h2 id="commands">Commands</h2>
 <div class="table-wrap"><table><thead><tr><th>Command</th><th>What it does</th></tr></thead><tbody><tr><td><code>ui [collection]</code></td><td>Open the app in your browser to build and edit tests</td></tr><tr><td><code>init [collection]</code></td><td>Start <code>api-tests/</code> in this repository, with a CI pipeline</td></tr><tr><td><code>suite &lt;collection&gt;</code></td><td>Send every request in a collection once and check each one</td></tr><tr><td><code>run &lt;request&gt;</code></td><td>Run a load test of one request</td></tr><tr><td><code>list</code></td><td>List saved requests (as <em>Collection/Name</em>) and environments</td></tr><tr><td><code>mock &lt;collection&gt;</code></td><td>Answer the collection's requests with their example responses, until Ctrl+C — see <a href="mock-server.html">Mock server</a>. <code>--port</code> (default 4010)</td></tr><tr><td><code>mcp</code></td><td>Let AI agents (Claude Code, Cursor, VS Code, Claude Desktop) use the app — see <a href="ai-agents.html">AI agents (MCP)</a>. <code>--allow-load host,…</code></td></tr></tbody></table></div>
@@ -152,7 +155,8 @@ npx apitestcenter run &quot;Orders API/List orders&quot; --data api-tests --env 
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

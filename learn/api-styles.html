@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kinds of APIs — Learn API testing — APITestCenter</title>
+  <meta name="description" content="REST, GraphQL, WebSockets, server-sent events, SOAP and gRPC — how each works, what it's good at, and what changes when you test it.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html" aria-current="page">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">APIs from zero</p>
+        <h1>Kinds of APIs</h1>
+        <p class="docs-lead">REST, GraphQL, WebSockets, server-sent events, SOAP and gRPC — how each works, what it's good at, and what changes when you test it.</p>
+        <p>Not all APIs are shaped the same way. You'll meet a few styles; the ideas from the earlier lessons — requests, status codes, JSON, signing in — carry over to all of them.</p>
+<h2 id="rest-resources-and-methods">REST: resources and methods</h2>
+<p>What the earlier lessons described is <strong>REST</strong>, by far the most common style: <strong>resources</strong> at addresses (<code>/orders/A-1001</code>), <strong>methods</strong> that say what to do (<code>GET</code>, <code>POST</code>…), <strong>status codes</strong>, and usually <strong>JSON</strong>. One request, one response.</p>
+<ul><li><strong>Good at:</strong> simple, predictable, easy to cache and to test. Every tool understands it.</li><li><strong>Watch out for:</strong> getting <em>too much</em> (the whole order when you wanted its status) or <em>too little</em> (an order, then one more request per item — the &quot;N+1&quot; pattern that slows apps down).</li></ul>
+<p>Strictly, REST has more rules than &quot;JSON over HTTP&quot;; in practice people call most JSON-over-HTTP APIs REST, and so will these lessons.</p>
+<h2 id="graphql-ask-for-exactly-what-you-need">GraphQL: ask for exactly what you need</h2>
+<p>A <strong>GraphQL</strong> API has <strong>one address</strong> (often <code>/graphql</code>) and you send a <strong>query</strong> saying exactly which fields you want:</p>
+<pre><code class="lang-graphql">query {
+  order(id: &quot;A-1001&quot;) {
+    status
+    items { sku quantity }
+  }
+}</code></pre>
+<p>and the answer has exactly that shape:</p>
+<pre><code class="lang-json">{ &quot;data&quot;: { &quot;order&quot;: { &quot;status&quot;: &quot;paid&quot;, &quot;items&quot;: [ { &quot;sku&quot;: &quot;LAMP-1&quot;, &quot;quantity&quot;: 1 } ] } } }</code></pre>
+<p>Changes are <strong>mutations</strong> (<code>mutation { cancelOrder(id: &quot;A-1001&quot;) { status } }</code>). The API publishes a <strong>schema</strong> — every type and field — which tools can load to help you write queries.</p>
+<ul><li><strong>Good at:</strong> apps that need different slices of the same data; one round trip instead of many.</li><li><strong>Testing it:</strong> the status is usually <strong>200 even when something failed</strong> — errors come in an <code>errors</code> list in the body. A GraphQL test must check that <code>errors</code> is absent, not just the status. Load tests must also send <em>realistic</em> queries: one deep query can cost the server far more than a hundred simple ones.</li></ul>
+<h2 id="websockets-a-conversation">WebSockets: a conversation</h2>
+<p>A <strong>WebSocket</strong> starts as an HTTP request and then stays <strong>open</strong>: both sides can send <strong>messages</strong> at any time, for as long as the connection lasts. Addresses start with <code>ws://</code> or <code>wss://</code> (encrypted).</p>
+<pre><code>→ connect   wss://chat.example.com/rooms/42
+← { &quot;type&quot;: &quot;welcome&quot;, &quot;users&quot;: 3 }
+→ { &quot;type&quot;: &quot;message&quot;, &quot;text&quot;: &quot;hello&quot; }
+← { &quot;type&quot;: &quot;message&quot;, &quot;from&quot;: &quot;Ann&quot;, &quot;text&quot;: &quot;hi!&quot; }</code></pre>
+<ul><li><strong>Good at:</strong> chat, live dashboards, trading, multiplayer games, collaboration — anything where the server must tell you things <strong>without being asked</strong>.</li><li><strong>Testing it:</strong> there are no status codes per message. You test the <strong>conversation</strong>: does the welcome arrive, does a message come back, does it close cleanly? When a connection closes, a <strong>close code</strong> says why (1000 normal, 1006 lost, 1008 policy — often auth).</li></ul>
+<h2 id="server-sent-events-sse-a-stream-of-updates">Server-sent events (SSE): a stream of updates</h2>
+<p><strong>SSE</strong> is simpler: an ordinary GET whose answer never quite ends. The server keeps sending <strong>events</strong>, one after another:</p>
+<pre><code>event: tick
+id: 1
+data: {&quot;price&quot;: 44.3}
+
+event: tick
+id: 2
+data: {&quot;price&quot;: 43.9}</code></pre>
+<p>It's one-way (server to you), uses plain HTTP, and reconnects easily. It's how many notification feeds, progress bars and <strong>AI chat answers that appear word by word</strong> work.</p>
+<h2 id="soap-the-older-stricter-style">SOAP: the older, stricter style</h2>
+<p><strong>SOAP</strong> APIs send <strong>XML</strong> documents in a fixed &quot;envelope&quot;, described by a <strong>WSDL</strong> file. You'll find them in banks, insurance, government and older enterprise systems. To test one: POST the XML envelope to its address with <code>Content-Type: text/xml</code> (and often a <code>SOAPAction</code> header) — the ideas are the same, the format is wordier.</p>
+<h2 id="grpc-fast-binary-between-services">gRPC: fast, binary, between services</h2>
+<p><strong>gRPC</strong> sends compact <strong>binary</strong> messages described by <code>.proto</code> files, over HTTP/2. It's popular <strong>between services inside a company</strong> because it's fast and strictly typed. You need tools that read the <code>.proto</code> file; you can't just type JSON.</p>
+<h2 id="which-one-am-i-looking-at">Which one am I looking at?</h2>
+<div class="table-wrap"><table><thead><tr><th>You see</th><th>It's probably</th></tr></thead><tbody><tr><td>Many paths, GET/POST/…, JSON</td><td>REST</td></tr><tr><td>One <code>/graphql</code> path, <code>query { … }</code> in the body</td><td>GraphQL</td></tr><tr><td>An address starting <code>ws://</code> or <code>wss://</code></td><td>WebSocket</td></tr><tr><td><code>Content-Type: text/event-stream</code> in the answer</td><td>Server-sent events</td></tr><tr><td>XML envelopes, a <code>.wsdl</code> file</td><td>SOAP</td></tr><tr><td><code>.proto</code> files, HTTP/2, binary</td><td>gRPC</td></tr></tbody></table></div>
+<aside class="callout callout-note"><p><strong>Try it</strong> — three styles on the practice API.</p>
+<ol><li><strong>REST:</strong> <code>GET {{practiceApi}}/products/1</code> — one resource, one answer.</li><li><strong>Event stream:</strong> <code>GET {{practiceApi}}/events</code> and press Send. The Body tab shows events arriving live, one a second — <em>event: tick</em> with an id and data.</li><li><strong>WebSocket:</strong> type <code>{{practiceWs}}/ws</code> — the button becomes <strong>Connect</strong>. Press it: a welcome message arrives. Type <code>{&quot;hello&quot;: &quot;world&quot;}</code> in the box under the log and press Send — it comes back with the time. Then <strong>Disconnect</strong>: the last line says <em>Closed — code 1000 (normal)</em>.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>REST</strong> — resources, methods, status codes, JSON; the default.</li><li><strong>GraphQL</strong> — one address, ask for exactly the fields you need; <strong>errors arrive with status 200</strong>, so check the body.</li><li><strong>WebSockets</strong> are two-way conversations; <strong>SSE</strong> is a one-way stream of events; <strong>SOAP</strong> is XML envelopes; <strong>gRPC</strong> is binary messages between services.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests.html#graphql">GraphQL</a> · <a href="../docs/live-connections.html">WebSockets and event streams</a></p>
+<p><strong>Next:</strong> <a href="what-is-api-testing.html">What API testing is</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="authentication.html"><span>Previous</span>Signing in — authentication</a><a class="next" href="what-is-api-testing.html"><span>Next</span>What API testing is</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#rest-resources-and-methods">REST: resources and methods</a></li><li><a href="#graphql-ask-for-exactly-what-you-need">GraphQL: ask for exactly what you need</a></li><li><a href="#websockets-a-conversation">WebSockets: a conversation</a></li><li><a href="#server-sent-events-sse-a-stream-of-updates">Server-sent events (SSE): a stream of updates</a></li><li><a href="#soap-the-older-stricter-style">SOAP: the older, stricter style</a></li><li><a href="#grpc-fast-binary-between-services">gRPC: fast, binary, between services</a></li><li><a href="#which-one-am-i-looking-at">Which one am I looking at?</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

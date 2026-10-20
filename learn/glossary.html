@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glossary, A to Z — Learn API testing — APITestCenter</title>
+  <meta name="description" content="Every term from the lessons — APIs, testing and load testing — in a sentence or two, with a link to where it's explained.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html" aria-current="page">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Reference</p>
+        <h1>Glossary, A to Z</h1>
+        <p class="docs-lead">Every term from the lessons — APIs, testing and load testing — in a sentence or two, with a link to where it's explained.</p>
+        <h3 id="a">A</h3>
+<ul><li><strong>API</strong> — how one program asks another for something: a request goes in, a response comes back. <a href="what-is-an-api.html">What an API is</a></li><li><strong>API key</strong> — a long secret string that identifies an application, sent with each request. <a href="authentication.html">Signing in</a></li><li><strong>Apdex</strong> — a 0-to-1 score of how many answers were satisfyingly fast, or at least tolerable. <a href="reading-results.html">Reading results</a></li><li><strong>Assertion</strong> — another word for a <a href="checks-and-assertions.html">check</a>.</li><li><strong>Authentication / authorization</strong> — <em>who are you</em> (fails with 401) / <em>may you do this</em> (fails with 403). <a href="authentication.html">Signing in</a></li></ul>
+<h3 id="b">B</h3>
+<ul><li><strong>Base URL</strong> — the server part of an address (<code>https://api.example.com</code>); the paths go after it. <a href="http-requests.html">Requests</a></li><li><strong>Baseline</strong> — a trusted run that later runs are compared with, to catch regressions. <a href="performance-goals.html">Goals and regressions</a></li><li><strong>Basic auth</strong> — a username and password, encoded (not encrypted) in the <code>Authorization</code> header. <a href="authentication.html">Signing in</a></li><li><strong>Bearer token</strong> — a token sent as <code>Authorization: Bearer …</code>; whoever bears it is let in. <a href="authentication.html">Signing in</a></li><li><strong>Body</strong> — the data a request or response carries. <a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><strong>Bottleneck</strong> — the part that runs out first under load and decides how fast everything goes. <a href="finding-bottlenecks.html">Finding the bottleneck</a></li></ul>
+<h3 id="c">C</h3>
+<ul><li><strong>Capacity</strong> — the most load an API can take while meeting its goals. <a href="why-performance-testing.html">Why test performance</a></li><li><strong>CDN</strong> — a network of servers in front of a site or API that caches and protects it; often rate limits. <a href="testing-safely.html">Testing safely</a></li><li><strong>Chaining</strong> — passing values (a token, an id) from one request's answer to the next. <a href="chaining-and-test-data.html">Chaining</a></li><li><strong>Check</strong> — a rule a correct answer must follow: a status, a value, a type, a time. <a href="checks-and-assertions.html">Checks</a></li><li><strong>CI / pipeline</strong> — automatic steps that build and test code on every change. <a href="api-tests-in-ci.html">API tests in a pipeline</a></li><li><strong>Client / server</strong> — the program that asks / the one that answers. <a href="what-is-an-api.html">What an API is</a></li><li><strong>Collection</strong> — a set of saved requests that belong together, often run in order.</li><li><strong>Content-Type</strong> — the header that says what format a body is in (<code>application/json</code>). <a href="headers-params-bodies.html">Headers</a></li><li><strong>Contract</strong> — what an API promises about its requests and answers; checked by contract tests. <a href="contract-testing.html">Contracts and schemas</a></li><li><strong>Cookie</strong> — a value a server asks the client to send back on later requests, often a sign-in session. <a href="authentication.html">Signing in</a></li></ul>
+<h3 id="d-e">D – E</h3>
+<ul><li><strong>Data-driven test</strong> — the same test run with many rows of inputs. <a href="chaining-and-test-data.html">Test data</a></li><li><strong>Endpoint</strong> — one address (path + method) of an API, like <code>GET /orders</code>.</li><li><strong>Environment</strong> — one place an API runs (DEV, UAT, production), with its own values for variables. <a href="environments-and-variables.html">Environments</a></li><li><strong>Error rate</strong> — the share of requests that failed (no answer, or status 400+). <a href="reading-results.html">Reading results</a></li><li><strong>Exit code</strong> — the number a command ends with: 0 passed, non-zero failed; pipelines read it. <a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul>
+<h3 id="f-g">F – G</h3>
+<ul><li><strong>Flaky test</strong> — a test that fails sometimes for no real reason; erodes trust. <a href="api-tests-in-ci.html">API tests in a pipeline</a></li><li><strong>GET / POST / PUT / PATCH / DELETE</strong> — the methods: read / create / replace / change / remove. <a href="http-requests.html">Requests</a></li><li><strong>GraphQL</strong> — an API style with one address where you ask for exactly the fields you want; errors arrive with status 200. <a href="api-styles.html">Kinds of APIs</a></li><li><strong>gRPC</strong> — fast binary messages between services, described by <code>.proto</code> files. <a href="api-styles.html">Kinds of APIs</a></li></ul>
+<h3 id="h-i">H – I</h3>
+<ul><li><strong>Header</strong> — a <code>Name: value</code> note sent with a request or response. <a href="headers-params-bodies.html">Headers</a></li><li><strong>HTTP / HTTPS</strong> — the language of the web; HTTPS is the encrypted version. <a href="what-is-an-api.html">What an API is</a></li><li><strong>Idempotent</strong> — the same effect whether sent once or many times (GET, PUT, DELETE — not POST). <a href="http-requests.html">Requests</a></li></ul>
+<h3 id="j">J</h3>
+<ul><li><strong>JSON</strong> — the text format most APIs use for data: objects, arrays, strings, numbers, booleans, null. <a href="json.html">JSON</a></li><li><strong>JSON path</strong> — a way to point at one value in a JSON answer, like <code>items[0].id</code>. <a href="json.html">JSON</a></li><li><strong>JSON Schema</strong> — a description of valid JSON (fields, types, required), used to check an answer's shape. <a href="contract-testing.html">Contracts and schemas</a></li><li><strong>JWT</strong> — a readable, signed token made of three dot-separated parts. <a href="authentication.html">Signing in</a></li></ul>
+<h3 id="l">L</h3>
+<ul><li><strong>Latency / response time</strong> — how long one request took. <a href="reading-results.html">Reading results</a></li><li><strong>Load test</strong> — many simulated users or requests at once, measuring speed and failures. <a href="why-performance-testing.html">Why test performance</a></li></ul>
+<h3 id="m-n">M – N</h3>
+<ul><li><strong>Median (p50)</strong> — the middle response time: half were faster. <a href="reading-results.html">Reading results</a></li><li><strong>Method</strong> — what a request asks to do: GET, POST, PUT, PATCH, DELETE… <a href="http-requests.html">Requests</a></li><li><strong>Mock</strong> — a pretend API that answers with prepared examples. <a href="mocking.html">Mocks</a></li><li><strong>mTLS / client certificate</strong> — the client proves who it is with a certificate during the encrypted connection. <a href="authentication.html">Signing in</a></li><li><strong>N+1 queries</strong> — one query for a list, then one more per item; a very common cause of slowness. <a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><strong>Negative test</strong> — a test that sends a bad request and expects a clear refusal. <a href="what-is-api-testing.html">What API testing is</a></li></ul>
+<h3 id="o">O</h3>
+<ul><li><strong>OAuth 2.0</strong> — a standard way to get a token from an authorization server, with limited permissions (scopes). <a href="authentication.html">Signing in</a></li><li><strong>OpenAPI / Swagger</strong> — a file describing an API's paths, parameters and answers — its contract, written down. <a href="contract-testing.html">Contracts and schemas</a></li></ul>
+<h3 id="p">P</h3>
+<ul><li><strong>p95 / p99</strong> — 95% / 99% of requests were faster than this; the usual basis for performance goals. <a href="reading-results.html">Reading results</a></li><li><strong>Path</strong> — the part of the URL after the server: <code>/orders/A-1001</code>. <a href="http-requests.html">Requests</a></li><li><strong>Percentile</strong> — the value at a position in sorted response times (p50, p95, p99). <a href="reading-results.html">Reading results</a></li></ul>
+<h3 id="q-r">Q – R</h3>
+<ul><li><strong>Query parameter</strong> — an option in the address after <code>?</code>: <code>?page=2</code>. <a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><strong>Ramp-up</strong> — raising load gradually instead of all at once. <a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><strong>Rate limit</strong> — a cap on requests per period; exceeding it gives 429. <a href="status-codes.html">Status codes</a> · <a href="testing-safely.html">Testing safely</a></li><li><strong>Regression</strong> — something that worked (or was fast) and now doesn't (or isn't), after a change. <a href="performance-goals.html">Goals and regressions</a></li><li><strong>Request / response</strong> — the question a client sends / the answer it gets. <a href="what-is-an-api.html">What an API is</a></li><li><strong>Requests per second (RPS) / throughput</strong> — answers per second; also a way to drive load at a fixed rate. <a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><strong>REST</strong> — the common style: resources at addresses, methods, status codes, usually JSON. <a href="api-styles.html">Kinds of APIs</a></li></ul>
+<h3 id="s">S</h3>
+<ul><li><strong>Safe method</strong> — one that only reads and changes nothing (GET, HEAD). <a href="http-requests.html">Requests</a></li><li><strong>Server-sent events (SSE)</strong> — a one-way stream of events over an ordinary request. <a href="api-styles.html">Kinds of APIs</a></li><li><strong>SLI / SLO / SLA</strong> — what you measure / the target / the contract with a customer. <a href="performance-goals.html">Goals and regressions</a></li><li><strong>Smoke / load / stress / spike / soak test</strong> — tiny check / a normal day / beyond normal / a sudden burst / hours long. <a href="why-performance-testing.html">Why test performance</a></li><li><strong>SOAP</strong> — an older style using XML envelopes, described by WSDL. <a href="api-styles.html">Kinds of APIs</a></li><li><strong>Status code</strong> — the three-digit first word of an answer: 2xx worked, 4xx your request was wrong, 5xx the server failed. <a href="status-codes.html">Status codes</a></li></ul>
+<h3 id="t">T</h3>
+<ul><li><strong>Test data</strong> — the inputs a test uses; varied on purpose. <a href="chaining-and-test-data.html">Test data</a></li><li><strong>Think time</strong> — the pause between a simulated user's requests, like a person reading. <a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><strong>Threshold</strong> — a goal turned into a pass/fail limit for a load test. <a href="performance-goals.html">Goals and regressions</a></li><li><strong>Token</strong> — a value proving you signed in, sent with each request; usually expires. <a href="authentication.html">Signing in</a></li><li><strong>TTFB (time to first byte)</strong> — from sending until the first byte of the answer: mostly the server working. <a href="reading-results.html">Reading results</a></li></ul>
+<h3 id="u-w">U – W</h3>
+<ul><li><strong>URL</strong> — the full address: scheme, host, port, path, query. <a href="http-requests.html">Requests</a></li><li><strong>Variable</strong> — a name like <code>{{baseUrl}}</code> that stands for a value, filled in when the request is sent. <a href="environments-and-variables.html">Environments</a></li><li><strong>Virtual user (VU) / simulated user</strong> — one pretend user in a load test, sending requests one after another. <a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><strong>WAF</strong> — a web application firewall: blocks suspicious traffic, including heavy load. <a href="testing-safely.html">Testing safely</a></li><li><strong>WebSocket</strong> — a connection that stays open for two-way messages. <a href="api-styles.html">Kinds of APIs</a></li></ul>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="testing-safely.html"><span>Previous</span>Testing safely and realistically</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contracts and schemas — Learn API testing — APITestCenter</title>
+  <meta name="description" content="An API's contract is its promise about requests and answers. OpenAPI describes it; JSON Schema checks answers against it. How contract testing catches breaking changes before the apps built on the API do.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html" aria-current="page">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Contracts and schemas</h1>
+        <p class="docs-lead">An API's contract is its promise about requests and answers. OpenAPI describes it; JSON Schema checks answers against it. How contract testing catches breaking changes before the apps built on the API do.</p>
+        <p>When a mobile app shows an order, it expects <code>total</code> to be a number and <code>items</code> to be a list. If the API one day sends <code>&quot;total&quot;: &quot;45.50&quot;</code> or renames <code>items</code> to <code>lines</code>, the app crashes — even though the API still answers <code>200</code> and the data is &quot;there&quot;. The API broke its <strong>contract</strong>.</p>
+<p>An API's <strong>contract</strong> is its promise: which requests it accepts, and what shape each answer has — the fields, their types, which are always present, which values are allowed. <strong>Contract testing</strong> checks the API still keeps it.</p>
+<h2 id="openapi-the-contract-written-down">OpenAPI: the contract, written down</h2>
+<p>Most REST APIs describe their contract in an <strong>OpenAPI</strong> file (older ones say <strong>Swagger</strong>) — YAML or JSON listing every path, method, parameter and answer:</p>
+<pre><code class="lang-yaml">paths:
+  /orders/{id}:
+    get:
+      summary: Get an order
+      responses:
+        &quot;200&quot;:
+          content:
+            application/json:
+              schema:
+                $ref: &quot;#/components/schemas/Order&quot;
+components:
+  schemas:
+    Order:
+      type: object
+      required: [id, status, total, items]
+      properties:
+        id:     { type: string, pattern: &quot;^A-\\d+$&quot; }
+        status: { type: string, enum: [new, paid, shipped, cancelled] }
+        total:  { type: number, minimum: 0 }
+        items:  { type: array, items: { $ref: &quot;#/components/schemas/Item&quot; } }</code></pre>
+<p>The file is often the API's documentation page too (it's what tools like Swagger UI render). Importing it into a testing tool gives you a request for every operation at once.</p>
+<h2 id="json-schema-checking-an-answers-shape">JSON Schema: checking an answer's shape</h2>
+<p>The <code>schema:</code> part above is a <strong>JSON Schema</strong> — a JSON (or YAML) description of what valid data looks like. It can say:</p>
+<div class="table-wrap"><table><thead><tr><th>Keyword</th><th>Means</th><th>Example</th></tr></thead><tbody><tr><td><code>type</code></td><td>the kind of value</td><td><code>&quot;type&quot;: &quot;number&quot;</code></td></tr><tr><td><code>required</code></td><td>fields that must be there</td><td><code>[&quot;id&quot;, &quot;status&quot;]</code></td></tr><tr><td><code>properties</code></td><td>the fields and their own schemas</td><td><code>{ &quot;total&quot;: { &quot;type&quot;: &quot;number&quot; } }</code></td></tr><tr><td><code>items</code></td><td>the schema of each entry in a list</td><td><code>{ &quot;$ref&quot;: &quot;#/…/Item&quot; }</code></td></tr><tr><td><code>enum</code></td><td>the only allowed values</td><td><code>[&quot;new&quot;, &quot;paid&quot;, &quot;shipped&quot;]</code></td></tr><tr><td><code>minimum</code>, <code>maximum</code></td><td>number limits</td><td><code>&quot;minimum&quot;: 0</code></td></tr><tr><td><code>minLength</code>, <code>pattern</code></td><td>text limits</td><td><code>&quot;pattern&quot;: &quot;^A-\\d+$&quot;</code></td></tr><tr><td><code>nullable</code> / <code>[&quot;string&quot;, &quot;null&quot;]</code></td><td>may be empty</td><td></td></tr><tr><td><code>additionalProperties: false</code></td><td>no fields beyond these</td><td></td></tr></tbody></table></div>
+<p>A schema check runs every answer through the schema and reports the first place it differs: <em><code>$.items[0].price</code> should be number (it is string)</em>, <em><code>$</code> should have <code>total</code></em>. One schema check replaces dozens of single-field checks — and keeps checking fields nobody thought to write a check for.</p>
+<h2 id="what-breaks-a-contract">What breaks a contract</h2>
+<p><strong>Breaking</strong> changes (the apps built on the API must change too):</p>
+<ul><li>removing or renaming a field; changing its type (<code>45</code> → <code>&quot;45&quot;</code>); making it sometimes missing or <code>null</code>;</li><li>adding a new <strong>required</strong> request field;</li><li>removing an allowed value from an <code>enum</code>, or narrowing a limit;</li><li>changing a status code (<code>201</code> → <code>200</code>), or an error's format.</li></ul>
+<p><strong>Usually safe</strong> changes: adding a new <em>optional</em> field to an answer, a new endpoint, a new optional parameter. (That's why a schema shouldn't forbid extra answer fields unless you mean it.)</p>
+<h2 id="two-ways-to-get-a-schema">Two ways to get a schema</h2>
+<ul><li><strong>From the API's OpenAPI file</strong> — the documented contract. Testing against it finds where the <em>implementation</em> differs from the <em>documentation</em> — and sometimes the documentation is what's wrong.</li><li><strong>From a real answer</strong> — tools can write a schema from a response you have: every field it had, with its type. Then you loosen it (this field may be missing; this one may be null) or tighten it (this must be one of these values). Good for APIs with no documentation.</li></ul>
+<h2 id="consumer-driven-contracts-briefly">Consumer-driven contracts, briefly</h2>
+<p>In bigger organisations, the teams that <em>use</em> an API (the consumers) write down what <em>they</em> rely on, and the API team's pipeline checks every change against all consumers' expectations (tools like Pact do this). It's the same idea at a larger scale: catch the breaking change in the API's pipeline, not in production.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — catch a shape change.</p>
+<ol><li>Send <code>GET {{practiceApi}}/products/1</code>. On <strong>Checks</strong>, add <strong>JSON schema</strong> and press <strong>Make it from the last response</strong>. Read the schema it wrote: <code>id</code> is a number, <code>name</code> a string, <code>price</code> a number, <code>inStock</code> a boolean — all required.</li><li>Send <code>GET {{practiceApi}}/products/2</code> with the same check — passes: same shape, different values.</li><li>Change the URL to <code>{{practiceApi}}/products</code> (the list) and Send: it fails — <em>$ should have id</em> — because a list isn't a product. That's exactly the kind of mismatch a schema check exists to catch.</li><li>Pretend the API changed: in the schema, change <code>&quot;price&quot;: { &quot;type&quot;: &quot;number&quot; }</code> to <code>&quot;string&quot;</code> and send product 1 again. It fails with <em>$.price should be string (it is number)</em> — the message a real breaking change would give you.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>An API's <strong>contract</strong> is the shape it promises; <strong>OpenAPI</strong> writes it down, <strong>JSON Schema</strong> checks answers against it.</li><li>A <strong>schema check</strong> reports exactly where an answer differs, and covers every field at once.</li><li><strong>Breaking changes</strong> — removed, renamed or retyped fields — are what contract tests catch before the apps built on the API break.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/checks.html#json-schema">JSON schema checks</a> · <a href="../docs/sending-requests.html#importing-from-postman-insomnia-a-browser-recording-or-openapi">Importing OpenAPI</a></p>
+<p><strong>Next:</strong> <a href="mocking.html">Mocks: testing without the real API</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="chaining-and-test-data.html"><span>Previous</span>Chaining requests and test data</a><a class="next" href="mocking.html"><span>Next</span>Mocks — testing without the real API</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#openapi-the-contract-written-down">OpenAPI: the contract, written down</a></li><li><a href="#json-schema-checking-an-answers-shape">JSON Schema: checking an answer's shape</a></li><li><a href="#what-breaks-a-contract">What breaks a contract</a></li><li><a href="#two-ways-to-get-a-schema">Two ways to get a schema</a></li><li><a href="#consumer-driven-contracts-briefly">Consumer-driven contracts, briefly</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

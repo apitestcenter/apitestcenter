@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Testing APIs</p>
         <h1>Scripts</h1>
         <p class="docs-lead">JavaScript before a request and on its answer — Postman's pm.test and pm.environment, so scripts from Postman collections run as they are.</p>
-        <p>Most tests need no code: <a href="checks.html">checks</a>, <a href="chaining.html#save-values">saved values</a> and <a href="environments.html#built-in-values-uuid-timestamp">built-in values</a> cover them. When you need more — compute a value, sign something, test a rule that spans fields — open the <strong>Scripts</strong> tab. There are two:</p>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/checks-and-assertions.html">checks and test scripts</a>.</p></aside>
+<p>Most tests need no code: <a href="checks.html">checks</a>, <a href="chaining.html#save-values">saved values</a> and <a href="environments.html#built-in-values-uuid-timestamp">built-in values</a> cover them. When you need more — compute a value, sign something, test a rule that spans fields — open the <strong>Scripts</strong> tab. There are two:</p>
 <ul><li><strong>Pre-request</strong> runs before the request is sent. It can set values, add or change headers, change the address or the body.</li><li><strong>Tests</strong> runs on the answer. Each <code>pm.test(…)</code> counts like a <a href="checks.html">check</a>: on Send, in <a href="collection-runner.html">collection runs</a> and CI, and for <strong>every request of a load test</strong>, where the report shows its pass rate like any other check.</li></ul>
 <p>The scripts use Postman's <code>pm</code> object, so scripts from an <a href="sending-requests.html#importing-from-postman-insomnia-a-browser-recording-or-openapi">imported Postman collection</a> run as they are. The <strong>Add</strong> buttons above each script put in a working example to change.</p>
 <pre><code class="lang-js">// Tests
@@ -136,7 +138,8 @@ pm.test(&quot;answers within 1 s&quot;, () =&gt; pm.expect(pm.response.responseT
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

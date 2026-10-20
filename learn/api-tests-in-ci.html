@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API tests in a pipeline — Learn API testing — APITestCenter</title>
+  <meta name="description" content="Tests that only run when someone remembers don't protect much. How API tests run by themselves on every change — CI, exit codes, reports, secrets, and keeping the pipeline trusted.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html" aria-current="page">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>API tests in a pipeline</h1>
+        <p class="docs-lead">Tests that only run when someone remembers don't protect much. How API tests run by themselves on every change — CI, exit codes, reports, secrets, and keeping the pipeline trusted.</p>
+        <p>A test you run by hand protects the API on the days you remember to run it. A test that runs <strong>by itself on every change</strong> protects it every day. That's <strong>CI</strong> — <em>continuous integration</em>: every time someone pushes code, a <strong>pipeline</strong> builds it and runs the tests, and a failure stops the change before it reaches users.</p>
+<h2 id="how-a-pipeline-runs-api-tests">How a pipeline runs API tests</h2>
+<p>A pipeline is a list of steps a CI service (GitHub Actions, GitLab CI, Azure DevOps, Jenkins…) runs on a fresh machine:</p>
+<ol><li>get the code;</li><li>start the API (or deploy it to a test environment);</li><li><strong>run the API tests</strong> against it;</li><li>pass or fail the whole run based on the result;</li><li>keep the reports.</li></ol>
+<p>The tests live <strong>in the repository</strong>, next to the code, so a change to the API and the change to its tests arrive together and are reviewed together.</p>
+<h2 id="exit-codes-how-a-pipeline-knows">Exit codes: how a pipeline knows</h2>
+<p>Command-line tools tell the pipeline how it went with an <strong>exit code</strong>: <code>0</code> means passed, anything else means failed. The pipeline stops on non-zero. So the test runner must exit with <code>1</code> when a test fails — and <em>only</em> then. (A runner that exits <code>0</code> on failure makes a pipeline that is always green and protects nothing.)</p>
+<p>APITestCenter's command line uses: <code>0</code> passed · <code>1</code> a test or target failed · <code>2</code> couldn't run (a typo in a name, no such environment).</p>
+<h2 id="reports-people-can-read">Reports people can read</h2>
+<p>When a pipeline fails, someone has to find out why, quickly:</p>
+<ul><li><strong>JUnit XML</strong> — the standard test-report format; CI services show it as a list of passed and failed tests, with the reason.</li><li><strong>HTML</strong> — a readable report to download.</li><li><strong>JSON</strong> — for tools and dashboards.</li></ul>
+<p>A good failure message says <em>what</em> and <em>why</em>: <em>&quot;Get order: 1 of 3 checks failed: <code>$.total</code> should be number (it is string)&quot;</em>, not <em>&quot;assertion failed&quot;</em>.</p>
+<h2 id="secrets-in-pipelines">Secrets in pipelines</h2>
+<p>Your test files are committed, so they must hold <strong>no secrets</strong>. Write <code>{{token}}</code> in the test, and give the value to the pipeline as a <strong>secret variable</strong> in the CI service's settings. The pipeline passes it in at run time (<code>--var token=$TOKEN</code>), and CI services hide it in logs.</p>
+<p>Use a <strong>dedicated test account</strong> for the pipeline, with only the permissions the tests need.</p>
+<h2 id="what-to-run-where">What to run where</h2>
+<p>Not every test belongs on every push:</p>
+<div class="table-wrap"><table><thead><tr><th>When</th><th>What</th><th>Why</th></tr></thead><tbody><tr><td>Every push / pull request</td><td>Fast functional and contract tests (seconds to a minute)</td><td>Fast feedback before merging</td></tr><tr><td>After deploying to a test environment</td><td>The full collection, end-to-end flows</td><td>Real environment, real config</td></tr><tr><td>Nightly / before a release</td><td>Load tests, long flows, soak tests</td><td>Too slow or heavy for every push</td></tr></tbody></table></div>
+<p>A <strong>smoke</strong> load test (a few users for 30 seconds) can run on every deploy to catch a big slowdown early; serious load tests run on a schedule, against an environment built for them.</p>
+<h2 id="keeping-the-pipeline-trusted">Keeping the pipeline trusted</h2>
+<p>A pipeline people don't trust gets ignored. The enemy is the <strong>flaky test</strong> — one that fails sometimes for no real reason: a shared test record someone else changed, a timing check with no headroom, a test that depends on another test's leftovers.</p>
+<ul><li>Make tests <strong>independent</strong> — each creates what it needs and cleans up.</li><li>Don't depend on <strong>order between tests</strong> unless it's an explicit chain.</li><li>Give <strong>time checks</strong> headroom; leave tight performance limits to load tests.</li><li>When a test is flaky, <strong>fix it or remove it</strong> — never &quot;just re-run until green&quot;.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong> — run your tests the way a pipeline does.</p>
+<ol><li>Save a couple of practice requests with checks in a folder, say <em>Shop</em>.</li><li>In a terminal: <code>npx apitestcenter suite &quot;Shop&quot;</code> — it runs the folder's requests in order, prints each result, and ends with <em>PASS</em> or <em>FAIL</em>.</li><li>Add <code>--junit results.xml</code> and open the file: that's what a CI service shows.</li><li>Make a check fail on purpose and run it again. Then type <code>echo $?</code> (macOS, Linux) or <code>echo %errorlevel%</code> (Windows): <code>1</code> — the pipeline would stop here.</li></ol>
+<p><code>npx apitestcenter init</code> sets up a test folder and a ready GitHub Actions pipeline in your repository.</p></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>CI</strong> runs your API tests on every change, so regressions stop before they reach users.</li><li>The runner's <strong>exit code</strong> decides pass or fail; <strong>JUnit</strong> reports show why. <strong>Secrets</strong> come from the CI service, never from committed files.</li><li>Fast tests on every push, heavy ones on a schedule — and <strong>fix flaky tests</strong>, or nobody will trust the pipeline.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/cli-and-ci.html">Command line and CI</a> · <a href="../docs/ci-walkthrough.html">From the app to your pipeline</a></p>
+<p><strong>Next:</strong> <a href="why-performance-testing.html">Why test performance</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="mocking.html"><span>Previous</span>Mocks — testing without the real API</a><a class="next" href="why-performance-testing.html"><span>Next</span>Why test performance</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#how-a-pipeline-runs-api-tests">How a pipeline runs API tests</a></li><li><a href="#exit-codes-how-a-pipeline-knows">Exit codes: how a pipeline knows</a></li><li><a href="#reports-people-can-read">Reports people can read</a></li><li><a href="#secrets-in-pipelines">Secrets in pipelines</a></li><li><a href="#what-to-run-where">What to run where</a></li><li><a href="#keeping-the-pipeline-trusted">Keeping the pipeline trusted</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

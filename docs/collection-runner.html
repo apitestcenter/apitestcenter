@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Testing APIs</p>
         <h1>Run a collection</h1>
         <p class="docs-lead">Send every request in a collection once, in your order, and see which passed and why the others didn't — a functional test of a whole API in one click.</p>
-        <p>A <strong>load test</strong> asks <em>“is one request fast enough under load?”</em>. A <strong>collection run</strong> asks <em>“does every request still work?”</em> — usually the first thing to check after a release.</p>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/chaining-and-test-data.html">chaining requests</a> and <a href="../learn/api-tests-in-ci.html">API tests in a pipeline</a>.</p></aside>
+<p>A <strong>load test</strong> asks <em>“is one request fast enough under load?”</em>. A <strong>collection run</strong> asks <em>“does every request still work?”</em> — usually the first thing to check after a release.</p>
 <h2 id="run-one">Run one</h2>
 <p>Click <strong>▶</strong> next to a collection in the saved-requests list, or open <strong>Run collection</strong> in the sidebar.</p>
 <ol><li>Pick the <strong>Collection</strong> and the <strong>Environment</strong>. Every folder is listed; running a folder runs its subfolders too, and each request gets its folders' auth, headers and variables. <em>No collection</em> holds the saved requests that are in no folder.</li><li>Check the <strong>run order</strong>. Untick a request to leave it out; use the arrows to move it. The order is saved for next time and for the <a href="cli-and-ci.html">command line</a>.</li><li>Optionally tick <strong>Stop at the first failure</strong>.</li><li>Press **Run <em>N</em> requests** (<em>N</em> counts the ticked ones). <strong>Stop</strong> ends the run after the current request.</li></ol>
@@ -74,7 +76,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

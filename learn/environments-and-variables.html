@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Environments and variables — Learn API testing — APITestCenter</title>
+  <meta name="description" content="The same API usually runs in several places — development, test, staging, production. Variables and environments let one set of tests run against all of them, with secrets kept apart.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html" aria-current="page">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Environments and variables</h1>
+        <p class="docs-lead">The same API usually runs in several places — development, test, staging, production. Variables and environments let one set of tests run against all of them, with secrets kept apart.</p>
+        <p>A company rarely has <em>one</em> copy of an API. It has several <strong>environments</strong>:</p>
+<div class="table-wrap"><table><thead><tr><th>Environment</th><th>Also called</th><th>Used for</th></tr></thead><tbody><tr><td><strong>Local</strong></td><td>dev machine</td><td>A developer running it on their own computer</td></tr><tr><td><strong>Development</strong></td><td>DEV</td><td>The newest code, often broken</td></tr><tr><td><strong>Test</strong> / <strong>QA</strong></td><td>SIT, UAT</td><td>Testers and business users try it before release</td></tr><tr><td><strong>Staging</strong></td><td>pre-prod</td><td>A copy of production, for the last checks</td></tr><tr><td><strong>Production</strong></td><td>PROD, live</td><td>Real users and real data</td></tr></tbody></table></div>
+<p>Each has its own address — <code>http://localhost:3000</code>, <code>https://dev.api.example.com</code>, <code>https://uat.api.example.com</code>, <code>https://api.example.com</code> — and often its own accounts, tokens and test data.</p>
+<p>Writing every test four times, once per address, would be madness. <strong>Variables</strong> solve it.</p>
+<h2 id="variables-names-for-values">Variables: names for values</h2>
+<p>A <strong>variable</strong> is a name that stands for a value. You write <code>{{baseUrl}}/orders</code> once; the tool fills in <code>{{baseUrl}}</code> when it sends the request.</p>
+<p>An <strong>environment</strong> is a set of values for those names:</p>
+<div class="table-wrap"><table><thead><tr><th>Variable</th><th>Local</th><th>UAT</th><th>Production</th></tr></thead><tbody><tr><td><code>baseUrl</code></td><td><code>http://localhost:3000</code></td><td><code>https://uat.api.example.com</code></td><td><code>https://api.example.com</code></td></tr><tr><td><code>user</code></td><td><code>dev@example.com</code></td><td><code>tester@example.com</code></td><td>—</td></tr><tr><td><code>token</code> (secret)</td><td><code>dev-token</code></td><td><code>•••••••</code></td><td><code>•••••••</code></td></tr></tbody></table></div>
+<p>Pick <em>UAT</em>, and every request goes to UAT with UAT's values. Pick <em>Local</em>, and the same tests run on your own computer. That's the whole idea: <strong>tests describe what to check; environments describe where</strong>.</p>
+<p>Variables aren't only for addresses. Use them for anything that differs between environments or that you'd otherwise repeat: user names, ids of test records, API versions, page sizes.</p>
+<h2 id="secrets-belong-in-variables">Secrets belong in variables</h2>
+<p>Tokens, passwords and API keys should never be typed into the request itself. Put them in a variable marked <strong>secret</strong>:</p>
+<ul><li>the request then says <code>Authorization: Bearer {{token}}</code> — safe to save, share and commit to git;</li><li>the secret value stays on your computer (APITestCenter encrypts secret values and never writes them into your request files);</li><li>in a pipeline, the secret comes from the pipeline's own secret store (<code>--var token=…</code>).</li></ul>
+<h2 id="where-values-come-from">Where values come from</h2>
+<p>A value can come from several places. When two give the same name a value, a rule decides which wins. In APITestCenter, from weakest to strongest: <strong>folder variables</strong> (defaults for the requests inside a folder) → the <strong>environment</strong> → <strong>values saved from answers</strong> (like a token from a login a moment ago) → values filled <strong>while a test runs</strong> (from a run-first request or a row of test data). On the command line, <code>--var name=value</code> sets or overrides any of them. The general idea, in any tool: <em>the more specific and recent, the stronger</em>.</p>
+<h2 id="values-that-make-themselves">Values that make themselves</h2>
+<p>Some values should be different every time — a new order reference, a unique email for a sign-up test, today's date. <strong>Built-in values</strong> do that: <code>{{$uuid}}</code> (a random unique id), <code>{{$timestamp}}</code>, <code>{{$randomInt(1,100)}}</code>, <code>{{$randomEmail}}</code>. Each request gets a fresh one — which matters in load tests, where a thousand sign-ups with the same email would mostly fail as duplicates.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — one request, two environments.</p>
+<ol><li>Click <strong>Manage</strong> (next to <em>Environment</em>) and create an environment <strong>Practice</strong>. Add a variable <code>baseUrl</code> with the value of your practice API — copy it from any answer's address, the part before <code>/products</code>.</li><li>Create a second environment <strong>Broken</strong> with <code>baseUrl</code> = <code>http://localhost:1</code> (nothing listens there).</li><li>Send <code>GET {{baseUrl}}/products</code> with <strong>Practice</strong> chosen → <code>200</code>. Switch to <strong>Broken</strong> and Send again → <em>Connection refused</em>. Same request, different place.</li><li>Add <code>X-Request-Id: {{$uuid}}</code> as a header and look at <strong>Request sent</strong> after two Sends — a different id each time.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>An API runs in several <strong>environments</strong> (Local, DEV, UAT, staging, production), each with its own address and accounts.</li><li><strong>Variables</strong> (<code>{{baseUrl}}</code>) let one test run anywhere; an <strong>environment</strong> is a set of values for them.</li><li>Keep <strong>secrets in secret variables</strong>, never in the request; use <strong>built-in values</strong> for values that must be new every time.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/environments.html">Environments</a> · <a href="../docs/environments.html#which-value-wins">Which value wins</a> · <a href="../docs/environments.html#built-in-values-uuid-timestamp">Built-in values</a></p>
+<p><strong>Next:</strong> <a href="chaining-and-test-data.html">Chaining requests and test data</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="checks-and-assertions.html"><span>Previous</span>Checks — deciding what a correct answer is</a><a class="next" href="chaining-and-test-data.html"><span>Next</span>Chaining requests and test data</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#variables-names-for-values">Variables: names for values</a></li><li><a href="#secrets-belong-in-variables">Secrets belong in variables</a></li><li><a href="#where-values-come-from">Where values come from</a></li><li><a href="#values-that-make-themselves">Values that make themselves</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

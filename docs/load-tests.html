@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Testing APIs</p>
         <h1>Load tests</h1>
         <p class="docs-lead">Send the same request many times at once to see how fast it stays and whether it holds up — with presets, simulated users or a fixed request rate, and goals.</p>
-        <p>A load test sends your request again and again, from many <strong>simulated users</strong> at the same time, for a while. It runs on your computer with <a href="https://k6.io">k6</a>, the open-source load-testing engine bundled with the app.</p>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/why-performance-testing.html">why test performance</a>, <a href="../learn/users-and-requests-per-second.html">users and requests per second</a> and <a href="../learn/testing-safely.html">testing safely</a>.</p></aside>
+<p>A load test sends your request again and again, from many <strong>simulated users</strong> at the same time, for a while. It runs on your computer with <a href="https://k6.io">k6</a>, the open-source load-testing engine bundled with the app.</p>
 <p>Press <strong>Run load test</strong> (<strong>Ctrl+Shift+Enter</strong>) to start. Press <strong>Send</strong> first to check the answer.</p>
 <h2 id="before-it-starts">Before it starts</h2>
 <p><strong>Signing in.</strong> With <a href="sending-requests.html#oauth-20">OAuth 2.0</a>, the token is fetched once before the test, and each simulated user renews it if the test outlasts it. With <a href="chaining.html#run-first">Run first</a>, the sign-in request runs once and its values are shared.</p>
@@ -95,7 +97,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

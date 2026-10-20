@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chaining requests and test data — Learn API testing — APITestCenter</title>
+  <meta name="description" content="Real flows take several requests — sign in, create, read, delete — each using values from the one before. And one test can run with many inputs. How chaining and data-driven testing work.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html" aria-current="page">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Chaining requests and test data</h1>
+        <p class="docs-lead">Real flows take several requests — sign in, create, read, delete — each using values from the one before. And one test can run with many inputs. How chaining and data-driven testing work.</p>
+        <p>Real use of an API is rarely one request. A shopper signs in, finds a product, orders it, checks the order, maybe cancels. Each step needs something from an earlier one: the <strong>token</strong> from the sign-in, the <strong>id</strong> of the order just created. Passing values from one request to the next is called <strong>chaining</strong>.</p>
+<h2 id="taking-a-value-from-an-answer">Taking a value from an answer</h2>
+<p>The sign-in answers:</p>
+<pre><code class="lang-json">{ &quot;data&quot;: { &quot;token&quot;: &quot;demo-8ed65df1c13…&quot;, &quot;user&quot;: &quot;ann&quot;, &quot;expiresIn&quot;: 3600 } }</code></pre>
+<p>You tell the tool <em>where</em> the value is — the JSON path <code>data.token</code> (<a href="json.html">JSON</a>) — and <em>what to call it</em> — <code>token</code>. From then on, <code>{{token}}</code> means that value, in any request after it.</p>
+<p>Three ways to point at a value:</p>
+<ul><li>a <strong>JSON path</strong> — <code>data.token</code>, <code>items[0].id</code> — for JSON answers (most of the time);</li><li>a <strong>header</strong> — the <code>Location</code> header after a create, for example;</li><li>a <strong>text pattern</strong> (a regular expression) — for anything else, like a value inside HTML or XML: <code>token=([a-z0-9]+)</code> keeps the part in brackets.</li></ul>
+<h2 id="two-directions">Two directions</h2>
+<p>There are two ways to wire a chain, and they suit different needs:</p>
+<ul><li><strong>&quot;Before me, run that&quot;</strong> — a request says <em>send the sign-in first, and take the token from it</em>. Use it for setup that every test of this request needs. (In APITestCenter: <strong>Run first</strong>.)</li><li><strong>&quot;After me, keep this&quot;</strong> — a request says <em>take the <code>id</code> from my answer and keep it for whoever comes next</em>. Use it for flows: create → read → update → delete. (In APITestCenter: <strong>Save values</strong>.)</li></ul>
+<p>A typical end-to-end flow, run as a collection in order:</p>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Request</th><th>Takes</th><th>Gives</th></tr></thead><tbody><tr><td>1</td><td><code>POST /login</code></td><td><code>{{user}}</code>, <code>{{password}}</code></td><td><code>{{token}}</code></td></tr><tr><td>2</td><td><code>POST /orders</code></td><td><code>{{token}}</code></td><td><code>{{orderId}}</code></td></tr><tr><td>3</td><td><code>GET /orders/{{orderId}}</code></td><td><code>{{token}}</code>, <code>{{orderId}}</code></td><td>— checks the order is there</td></tr><tr><td>4</td><td><code>DELETE /orders/{{orderId}}</code></td><td>both</td><td>— cleans up</td></tr><tr><td>5</td><td><code>GET /orders/{{orderId}}</code></td><td>both</td><td>— checks it's gone (<code>404</code>)</td></tr></tbody></table></div>
+<p>Step 4 matters: <strong>tests should clean up after themselves</strong>, or the test environment fills with junk orders and later tests trip over them.</p>
+<h3 id="order-matters">Order matters</h3>
+<p>A chain only works in order. If <em>Get order</em> runs before <em>Create order</em>, <code>{{orderId}}</code> doesn't exist yet. Good tools tell you which request was supposed to produce it. When a step in the middle fails, the steps after it can't do anything useful — some tools stop the run there (&quot;stop at the first failure&quot;).</p>
+<h2 id="test-data-one-test-many-inputs">Test data: one test, many inputs</h2>
+<p>A test with one input proves the API works for that input. Real APIs get thousands of different ones. <strong>Data-driven testing</strong> runs the same request with rows from a table — usually a CSV file:</p>
+<pre><code class="lang-csv">email,password,expected
+ann@example.com,correct-1,200
+bob@example.com,wrong,401
+,missing,400
+very.long.name.that.goes.on.and.on@example.com,correct-2,200</code></pre>
+<p>Each column becomes a variable (<code>{{email}}</code>, <code>{{password}}</code>), and each row is one run. With an <code>expected</code> column, the same test checks the happy path <em>and</em> the failures. In a <strong>load test</strong>, test data makes the traffic realistic: a thousand users signing in as a thousand different accounts, not one account a thousand times (which a cache would answer instantly and tell you nothing).</p>
+<p>Rows can be used <strong>in order</strong>, <strong>at random</strong>, or <strong>one per simulated user</strong> — the last is what you want for logins, so each user stays one person.</p>
+<h3 id="where-test-data-comes-from">Where test data comes from</h3>
+<ul><li><strong>Made up</strong>, with variety on purpose: long and short, accents and emoji (<code>José</code>, <code>Zoë</code>), empty values, the biggest and smallest allowed numbers.</li><li><strong>Generated</strong> fresh each time: <code>{{$uuid}}</code>, <code>{{$randomEmail}}</code> — so a sign-up test never collides with yesterday's.</li><li><strong>Copied from production</strong> — careful: real customer data in a test system can be a legal problem. Mask or invent it.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong> — a three-step chain on the practice API.</p>
+<ol><li>Save <code>POST {{practiceApi}}/login</code> (body <code>{ &quot;username&quot;: &quot;you&quot;, &quot;password&quot;: &quot;demo&quot; }</code>) as <strong>Sign in</strong>.</li><li>Create <code>POST {{practiceApi}}/orders</code> with body <code>{ &quot;productId&quot;: 2, &quot;quantity&quot;: 1 }</code>. On <strong>Run first</strong>, choose <em>Sign in</em> and take <strong>JSON field</strong> <code>data.token</code> as <code>{{token}}</code>; press <em>Use {{token}} as the Bearer token</em>. On <strong>Save values</strong>, take <code>id</code> as <code>{{orderId}}</code>. Send → <code>201</code>, and <code>{{orderId}}</code> appears under <em>Saved from answers</em>.</li><li>New request: <code>GET {{practiceApi}}/orders/{{orderId}}</code>, with the same Run first. Send → your order.</li></ol>
+<p>Save all three in one folder and run the folder as a <strong>collection</strong>: they run in order, passing the values along.</p></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>Chaining</strong> passes values — tokens, ids — from one request's answer to the next, by JSON path, header or pattern.</li><li>Run a flow <strong>in order</strong>, and <strong>clean up</strong> what tests create.</li><li><strong>Test data</strong> runs one test with many inputs — happy and unhappy — and makes load tests realistic; one row per user for logins.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/chaining.html#run-first">Run first</a> · <a href="../docs/chaining.html#save-values">Save values</a> · <a href="../docs/chaining.html#test-data">Test data</a> · <a href="../docs/collection-runner.html#a-real-flow-create-read-delete">A real flow: create, read, delete</a></p>
+<p><strong>Next:</strong> <a href="contract-testing.html">Contracts and schemas</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="environments-and-variables.html"><span>Previous</span>Environments and variables</a><a class="next" href="contract-testing.html"><span>Next</span>Contracts and schemas</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#taking-a-value-from-an-answer">Taking a value from an answer</a></li><li><a href="#two-directions">Two directions</a></li><li><a href="#test-data-one-test-many-inputs">Test data: one test, many inputs</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Requests — addresses and methods — Learn API testing — APITestCenter</title>
+  <meta name="description" content="Every API request says where to go (the URL) and what to do (the method). How URLs are built, and what GET, POST, PUT, PATCH and DELETE mean.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html" aria-current="page">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">APIs from zero</p>
+        <h1>Requests — addresses and methods</h1>
+        <p class="docs-lead">Every API request says where to go (the URL) and what to do (the method). How URLs are built, and what GET, POST, PUT, PATCH and DELETE mean.</p>
+        <p>Every request answers two questions: <strong>where?</strong> and <strong>what should happen there?</strong> The <em>where</em> is the <strong>URL</strong>. The <em>what</em> is the <strong>method</strong>.</p>
+<h2 id="the-url-an-address-piece-by-piece">The URL: an address, piece by piece</h2>
+<pre><code>https://api.shop.example.com:443/v2/orders/A-1001?expand=items&amp;lang=en
+└─┬─┘   └─────────┬─────────┘└┬┘└──────┬───────┘└─────────┬─────────┘
+scheme          host        port     path               query</code></pre>
+<ul><li><strong>Scheme</strong> — <code>https</code> (encrypted) or <code>http</code> (not encrypted). Real APIs should use <code>https</code>; <code>http</code> is fine on your own computer.</li><li><strong>Host</strong> — which server: <code>api.shop.example.com</code>. On your own computer it's <code>localhost</code> or <code>127.0.0.1</code>.</li><li><strong>Port</strong> — which &quot;door&quot; on that server. Usually left out: <code>https</code> means 443 and <code>http</code> means 80. Programs you run yourself often use others, like <code>localhost:3000</code> or <code>localhost:8080</code>.</li><li><strong>Path</strong> — which thing on the server: <code>/v2/orders/A-1001</code>. It often reads like folders: <em>version 2 → orders → order A-1001</em>.</li><li><strong>Query</strong> — extra details after a <code>?</code>, as <code>name=value</code> pairs joined by <code>&amp;</code>: <code>expand=items&amp;lang=en</code>. Used for options like filters, sorting and pages.</li></ul>
+<p>The part from the scheme to the port — <code>https://api.shop.example.com</code> — is the <strong>base URL</strong>. One API usually has one base URL and many paths. That's why tools let you store the base URL once (in APITestCenter as <code>{{baseUrl}}</code>) and write each request as just its path: <code>{{baseUrl}}/orders</code>.</p>
+<h3 id="resources-the-nouns-of-an-api">Resources: the nouns of an API</h3>
+<p>Most web APIs are organised around <strong>resources</strong> — the things the API is about: products, orders, users, invoices. A good path names a resource:</p>
+<div class="table-wrap"><table><thead><tr><th>Path</th><th>Means</th></tr></thead><tbody><tr><td><code>/orders</code></td><td>all orders (a <em>collection</em>)</td></tr><tr><td><code>/orders/A-1001</code></td><td>one order</td></tr><tr><td><code>/orders/A-1001/items</code></td><td>the items of that order</td></tr><tr><td><code>/users/42/orders</code></td><td>the orders of user 42</td></tr></tbody></table></div>
+<p>The <strong>method</strong> then says what to do with it.</p>
+<h2 id="the-method-what-to-do">The method: what to do</h2>
+<div class="table-wrap"><table><thead><tr><th>Method</th><th>Means</th><th>Example</th><th>Has a body?</th></tr></thead><tbody><tr><td><strong>GET</strong></td><td>Read — give me this</td><td><code>GET /orders/A-1001</code></td><td>No</td></tr><tr><td><strong>POST</strong></td><td>Create — make a new one (or <em>do</em> something)</td><td><code>POST /orders</code> with the new order</td><td>Yes</td></tr><tr><td><strong>PUT</strong></td><td>Replace — make this one exactly like this</td><td><code>PUT /users/42</code> with the whole user</td><td>Yes</td></tr><tr><td><strong>PATCH</strong></td><td>Change part of it</td><td><code>PATCH /users/42</code> with just <code>{ &quot;email&quot;: &quot;…&quot; }</code></td><td>Yes</td></tr><tr><td><strong>DELETE</strong></td><td>Remove it</td><td><code>DELETE /orders/A-1001</code></td><td>Usually no</td></tr><tr><td>HEAD</td><td>Like GET, but only the headers — <em>does it exist, how big is it?</em></td><td></td><td>No</td></tr><tr><td>OPTIONS</td><td>What may I do here? (browsers ask this before some requests)</td><td></td><td>No</td></tr></tbody></table></div>
+<p>The same path with different methods does different things: <code>GET /orders</code> lists orders, <code>POST /orders</code> creates one.</p>
+<h3 id="safe-and-idempotent-two-words-worth-knowing">Safe and idempotent: two words worth knowing</h3>
+<ul><li>A <strong>safe</strong> method only reads; it changes nothing on the server. GET and HEAD are safe. You can send them a hundred times and nothing happens to the data.</li><li>An <strong>idempotent</strong> method has the same effect whether you send it once or ten times. GET, PUT and DELETE are idempotent: deleting order A-1001 twice still leaves it deleted; putting the same user twice leaves the same user. <strong>POST is not</strong>: sending <em>&quot;create an order&quot;</em> twice usually creates <strong>two</strong> orders.</li></ul>
+<p>This matters for testing — and for load testing especially. A load test sends a request thousands of times. Thousands of GETs are harmless; thousands of POSTs create thousands of records. It also matters when networks fail: if a POST times out, you don't know whether the order was created — sending it again might create a duplicate. Good APIs offer a way around this (an <em>idempotency key</em>), and good tests check it.</p>
+<h2 id="putting-it-together">Putting it together</h2>
+<pre><code class="lang-http">POST https://api.shop.example.com/v2/orders?notify=true</code></pre>
+<p>reads: <em>at the shop API, version 2, create a new order, and send a notification</em>. The details of the order travel in the <strong>body</strong> — next lesson.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — the same address, different methods.</p>
+<ol><li>Send <code>GET {{practiceApi}}/products</code> — the product list. A <em>safe</em> request: send it as often as you like.</li><li>Change the method (the menu left of the URL) to <strong>POST</strong> and the URL to <code>{{practiceApi}}/login</code>. Open the <strong>Body</strong> tab, choose JSON, and write <code>{ &quot;username&quot;: &quot;you&quot;, &quot;password&quot;: &quot;demo&quot; }</code>. Send. The answer contains a token — you just <em>did</em> something rather than read something.</li><li>Send <code>GET {{practiceApi}}/products?page=2</code>. The practice API ignores the query here, but look at the <strong>Params</strong> tab: the app split <code>page=2</code> out of the URL for you, one row per parameter.</li><li>Type <code>/products</code> in an empty URL bar and look at the menu that appears on its left: it offers base URLs — that's the split between <em>base URL</em> and <em>path</em>.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>The <strong>URL</strong> is the address: scheme, host, port, path and query. The <strong>base URL</strong> is the server; the <strong>path</strong> names the resource.</li><li>The <strong>method</strong> says what to do: <strong>GET</strong> reads, <strong>POST</strong> creates, <strong>PUT</strong> replaces, <strong>PATCH</strong> changes part, <strong>DELETE</strong> removes.</li><li><strong>GET is safe</strong> (changes nothing) and <strong>POST isn't idempotent</strong> (sent twice, it acts twice) — remember both before you load-test.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests.html#the-request-bar">The request bar</a> · <a href="../docs/environments.html#choosing-a-base-url">Choosing a base URL</a></p>
+<p><strong>Next:</strong> <a href="headers-params-bodies.html">Headers, query parameters and bodies</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="what-is-an-api.html"><span>Previous</span>What an API is</a><a class="next" href="headers-params-bodies.html"><span>Next</span>Headers, query parameters and bodies</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-url-an-address-piece-by-piece">The URL: an address, piece by piece</a></li><li><a href="#the-method-what-to-do">The method: what to do</a></li><li><a href="#putting-it-together">Putting it together</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

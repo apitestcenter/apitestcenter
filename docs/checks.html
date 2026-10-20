@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Testing APIs</p>
         <h1>Checks</h1>
         <p class="docs-lead">Rules for a correct answer. A fast answer with an error inside should still fail — checks make sure it does.</p>
-        <p>Open the <strong>Checks</strong> tab and add rules. Each Send shows ✓ or ✕ for every rule, and a load test applies them to <strong>every</strong> request, so the report says what share of answers were correct — not just fast.</p>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/checks-and-assertions.html">what to check, and how strict to be</a>, and <a href="../learn/contract-testing.html">contracts and schemas</a>.</p></aside>
+<p>Open the <strong>Checks</strong> tab and add rules. Each Send shows ✓ or ✕ for every rule, and a load test applies them to <strong>every</strong> request, so the report says what share of answers were correct — not just fast.</p>
 <h2 id="kinds-of-checks">Kinds of checks</h2>
 <div class="table-wrap"><table><thead><tr><th>Check</th><th>Passes when</th><th>Example</th></tr></thead><tbody><tr><td><strong>Status</strong></td><td>The status matches. Use one code, several, a range, or a class.</td><td><code>200</code> · <code>200, 201</code> · <code>200-299</code> · <code>2xx</code></td></tr><tr><td><strong>JSON field</strong></td><td>A field exists or not; equals, does not equal, or contains a value; is more or less than a number; matches a pattern; is of a type; has a length.</td><td><code>data.items[0].id</code> exists · <code>errors</code> does not exist · <code>total</code> is more than <code>0</code> · <code>items</code> has length <code>&gt;0</code> · <code>id</code> is of type <code>integer</code></td></tr><tr><td><strong>Body text</strong></td><td>The answer contains — or does not contain — some text, matches a pattern, or is valid JSON.</td><td>does not contain <code>error</code> · is valid JSON</td></tr><tr><td><strong>Header</strong></td><td>A response header exists or not, equals, contains, or matches a pattern.</td><td><code>content-type</code> contains <code>json</code> · <code>x-powered-by</code> does not exist</td></tr><tr><td><strong>Response time</strong></td><td>The answer arrived within a time, in milliseconds.</td><td>within <code>500</code> ms</td></tr><tr><td><strong>JSON schema</strong></td><td>The whole answer matches a <a href="https://json-schema.org">JSON Schema</a>.</td><td>see below</td></tr></tbody></table></div>
 <p><strong>JSON paths</strong> start from the top of the answer: <code>name</code>, <code>data.user.id</code>, <code>items[2].price</code>. A leading <code>$.</code> is fine too.</p>
@@ -68,7 +70,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

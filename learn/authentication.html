@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signing in — authentication — Learn API testing — APITestCenter</title>
+  <meta name="description" content="How an API knows who is asking — API keys, Basic, Bearer tokens, OAuth 2.0, JWT, cookies and certificates — what each is, when it's used, and the mistakes to avoid.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html" aria-current="page">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">APIs from zero</p>
+        <h1>Signing in — authentication</h1>
+        <p class="docs-lead">How an API knows who is asking — API keys, Basic, Bearer tokens, OAuth 2.0, JWT, cookies and certificates — what each is, when it's used, and the mistakes to avoid.</p>
+        <p>Most APIs don't answer just anyone. Before they do, they want to know <strong>who is asking</strong> — that's <strong>authentication</strong> (&quot;authn&quot;) — and then whether that someone <strong>may do this</strong> — <strong>authorization</strong> (&quot;authz&quot;). A <code>401</code> means authentication failed; a <code>403</code> means authorization did (<a href="status-codes.html">status codes</a>).</p>
+<p>There are a handful of common ways to sign in. You'll meet all of them.</p>
+<h2 id="api-key">API key</h2>
+<p>A long secret string the API gives you, sent with every request — usually in a header:</p>
+<pre><code class="lang-http">GET /forecast
+X-API-Key: 9f3c2b7e41d8a6...</code></pre>
+<p>Simple, and common for public data APIs and server-to-server use. The key identifies an <strong>application</strong>, not a person. Anyone who has it can use it as you — so keep it out of code you share and out of URLs.</p>
+<h2 id="basic-authentication">Basic authentication</h2>
+<p>A username and password, joined with <code>:</code> and encoded (Base64), in the <code>Authorization</code> header:</p>
+<pre><code class="lang-http">Authorization: Basic YW5uOnNlY3JldA==        ← &quot;ann:secret&quot;</code></pre>
+<p>The encoding is <strong>not</strong> encryption — anyone can decode it. Basic is only acceptable over <code>https</code>, and mostly appears on internal and older systems.</p>
+<h2 id="bearer-tokens">Bearer tokens</h2>
+<p>You sign in <strong>once</strong> (with a password, or through OAuth below), get a <strong>token</strong> back, and send that token with every request:</p>
+<pre><code class="lang-http">Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</code></pre>
+<p><em>Bearer</em> means &quot;whoever bears this token is allowed&quot; — so a token is as precious as a password. Tokens usually <strong>expire</strong> (after minutes or hours), which limits the damage if one leaks — and means your tests must get a new one now and then.</p>
+<p>A typical flow — exactly what <a href="chaining-and-test-data.html">chaining</a> automates:</p>
+<ol><li><code>POST /login</code> with a username and password → the answer contains <code>&quot;token&quot;: &quot;eyJ…&quot;</code>.</li><li>Every request after that: <code>Authorization: Bearer eyJ…</code>.</li></ol>
+<h2 id="jwt-a-token-you-can-read">JWT: a token you can read</h2>
+<p>Many tokens are <strong>JWTs</strong> (<em>JSON Web Tokens</em>, said &quot;jot&quot;): three Base64 parts separated by dots — <code>header.payload.signature</code>. The payload is JSON you can decode and read:</p>
+<pre><code class="lang-json">{ &quot;sub&quot;: &quot;user-42&quot;, &quot;name&quot;: &quot;Ann&quot;, &quot;role&quot;: &quot;admin&quot;, &quot;exp&quot;: 1792400000 }</code></pre>
+<p><code>sub</code> is who, <code>exp</code> is when it expires (in seconds since 1970). The <strong>signature</strong> lets the server check nobody changed it. Readable doesn't mean editable: change <code>&quot;role&quot;: &quot;user&quot;</code> to <code>&quot;admin&quot;</code> and the signature no longer matches — the server refuses it. (Testing that it <em>does</em> refuse is a good security test.)</p>
+<h2 id="oauth-20-tokens-from-a-third-party">OAuth 2.0: tokens from a third party</h2>
+<p>When you click <em>&quot;Sign in with Google&quot;</em>, or an app asks <em>&quot;Allow this app to read your calendar?&quot;</em>, that's <strong>OAuth 2.0</strong>. Instead of giving an app your password, a separate <strong>authorization server</strong> gives the app a token with limited permission (its <strong>scopes</strong>, like <code>calendar.read</code>).</p>
+<p>The ways to get the token are called <strong>grants</strong>. The two you'll meet most in API testing:</p>
+<ul><li><strong>Client credentials</strong> — server to server, no person: the app sends its <em>client id</em> and <em>client secret</em> to the token address and gets a token. Common for internal APIs.</li><li><strong>Authorization code</strong> (with <strong>PKCE</strong>) — a person signs in through a browser, the app gets a code, and swaps it for a token. Used whenever a real user is involved.</li></ul>
+<p>Others exist: <em>password</em> (old, being retired), <em>refresh token</em> (swap an expiring token for a new one), <em>JWT bearer</em> and <em>SAML bearer</em> (enterprise systems like Salesforce and SAP). Tokens expire; a good tool renews them by itself — including during a long load test.</p>
+<h2 id="cookies-and-sessions">Cookies and sessions</h2>
+<p>Websites usually sign you in once and the server sets a <strong>cookie</strong> (<code>Set-Cookie: session=abc…</code>); your browser sends it back with every request (<code>Cookie: session=abc…</code>). Some APIs work the same way. A tool with a <strong>cookie jar</strong> keeps and returns cookies like a browser, so a login request signs in the requests after it.</p>
+<h2 id="signatures-and-certificates">Signatures and certificates</h2>
+<p>For higher security, some APIs want more than a secret in a header:</p>
+<ul><li><strong>Signed requests</strong> — every request is signed with a secret key, over its method, address, time and body: <strong>AWS Signature</strong>, <strong>OAuth 1.0</strong> (NetSuite and others), HMAC schemes. A copied request can't be reused later or changed.</li><li><strong>Client certificates (mutual TLS)</strong> — your computer proves who it is with a certificate during the encrypted connection, before any request is sent. Common in banking and between companies.</li><li><strong>Digest</strong> and <strong>NTLM</strong> — older challenge-and-answer sign-ins, still found inside companies (NTLM is Windows' own).</li></ul>
+<h2 id="keeping-secrets-secret">Keeping secrets secret</h2>
+<ul><li>Put secrets in <strong>variables</strong> marked secret, not in the request itself — and <strong>never</strong> commit them to git.</li><li>Use <strong>test accounts</strong> with test permissions, not your own admin account.</li><li>A token in a screenshot or a chat message is a leaked token. Revoke it.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong> — sign in and use the token.</p>
+<ol><li>Send <code>GET {{practiceApi}}/orders</code> → <code>401 Unauthorized</code>: who are you?</li><li>Send <code>POST {{practiceApi}}/login</code> with the body <code>{ &quot;username&quot;: &quot;you&quot;, &quot;password&quot;: &quot;demo&quot; }</code>. The answer has <code>data.token</code>.</li><li>Copy the token. On <code>GET {{practiceApi}}/orders</code>, open <strong>Auth</strong>, choose <strong>Bearer token</strong>, paste it, and Send → <code>200</code> with your orders.</li><li>Open <strong>Request sent</strong>: the <code>Authorization</code> header shows as <code>Bearer &lt;hidden&gt;</code> — the app keeps it out of sight until you choose <em>Show secrets</em>.</li></ol>
+<p>Copying tokens by hand gets old fast. <a href="chaining-and-test-data.html">Chaining requests</a> does it for you.</p></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>Authentication</strong> is <em>who are you</em> (fails with 401); <strong>authorization</strong> is <em>may you</em> (fails with 403).</li><li>The common kinds: <strong>API key</strong>, <strong>Basic</strong>, <strong>Bearer token</strong> (often a <strong>JWT</strong>), <strong>OAuth 2.0</strong>, <strong>cookies</strong>, and for high security <strong>signatures</strong> and <strong>client certificates</strong>.</li><li>A token is as good as a password: keep it in <strong>secret variables</strong>, out of git, chats and screenshots.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests.html#the-tabs-under-the-request">Auth</a> · <a href="../docs/sending-requests.html#oauth-20">OAuth 2.0</a> · <a href="../docs/sending-requests.html#folders-sign-in-once">Folders: sign in once</a> · <a href="../docs/sending-requests.html#cookies">Cookies</a> · <a href="../docs/sending-requests.html#client-certificates-mutual-tls">Client certificates</a></p>
+<p><strong>Next:</strong> <a href="api-styles.html">Kinds of APIs</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="json.html"><span>Previous</span>JSON</a><a class="next" href="api-styles.html"><span>Next</span>Kinds of APIs</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#api-key">API key</a></li><li><a href="#basic-authentication">Basic authentication</a></li><li><a href="#bearer-tokens">Bearer tokens</a></li><li><a href="#jwt-a-token-you-can-read">JWT: a token you can read</a></li><li><a href="#oauth-20-tokens-from-a-third-party">OAuth 2.0: tokens from a third party</a></li><li><a href="#cookies-and-sessions">Cookies and sessions</a></li><li><a href="#signatures-and-certificates">Signatures and certificates</a></li><li><a href="#keeping-secrets-secret">Keeping secrets secret</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

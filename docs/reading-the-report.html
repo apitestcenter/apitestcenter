@@ -19,7 +19,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
         <a href="../#features">Features</a>
-        <a href="./" aria-current="true">Docs</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../#faq">FAQ</a>
       </nav>
@@ -41,7 +42,8 @@
         <p class="docs-kicker">Results</p>
         <h1>Reading the report</h1>
         <p class="docs-lead">What every number in a load-test report means, how the app decides pass or fail, and what failing status codes like 429 or 503 are telling you.</p>
-        <h2 id="the-result">The result</h2>
+        <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/reading-results.html">response times, percentiles and errors</a>, and <a href="../learn/finding-bottlenecks.html">finding the bottleneck</a>.</p></aside>
+<h2 id="the-result">The result</h2>
 <p>At the top of every report is the <strong>Result</strong> — the app's plain summary:</p>
 <ul><li><strong>Looks healthy</strong> — nothing worrying at this load.</li><li><strong>Usable, with caveats</strong> — read the lines underneath before you rely on it.</li><li><strong>Not production-ready at this load</strong> — something clearly failed.</li><li><strong>Blocked by a rate limit or firewall</strong> — most requests were refused on purpose (429 or 403). The numbers show that limit, not your API's speed.</li></ul>
 <p>Underneath, each part is judged on its own:</p>
@@ -85,7 +87,8 @@
       <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
       <nav aria-label="Footer">
         <a href="../#download">Download</a>
-        <a href="./">Docs</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
         <a href="../whats-new.html">What&rsquo;s new</a>
         <a href="../privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>

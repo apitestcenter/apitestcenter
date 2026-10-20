@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading results — response times, percentiles, errors — Learn API testing — APITestCenter</title>
+  <meta name="description" content="A load test produces a lot of numbers. Which ones matter, why the average lies and p95 doesn't, what throughput and error rate tell you, and how to read the charts.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html" aria-current="page">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Performance and load testing</p>
+        <h1>Reading results — response times, percentiles, errors</h1>
+        <p class="docs-lead">A load test produces a lot of numbers. Which ones matter, why the average lies and p95 doesn't, what throughput and error rate tell you, and how to read the charts.</p>
+        <p>After a load test you have thousands of measurements. A handful of numbers summarise them — if you know how to read them.</p>
+<h2 id="response-time-latency">Response time (latency)</h2>
+<p><strong>Response time</strong> — also <strong>latency</strong> — is how long one request took: from sending it to receiving the whole answer, in milliseconds (ms; 1,000 ms = 1 second). For people, as a rough guide:</p>
+<div class="table-wrap"><table><thead><tr><th>Time</th><th>Feels</th></tr></thead><tbody><tr><td>under 100 ms</td><td>instant</td></tr><tr><td>100–300 ms</td><td>quick</td></tr><tr><td>300 ms – 1 s</td><td>noticeable</td></tr><tr><td>1–3 s</td><td>slow; attention wanders</td></tr><tr><td>over 3 s</td><td>many people give up</td></tr></tbody></table></div>
+<p>An API call is usually one of several behind a screen, so APIs need to be faster than the screen as a whole.</p>
+<h2 id="why-the-average-lies">Why the average lies</h2>
+<p>Imagine 100 requests: 95 take 50 ms, and 5 take 5 seconds — a database hiccup. The <strong>average</strong> is (95 × 50 + 5 × 5000) ÷ 100 = <strong>297 ms</strong>. It describes <em>nobody</em>: 95 people got 50 ms and 5 people waited 5 seconds. And with a busy site, &quot;5 in 100&quot; is thousands of unhappy people a day.</p>
+<p>So we use <strong>percentiles</strong>: line all the response times up from fastest to slowest, and read the value at a position.</p>
+<ul><li><strong>p50 (the median)</strong> — the middle: half were faster. <em>The typical experience.</em></li><li><strong>p95</strong> — 95% were faster than this; 5% were slower. <em>The experience of the unlucky few</em> — the number most goals use.</li><li><strong>p99</strong> — 99% were faster; 1 in 100 was slower. <em>The tail</em> — where problems hide.</li><li><strong>max</strong> — the single slowest. Often a fluke; worth a look, not worth a goal.</li></ul>
+<p>In the example: <strong>p50 = 50 ms</strong>, <strong>p95 = 50 ms</strong>… and <strong>p99 = 5,000 ms</strong>. The percentiles tell the true story; the average hid it.</p>
+<aside class="callout callout-note"><p><strong>Note</strong> Percentiles don't add up or average. The p95 of a page that makes four API calls is not the sum of the four p95s, and the average of two tests' p95s isn't the p95 of both. Compare like with like.</p></aside>
+<h2 id="throughput-requests-per-second">Throughput: requests per second</h2>
+<p><strong>Throughput</strong> — <strong>requests per second (RPS)</strong> — is how many answers the API gave each second. On its own it says little (&quot;we did 400 RPS&quot; — with what response times? how many failed?). It matters in relation to the others:</p>
+<ul><li>throughput <strong>rises</strong> with load while response times stay flat → the API has room;</li><li>throughput <strong>stops rising</strong> while response times climb → the API is at its limit (more load only makes queues longer);</li><li>throughput <strong>falls</strong> while load rises → the API is overloaded and getting worse.</li></ul>
+<h2 id="error-rate">Error rate</h2>
+<p>The <strong>error rate</strong> is the share of requests that <strong>failed</strong>: no answer at all (a timeout, a refused connection), or a status of 400 and above. And — if your requests have <a href="checks-and-assertions.html">checks</a> — answers that came back but were <strong>wrong</strong>.</p>
+<ul><li><strong>Any 5xx under load</strong> means something gave way. Find the first one in time: that's roughly where the limit is.</li><li><strong>429</strong> or <strong>403</strong> in bulk usually means a rate limit or firewall — the numbers then describe the <strong>guard</strong>, not the API (<a href="testing-safely.html">testing safely</a>).</li><li><strong>Timeouts</strong> mean answers took longer than the tool would wait.</li></ul>
+<aside class="callout callout-warning"><p><strong>Warning</strong> Failed requests are often very <strong>fast</strong> — an error page is quicker to send than real data. A test where 60% of requests fail can show wonderful response times. Always read the error rate <strong>before</strong> trusting the speed.</p></aside>
+<h2 id="reading-the-charts">Reading the charts</h2>
+<p>Most reports draw these over time. The patterns to recognise:</p>
+<div class="table-wrap"><table><thead><tr><th>You see</th><th>It usually means</th></tr></thead><tbody><tr><td>Response times flat while users rise</td><td>Plenty of room</td></tr><tr><td>Response times rise <strong>with</strong> the users, then flatten when users do</td><td>Normal queuing — check whether it's still within the goal</td></tr><tr><td>Response times rise steadily <strong>while load is constant</strong></td><td>Something <strong>grows</strong> over time — a leak, a queue, a filling table (soak tests find this)</td></tr><tr><td>Requests per second hit a ceiling; response times climb</td><td>The capacity limit</td></tr><tr><td>Errors start at a clear point</td><td>The breaking point — note the users / RPS at that moment</td></tr><tr><td>Sawtooth: slow, fast, slow, fast</td><td>Periodic pauses — garbage collection, a scheduled job, autoscaling</td></tr><tr><td>Slow only at the very start</td><td>Warm-up: cold caches, connections being made — ignore the first minute, or ramp up</td></tr></tbody></table></div>
+<h2 id="other-numbers-youll-see">Other numbers you'll see</h2>
+<ul><li><strong>Time to first byte (TTFB)</strong> — from sending until the first byte of the answer: mostly the server <em>working</em>. If TTFB is most of the response time, the time is spent in the API, not the network.</li><li><strong>Connection and TLS time</strong> — making the connection and the encryption; high when connections aren't reused.</li><li><strong>Apdex</strong> — a 0-to-1 score of how many answers were &quot;satisfying&quot; (within a target) or &quot;tolerable&quot; (within 4× it).</li><li><strong>Users / VUs</strong> — how many simulated users were running at each moment.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong> — see the average lie.</p>
+<ol><li>Request <code>GET {{practiceApi}}/flaky</code> — about 1 in 10 answers is a <code>500</code>. Run a <strong>Smoke</strong> test.</li><li>In the report, read <strong>Failed requests</strong> (about 10%) before anything else — then <strong>Typical response time</strong> (p50) and <strong>Response time</strong> (p95).</li><li>Now request <code>{{practiceApi}}/slow?ms=300</code> and run <strong>Spike</strong>. In the chart, watch p95 rise when the users jump — and drop back after.</li><li>Read the <strong>Result</strong> at the top, and the plain-language lines under it: errors, latency, stability, capacity — each judged on its own.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li><strong>Response time</strong> per request; summarise with <strong>percentiles</strong>, not the average: <strong>p50</strong> typical, <strong>p95</strong> the unlucky few, <strong>p99</strong> the tail.</li><li><strong>Throughput</strong> matters with the others: flat while times climb = the limit. <strong>Error rate first</strong> — failures are fast and flatter the speed.</li><li>Learn the chart shapes: rising under constant load = something <strong>grows</strong>; a ceiling in RPS = <strong>capacity</strong>.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/reading-the-report.html">Reading the report</a> · <a href="../docs/reading-the-report.html#key-numbers">Key numbers</a> · <a href="../docs/reading-the-report.html#the-result">The result</a></p>
+<p><strong>Next:</strong> <a href="finding-bottlenecks.html">Finding the bottleneck</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="users-and-requests-per-second.html"><span>Previous</span>Users and requests per second</a><a class="next" href="finding-bottlenecks.html"><span>Next</span>Finding the bottleneck</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#response-time-latency">Response time (latency)</a></li><li><a href="#why-the-average-lies">Why the average lies</a></li><li><a href="#throughput-requests-per-second">Throughput: requests per second</a></li><li><a href="#error-rate">Error rate</a></li><li><a href="#reading-the-charts">Reading the charts</a></li><li><a href="#other-numbers-youll-see">Other numbers you'll see</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

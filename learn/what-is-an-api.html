@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What an API is — Learn API testing — APITestCenter</title>
+  <meta name="description" content="An API is how one program asks another for something — and gets an answer back. What that looks like, with everyday examples.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html" aria-current="page">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">APIs from zero</p>
+        <h1>What an API is</h1>
+        <p class="docs-lead">An API is how one program asks another for something — and gets an answer back. What that looks like, with everyday examples.</p>
+        <p>When an app on your phone shows today's weather, it didn't work the weather out itself. It <strong>asked</strong> a weather service: <em>&quot;What's the weather in Bengaluru?&quot;</em> — and the service <strong>answered</strong>: <em>&quot;28 °C, cloudy.&quot;</em> The app then drew that on your screen.</p>
+<p>The way the app asked — which address it used, what words, in what shape — is the weather service's <strong>API</strong>: its <em>Application Programming Interface</em>. An API is a promise a program makes: <em>&quot;Ask me like this, and I'll answer like that.&quot;</em></p>
+<h2 id="programs-asking-programs">Programs asking programs</h2>
+<p>People use apps through screens: buttons, forms, menus. Programs use other programs through APIs: no screen, just questions and answers in an agreed format.</p>
+<p>Almost everything you do online is a chain of these questions:</p>
+<ul><li><strong>Paying in a shop</strong> — the shop's website asks a payment service: <em>&quot;Charge this card ₹1,499.&quot;</em> The payment service answers: <em>&quot;Approved.&quot;</em></li><li><strong>Signing in with Google</strong> — a site asks Google: <em>&quot;Is this person who they say they are?&quot;</em></li><li><strong>A ride app showing the car on a map</strong> — it asks its own servers every few seconds: <em>&quot;Where is driver 4021 now?&quot;</em></li><li><strong>Inside one company</strong> — the order system asks the stock system: <em>&quot;Do we have product 77?&quot;</em>, and the stock system asks the warehouse system.</li></ul>
+<p>The program that asks is the <strong>client</strong>. The program that answers is the <strong>server</strong> (it &quot;serves&quot; the answer). The same program can be both: the order system is a server to the website, and a client of the stock system.</p>
+<h2 id="a-request-and-a-response">A request and a response</h2>
+<p>Each question is a <strong>request</strong>; each answer is a <strong>response</strong>. On the web, most APIs use <strong>HTTP</strong> — the same language your browser uses to fetch web pages. A request to a weather API might look like this:</p>
+<pre><code class="lang-http">GET https://api.weather.example.com/now?city=Bengaluru
+Accept: application/json</code></pre>
+<p>and the response:</p>
+<pre><code class="lang-http">200 OK
+Content-Type: application/json
+
+{ &quot;city&quot;: &quot;Bengaluru&quot;, &quot;temperature&quot;: 28, &quot;sky&quot;: &quot;cloudy&quot; }</code></pre>
+<p>You'll learn every part of this in the next lessons. For now, notice the shape:</p>
+<ul><li>the request says <strong>what to do</strong> (<code>GET</code> — fetch something) and <strong>where</strong> (the address, or <em>URL</em>);</li><li>the response starts with a <strong>status</strong> (<code>200 OK</code> — it worked) and carries the <strong>data</strong>, here in a format called JSON.</li></ul>
+<p>A web page is made for people to read. An API response is made for programs to read: no colours, no layout, just the data.</p>
+<h2 id="why-apis-matter-so-much">Why APIs matter so much</h2>
+<ul><li><strong>Apps are built from them.</strong> A typical app calls dozens of APIs — its own and other companies'. If one breaks or slows down, the app breaks or slows down.</li><li><strong>Teams work through them.</strong> The team building the website and the team building the payment system agree on an API, then work separately. The API is the contract between them.</li><li><strong>Businesses connect through them.</strong> Banks, shops, airlines and governments share data through APIs instead of files and emails.</li></ul>
+<p>That is why testing APIs matters: when an API gives a wrong answer, or a slow one, everything built on top of it suffers — often without anyone noticing at first.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — your first API call, in under a minute.</p>
+<ol><li>Open APITestCenter. In the bar at the top, type <code>{{practiceApi}}/products</code>.</li><li>Press <strong>Send</strong>.</li><li>On the right you see the <strong>response</strong>: <code>200 OK</code>, and a list of products — each with an <code>id</code>, a <code>name</code>, a <code>price</code> and whether it's <code>inStock</code>.</li></ol>
+<p>You just did what every app does all day: asked a server for data, and got it back. Now try <code>{{practiceApi}}/products/3</code> — the answer is just product 3. And <code>{{practiceApi}}/products/99</code>: there is no product 99, so the server says so with <code>404 Not Found</code>.</p></aside>
+<h2 id="what-youll-meet-next">What you'll meet next</h2>
+<p>An API call is made of a few parts, and the next lessons take them one at a time:</p>
+<ul><li><a href="http-requests.html">the address and the method</a> — <em>where</em> and <em>what to do</em>;</li><li><a href="headers-params-bodies.html">headers, query parameters and the body</a> — the details a request carries;</li><li><a href="status-codes.html">the status code</a> — the answer's first word;</li><li><a href="json.html">JSON</a> — how the data is written;</li><li><a href="authentication.html">signing in</a> — how the server knows who's asking.</li></ul>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>An <strong>API</strong> is how a program asks another program for something: a <strong>request</strong> goes from a <strong>client</strong> to a <strong>server</strong>, and a <strong>response</strong> comes back.</li><li>Most APIs speak <strong>HTTP</strong>, like your browser, and answer with data (usually <strong>JSON</strong>) instead of a web page.</li><li>Apps, teams and businesses are connected through APIs — so a broken or slow API breaks or slows everything built on it.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests.html">Sending requests</a> · <a href="../docs/getting-started.html#the-practice-api">The practice API</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="index.html"><span>Previous</span>Learn API testing, from zero</a><a class="next" href="http-requests.html"><span>Next</span>Requests — addresses and methods</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#programs-asking-programs">Programs asking programs</a></li><li><a href="#a-request-and-a-response">A request and a response</a></li><li><a href="#why-apis-matter-so-much">Why APIs matter so much</a></li><li><a href="#what-youll-meet-next">What you'll meet next</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
