@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI agents (MCP) — APITestCenter guide</title>
+  <meta name="description" content="Let Claude Code, Cursor, VS Code Copilot or Claude Desktop send your saved requests, run collections and load tests, and read the reports — with your secrets kept hidden.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li><li><a href="working-in-the-app.html">Working in the app</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="live-connections.html">WebSockets and event streams</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="scripts.html">Scripts</a></li><li><a href="collection-runner.html">Run a collection</a></li><li><a href="mock-server.html">Mock server</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="ci-walkthrough.html">From the app to your pipeline</a></li><li><a href="cli-and-ci.html">Command line and CI</a></li><li><a href="ai-agents.html" aria-current="page">AI agents (MCP)</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Automation</p>
+        <h1>AI agents (MCP)</h1>
+        <p class="docs-lead">Let Claude Code, Cursor, VS Code Copilot or Claude Desktop send your saved requests, run collections and load tests, and read the reports — with your secrets kept hidden.</p>
+        <p>APITestCenter speaks <strong>MCP</strong> (Model Context Protocol), the standard way AI coding agents use tools. Connect it once, and you can ask your agent things like:</p>
+<ul><li><em>&quot;Send the Orders/List request against UAT and tell me why it fails.&quot;</em></li><li><em>&quot;Run the Checkout collection and fix the first test that fails.&quot;</em></li><li><em>&quot;Load-test the search endpoint on my local server with 20 users for a minute — is p95 under 300 ms?&quot;</em></li><li><em>&quot;Compare the last two load tests of the login request. Did it get slower?&quot;</em></li><li><em>&quot;Start the mock server for the Orders API so I can build the frontend.&quot;</em></li></ul>
+<p>The agent works with the same saved requests, environments, checks and scripts as the app.</p>
+<h2 id="connect-your-agent">Connect your agent</h2>
+<p>The agent starts APITestCenter itself with <code>npx apitestcenter mcp</code> (or <code>atc mcp</code> if you have the <a href="cli-and-ci.html#the-command-line-in-the-desktop-app">desktop app or a global install</a>). Pick yours:</p>
+<p><strong>Claude Code</strong> — in a terminal:</p>
+<pre><code class="lang-bash">claude mcp add apitestcenter -- npx -y apitestcenter mcp</code></pre>
+<p><strong>Cursor</strong> — <code>.cursor/mcp.json</code> in your project (or <code>~/.cursor/mcp.json</code> for all projects):</p>
+<pre><code class="lang-json">{
+  &quot;mcpServers&quot;: {
+    &quot;apitestcenter&quot;: { &quot;command&quot;: &quot;npx&quot;, &quot;args&quot;: [&quot;-y&quot;, &quot;apitestcenter&quot;, &quot;mcp&quot;] }
+  }
+}</code></pre>
+<p><strong>VS Code (Copilot agent mode)</strong> — <code>.vscode/mcp.json</code>:</p>
+<pre><code class="lang-json">{
+  &quot;servers&quot;: {
+    &quot;apitestcenter&quot;: { &quot;type&quot;: &quot;stdio&quot;, &quot;command&quot;: &quot;npx&quot;, &quot;args&quot;: [&quot;-y&quot;, &quot;apitestcenter&quot;, &quot;mcp&quot;] }
+  }
+}</code></pre>
+<p><strong>Claude Desktop</strong> — <em>Settings → Developer → Edit config</em>, then add the same <code>mcpServers</code> entry as for Cursor.</p>
+<aside class="callout callout-tip"><p><strong>Tip</strong> On Windows, if the agent says it can't find <code>npx</code>, use <code>&quot;command&quot;: &quot;cmd&quot;, &quot;args&quot;: [&quot;/c&quot;, &quot;npx&quot;, &quot;-y&quot;, &quot;apitestcenter&quot;, &quot;mcp&quot;]</code>.</p></aside>
+<p>It works on the app's usual data folder. For tests kept in a repository, add <code>--data api-tests</code> (in the args list: <code>&quot;mcp&quot;, &quot;--data&quot;, &quot;api-tests&quot;</code>).</p>
+<h2 id="what-the-agent-can-do">What the agent can do</h2>
+<div class="table-wrap"><table><thead><tr><th>Tool</th><th>What it does</th></tr></thead><tbody><tr><td><code>list_requests</code></td><td>Lists saved requests (as <em>Collection/Name</em>), collections, and environments with their variable names.</td></tr><tr><td><code>send_request</code></td><td>Sends a saved request once, with its folder auth, <a href="scripts.html">scripts</a> and <a href="checks.html">checks</a>. Returns the status, time, headers, the body (first 20 KB), check results and the <a href="sending-requests.html#request-sent-what-actually-went-out">request as sent</a>.</td></tr><tr><td><code>run_collection</code></td><td>Runs a collection or folder in its <a href="collection-runner.html">saved order</a>, passing saved values along. Returns which requests passed or failed, and why.</td></tr><tr><td><code>run_load_test</code></td><td>A <a href="load-tests.html">load test</a> of a saved request — a preset, or users / requests per second and duration, with optional p95 and error targets. Returns the verdict, percentiles, error rate, status codes and checks. Saved to <a href="history.html">History</a>, marked <em>Run by an AI agent (MCP)</em>.</td></tr><tr><td><code>load_test_result</code></td><td>The result of a long load test (one that ran past 100 s), or of any run in History.</td></tr><tr><td><code>list_runs</code></td><td>The latest load tests in History, to compare runs or spot a regression.</td></tr><tr><td><code>start_mock</code>, <code>stop_mock</code></td><td>The <a href="mock-server.html">mock server</a> for a collection.</td></tr></tbody></table></div>
+<p>The agent can't change or delete your saved requests, environments or History.</p>
+<h2 id="kept-safe">Kept safe</h2>
+<ul><li><strong>Secrets stay hidden.</strong> Secret environment variables show only their names; <code>Authorization</code>, cookies and API keys show as <code>&lt;hidden&gt;</code>; values saved from answers (often tokens) show only their names. The agent does see response bodies — that's what it's there to read — so don't point it at data it shouldn't see.</li><li><strong>Load tests only go where you allow.</strong> By default only to this computer (<code>localhost</code>, <code>127.0.0.1</code>). To let the agent load-test a test server, add it when you connect: <code>npx -y apitestcenter mcp --allow-load api-uat.example.com</code> (several: separated by commas). A load test to any other host is refused, and the agent is told how you could allow it. Sending single requests isn't limited.</li><li><strong>Secrets saved in the desktop app</strong> are encrypted for the app only, so the command line — and the agent — can't use them. Give the agent what it needs through <code>{{variables}}</code>: it can pass values (like a test token you give it) with each call.</li></ul>
+<h2 id="good-to-know">Good to know</h2>
+<ul><li>The agent's load tests use your computer, like the app's. A long test (past 100 s) keeps running; the agent fetches the result with <code>load_test_result</code>.</li><li>The agent sees only what the tools return. To check what it ran, open <strong>History</strong> in the app.</li><li>New to this? The words in the answers — <em>p95</em>, <em>error rate</em>, <em>requests per second</em> — are explained in <a href="reading-the-report.html">Reading the report</a>.</li></ul>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="cli-and-ci.html"><span>Previous</span>Command line and CI</a><a class="next" href="troubleshooting.html"><span>Next</span>Troubleshooting</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#connect-your-agent">Connect your agent</a></li><li><a href="#what-the-agent-can-do">What the agent can do</a></li><li><a href="#kept-safe">Kept safe</a></li><li><a href="#good-to-know">Good to know</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

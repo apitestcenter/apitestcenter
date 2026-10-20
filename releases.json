@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-20T08:04:19.840Z",
+  "generatedAt": "2026-10-20T14:18:43.856Z",
   "releases": [
+    {
+      "version": "0.12.0",
+      "date": "2026-10-20T14:18:41Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>AI agents can use the app (MCP).</strong> Connect Claude Code, Cursor, VS Code or Claude Desktop with one line, and ask them to send your requests, run collections and load tests, or read the reports. Secrets stay hidden, and load tests only go to hosts you allow.</li><li><strong>WebSockets and event streams.</strong> Type a <code>ws://</code> address and press Connect — send and receive messages live. Event-stream (SSE) answers show their events as they arrive. Try both with the practice API.</li><li><strong><code>pm.sendRequest</code> in scripts</strong> — sign in or look something up from a script, as in Postman. In load tests these extra requests are left out of the numbers.</li><li><strong>Scripts on folders</strong> — write a pre-request or tests script once, for every request inside. Postman collection and folder scripts import to their folders.</li><li><strong>Earlier answers</strong> — a saved request keeps its last 20 answers; open one, or see exactly what changed since (field by field, line by line). Secrets are masked before anything is saved.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.12.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.12.0.exe",
+          "size": 123334054,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.12.0/APITestCenter-Setup-0.12.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.12.0.exe",
+          "size": 123096264,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.12.0/APITestCenter-Portable-0.12.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.12.0-mac-arm64.dmg",
+          "size": 144959854,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.12.0/APITestCenter-0.12.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.12.0-mac-x64.dmg",
+          "size": 151854899,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.12.0/APITestCenter-0.12.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.12.0-linux-x86_64.AppImage",
+          "size": 153204233,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.12.0/APITestCenter-0.12.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.12.0-linux-amd64.deb",
+          "size": 123366708,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.12.0/APITestCenter-0.12.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.11.0",
       "date": "2026-10-20T08:04:18Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>Scripts.</strong> A pre-request script and a tests script on every request, with Postman's <code>pm</code> — <code>pm.test</code>, <code>pm.expect</code>, <code>pm.environment.set</code>, <code>pm.response.json()</code>. Tests count like checks, also in collection runs, CI and every request of a load test. Scripts run in a sandbox that can't reach your files, the network or the app.</li><li><strong>Postman scripts now import</strong> — request, folder and collection scripts, as Postman runs them.</li><li><strong>Mock server.</strong> Answer a collection's requests with example responses on your computer, to build a frontend before the API exists. <em>Save as example</em> on any answer, or write one; OpenAPI imports come with examples. Also <code>atc mock</code> for pipelines.</li><li><strong>OpenAPI imports check the API against its documentation</strong> — every request gets a JSON schema check from the documented response.</li><li><strong>Fix for the command line on Node 23 (Windows):</strong> <code>atc suite</code> could end with exit code 127 even when everything passed, failing a pipeline. Please update the npm package.</li><li><strong>Smoother:</strong> the Saved requests panel slides, switching requests fades, and <code>atc ui</code> opens sooner.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.11.0",
       "files": [

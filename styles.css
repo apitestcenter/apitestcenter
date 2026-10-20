@@ -251,3 +251,5 @@ details p { margin: 0 0 18px; color: var(--mute); }
   .docs-menu > summary { display: block; padding: 10px 28px 10px 6px; }
   .docs-menu:not([open]) > :not(summary) { display: none; }
 }
+
+.card code { font-size: 0.86em; color: var(--ink); background: var(--panel-2); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
