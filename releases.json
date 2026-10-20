@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-19T16:45:03.866Z",
+  "generatedAt": "2026-10-20T08:04:19.840Z",
   "releases": [
+    {
+      "version": "0.11.0",
+      "date": "2026-10-20T08:04:18Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>Scripts.</strong> A pre-request script and a tests script on every request, with Postman's <code>pm</code> — <code>pm.test</code>, <code>pm.expect</code>, <code>pm.environment.set</code>, <code>pm.response.json()</code>. Tests count like checks, also in collection runs, CI and every request of a load test. Scripts run in a sandbox that can't reach your files, the network or the app.</li><li><strong>Postman scripts now import</strong> — request, folder and collection scripts, as Postman runs them.</li><li><strong>Mock server.</strong> Answer a collection's requests with example responses on your computer, to build a frontend before the API exists. <em>Save as example</em> on any answer, or write one; OpenAPI imports come with examples. Also <code>atc mock</code> for pipelines.</li><li><strong>OpenAPI imports check the API against its documentation</strong> — every request gets a JSON schema check from the documented response.</li><li><strong>Fix for the command line on Node 23 (Windows):</strong> <code>atc suite</code> could end with exit code 127 even when everything passed, failing a pipeline. Please update the npm package.</li><li><strong>Smoother:</strong> the Saved requests panel slides, switching requests fades, and <code>atc ui</code> opens sooner.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.11.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.11.0.exe",
+          "size": 123296913,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.11.0/APITestCenter-Setup-0.11.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.11.0.exe",
+          "size": 123059132,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.11.0/APITestCenter-Portable-0.11.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.11.0-mac-arm64.dmg",
+          "size": 144957967,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.11.0/APITestCenter-0.11.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.11.0-mac-x64.dmg",
+          "size": 151819345,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.11.0/APITestCenter-0.11.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.11.0-linux-x86_64.AppImage",
+          "size": 153158958,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.11.0/APITestCenter-0.11.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.11.0-linux-amd64.deb",
+          "size": 123326876,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.11.0/APITestCenter-0.11.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.10.0",
       "date": "2026-10-19T16:45:02Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>See exactly what was sent.</strong> A new <strong>Request sent</strong> tab shows the request as it went out — after variables, folders, OAuth, signing and cookies — with every header, the body and any redirects. Secrets stay hidden until you choose <em>Show secrets</em>.</li><li><strong>Copy it as code</strong> — curl, PowerShell, JavaScript, Python, C#, Java, Go, or as a ready k6 load-test script.</li><li><strong>Built-in values:</strong> <code>{{$uuid}}</code>, <code>{{$timestamp}}</code>, <code>{{$isoTimestamp}}</code>, <code>{{$randomInt(1,100)}}</code>, <code>{{$randomString}}</code>, <code>{{$randomEmail}}</code>, random names and more — a fresh value for every request, in load tests too. Postman's <code>{{$guid}}</code> and <code>{{$timestamp}}</code> now work as imported.</li><li><strong>JSON schema checks.</strong> Make one from the last response in one click, then every answer must have that shape; a mismatch says where (<em>$.items[0].id should be integer</em>). Plus new checks: more/less than, type, length, patterns, valid JSON, header does not exist.</li><li><strong>Failed checks say why</strong> — <em>got 404</em>, <em>is &quot;pending&quot;</em> — in the app and in CI output.</li><li><strong>Response cookies</strong> in their own tab, and <strong>image answers</strong> shown as pictures.</li><li><strong>Running local servers are found reliably</strong> in the Base URL picker, with a refresh button.</li><li><strong>Skip TLS certificate check is now on for new requests</strong>, so test servers with their own certificates just work. Requests you saved keep their setting; turn it off to check certificates when testing production.</li><li><strong>Fixes:</strong> typing an address with a port (<code>http://localhost:8080/...</code>) no longer loses the port; <code>atc ui</code> shows the app icon.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.10.0",
       "files": [

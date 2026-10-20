@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mock server — APITestCenter guide</title>
+  <meta name="description" content="Answer a collection's requests with example responses on your computer — build the frontend before the API exists, or keep testing while it's down.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="./" aria-current="true">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li><li><a href="working-in-the-app.html">Working in the app</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="scripts.html">Scripts</a></li><li><a href="collection-runner.html">Run a collection</a></li><li><a href="mock-server.html" aria-current="page">Mock server</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="ci-walkthrough.html">From the app to your pipeline</a></li><li><a href="cli-and-ci.html">Command line and CI</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Mock server</h1>
+        <p class="docs-lead">Answer a collection's requests with example responses on your computer — build the frontend before the API exists, or keep testing while it's down.</p>
+        <p>The mock server pretends to be your API. It answers the requests of a collection (or folder) with each request's <strong>example</strong> response, on a port of your computer — so a frontend, a mobile app or another team's tests can work against it before the real API is ready, while it's down, or without touching shared test data.</p>
+<h2 id="give-requests-an-example">Give requests an example</h2>
+<p>Each saved request can have one example: the status, headers and body the mock answers with.</p>
+<ul><li><strong>From a real answer:</strong> send the request, then choose <strong>Save as example</strong> at the top of the response. Save the request to keep it.</li><li><strong>By hand:</strong> the <strong>Example</strong> tab — set the status, headers (one per line, <code>Name: value</code>), the body, and a wait before answering if you want it to feel like a slow server.</li><li><strong>From an OpenAPI file:</strong> <a href="sending-requests.html#importing-from-postman-insomnia-a-browser-recording-or-openapi">imported</a> requests already have one — the file's example for the success answer, or one made from its schema.</li></ul>
+<p>The body can use values: <code>{{id}}</code> is what the caller put in place of <code>{{id}}</code> in the path, a query parameter like <code>{{page}}</code> is filled from the address, and <a href="environments.html#built-in-values-uuid-timestamp">built-in values</a> like <code>{{$uuid}}</code> or <code>{{$randomInt(1,100)}}</code> are new on every call.</p>
+<pre><code class="lang-json">{ &quot;id&quot;: &quot;{{id}}&quot;, &quot;status&quot;: &quot;paid&quot;, &quot;ref&quot;: &quot;{{$uuid}}&quot; }</code></pre>
+<h2 id="start-it">Start it</h2>
+<p>Open <strong>Mock server</strong> — from a folder's <strong>⋯</strong> menu (<em>Mock server for this folder</em>), the link on the <strong>Example</strong> tab, or the <a href="working-in-the-app.html#the-command-palette">command palette</a>. Pick the collection or folder and a port (4010 unless you change it), and press <strong>Start</strong>. It shows its address, for example <code>http://127.0.0.1:4010</code>, every request it answers, and the calls it gets.</p>
+<p>Point your app at that address — or set <code>{{baseUrl}}</code> to it in an <a href="environments.html">environment</a> and send your saved requests to the mock.</p>
+<p>It keeps running until you press <strong>Stop</strong> or close the app. Only this computer can reach it. Any web page on this computer may call it (it sends <code>Access-Control-Allow-Origin: *</code>), so a frontend in the browser works without a proxy.</p>
+<h2 id="how-it-picks-the-answer">How it picks the answer</h2>
+<ul><li>The <strong>method</strong> and <strong>path</strong> of the call are matched against the saved requests. The path comes from each request's address: <code>{{baseUrl}}/orders/{{id}}</code> answers <code>/orders/A-1001</code>, <code>/orders/7</code>… — a <code>{{name}}</code> stands for any one part of the path. The query string doesn't matter.</li><li>When two match, the one with more fixed parts wins: <code>/orders/latest</code> before <code>/orders/{{id}}</code>.</li><li>A request <strong>without an example</strong> answers <code>501</code> and says so. A call that matches nothing answers <code>404</code> with the list of paths it knows.</li><li>Changes to an example are used at once — no restart.</li></ul>
+<h2 id="from-the-command-line">From the command line</h2>
+<pre><code class="lang-bash">npx apitestcenter mock &quot;Orders API&quot; --port 4010 --data api-tests</code></pre>
+<p><code>atc mock</code> runs it until <strong>Ctrl+C</strong>, printing each call. In a pipeline, start it in the background before your frontend's tests. <code>&quot;&quot;</code> mocks the requests outside any collection.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="collection-runner.html"><span>Previous</span>Run a collection</a><a class="next" href="reading-the-report.html"><span>Next</span>Reading the report</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#give-requests-an-example">Give requests an example</a></li><li><a href="#start-it">Start it</a></li><li><a href="#how-it-picks-the-answer">How it picks the answer</a></li><li><a href="#from-the-command-line">From the command line</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="./">Docs</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
