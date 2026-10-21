@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>APITestCenter — load testing you can actually read</title>
-  <meta name="description" content="Free desktop app to send API requests, run load tests, and get a plain-language answer: is your API fast enough? Your tests stay on your computer.">
-  <meta property="og:title" content="APITestCenter — load testing you can actually read">
-  <meta property="og:description" content="Send a request, run a load test, and get a plain-language answer. Free for Windows, Mac and Linux. Your tests stay on your computer.">
+  <title>APITestCenter — Build it. Test it. Load it. Ship it.</title>
+  <meta name="description" content="One free app to send and check API requests, load-test at up to 100,000 requests a second, run your tests in CI, and let AI agents test for you. Windows, Mac and Linux. No account.">
+  <meta property="og:title" content="APITestCenter — Build it. Test it. Load it. Ship it.">
+  <meta property="og:description" content="Requests, checks, load tests, a command line for CI and an MCP server for AI agents — one free desktop app. Your tests stay on your computer.">
   <meta property="og:image" content="https://apitestcenter.com/assets/screens/report.png">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#07090d">
@@ -16,25 +16,27 @@
   <link rel="preconnect" href="https://release-assets.githubusercontent.com">
   <link rel="preconnect" href="https://objects.githubusercontent.com">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="home.css">
   <script>
     try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+    document.documentElement.classList.add("js");
   </script>
   <script src="site.js" defer></script>
+  <script src="home.js" defer></script>
 </head>
-<body>
+<body class="home">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="site-header">
     <div class="wrap nav">
       <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
       <nav class="nav-links" aria-label="Main">
-        <a href="#features">Features</a>
-        <a href="#how">How it works</a>
-        <a href="#download">Download</a>
+        <a href="#ways">Product</a>
+        <a href="#tour">Tour</a>
+        <a href="#pricing">Pricing</a>
         <a href="docs/">Docs</a>
         <a href="learn/">Learn</a>
         <a href="whats-new.html">What&rsquo;s new</a>
-        <a href="#faq">FAQ</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="#download">Download</a>
@@ -42,258 +44,383 @@
   </header>
 
   <main id="main">
-    <div class="hero wrap">
-      <span class="eyebrow">Free desktop app for Windows, Mac and Linux</span>
-      <h1>Load testing you can actually read</h1>
-      <p class="lead">Send a request, run a load test, and get a plain-language answer: <strong>is your API fast enough, and will it hold up?</strong> No scripts to write, no account, and your tests never leave your computer.</p>
-      <div class="cta">
-        <a class="btn btn-primary" data-download="setup" data-primary href="#download">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-          <span data-primary-label>Download for Windows</span>
-        </a>
-        <a class="btn btn-ghost" href="#how">See how it works</a>
-      </div>
-      <p class="fine"><span data-version>Latest version</span> · Windows 10 and 11 · Mac and Linux preview · Free</p>
-      <figure class="shot">
-        <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
-        <video class="demo" autoplay muted loop playsinline preload="metadata" width="1280" height="800" poster="assets/demo-poster.jpg"
-          aria-label="Demo: typing a URL, sending one request with checks passing, running a load test with 12 simulated users and watching it live, then reading the report grouped by speed, reliability, and load.">
-          <source src="assets/demo.webm" type="video/webm">
-          <img src="assets/screens/report.png" width="1440" height="900" alt="APITestCenter showing a load test report: 45 requests per second, 40 ms response time, no failed requests, and a plain-language result.">
-        </video>
-        <figcaption class="fine" style="padding:8px 12px;margin:0;border-top:1px solid var(--line)">One minute with APITestCenter, against the practice API built into the app.</figcaption>
-      </figure>
-    </div>
-
-    <p class="strip"><span class="wrap" style="display:block">Load tests run on <strong>k6</strong>, the open-source load-testing engine — packaged inside the app, nothing to install or configure.</span></p>
-
-    <section id="features">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Everything you need to know if your API is ready</h2>
-          <p>Built for developers and testers — and readable by everyone else on the team.</p>
+    <!-- ───────────── Hero: one engine, three ways in ───────────── -->
+    <section class="hx" aria-labelledby="hx-title">
+      <div class="hx-grid" aria-hidden="true"></div>
+      <div class="hx-glow" aria-hidden="true"></div>
+      <div class="wrap hx-inner">
+        <div class="hx-copy">
+          <p class="hx-eyebrow"><span class="dot-live" aria-hidden="true"></span>Free · Windows, Mac &amp; Linux · No account</p>
+          <h1 id="hx-title" class="hx-title">
+            <span class="hx-word">Build it.</span>
+            <span class="hx-word">Test it.</span>
+            <span class="hx-word">Load it.</span>
+            <span class="hx-word hx-accent">Ship it.</span>
+          </h1>
+          <p class="hx-lead">
+            One free app to
+            <span class="ticker" aria-live="off">
+              <span class="ticker-item is-on">send and check requests</span>
+              <span class="ticker-item">load-test at 100,000 requests a second</span>
+              <span class="ticker-item">run your tests in CI</span>
+              <span class="ticker-item">let AI agents test for you</span>
+            </span>
+            <span class="sr-only">— send and check requests, load-test at up to 100,000 requests a second, run your tests in CI, and let AI agents test for you.</span>
+          </p>
+          <p class="hx-sub">Plain-language answers, not walls of numbers. Everything runs on your computer — localhost, VPN and internal APIs included.</p>
+          <div class="hx-cta">
+            <a class="btn btn-primary btn-lg" data-download="setup" data-primary href="#download">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+              <span data-primary-label>Download for Windows</span>
+            </a>
+            <button class="npx" type="button" data-copy="npx apitestcenter ui" title="Copy to clipboard">
+              <span class="npx-prompt" aria-hidden="true">$</span><code>npx apitestcenter ui</code><span class="npx-copy" data-copy-label>Copy</span>
+            </button>
+          </div>
+          <p class="fine"><span data-version>Latest version</span> · <a href="whats-new.html">What&rsquo;s new</a> · <span data-primary-alt></span></p>
+          <p class="fine download-note" data-download-note hidden>Download not starting? Your network may be checking the file first — give it a moment, or get it from <a data-releases href="#download">the release page</a>.</p>
         </div>
-        <div class="grid">
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-            <h3>Answers in plain words</h3>
-            <p>“Meets your goals under this load” instead of a wall of numbers. Every term has a plain name, with the technical one beside it.</p>
+
+        <!-- The stage: the app window, a terminal and an AI chat, layered in depth. -->
+        <div class="stage" data-stage aria-label="The APITestCenter app, its command line, and an AI agent using it" role="img">
+          <div class="layer layer-chat" data-depth="3">
+            <div class="chrome"><i></i><i></i><i></i><span>AI agent · MCP</span></div>
+            <div class="chat">
+              <p class="msg msg-you">Load test the orders API with 50 users. Is p95 under 300&nbsp;ms?</p>
+              <p class="msg msg-tool"><span>run_load_test</span> Orders · 50 users · 1m</p>
+              <p class="msg msg-bot">Yes — <b>p95 212 ms</b>, 0 errors, 410 req/s. All goals met ✓</p>
+            </div>
+          </div>
+          <div class="layer layer-term" data-depth="1">
+            <div class="chrome"><i></i><i></i><i></i><span>terminal</span></div>
+            <pre class="term" data-term><code></code></pre>
+          </div>
+          <div class="layer layer-app" data-depth="2">
+            <div class="chrome"><i></i><i></i><i></i><span>APITestCenter</span></div>
+            <video class="demo" autoplay muted loop playsinline preload="metadata" width="1280" height="800" poster="assets/clips/load-test.jpg" data-zoom data-src="assets/clips/load-test.webm" data-caption="A load test running live in APITestCenter.">
+              <source src="assets/clips/load-test.webm" type="video/webm">
+            </video>
+          </div>
+          <svg class="pulses" viewBox="0 0 600 460" preserveAspectRatio="none" aria-hidden="true" data-pulses></svg>
+        </div>
+      </div>
+
+      <!-- A response-time trace drawing itself along the bottom of the hero. -->
+      <div class="trace" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" data-trace><path class="trace-line"/><path class="trace-fill"/></svg>
+        <div class="trace-read wrap"><span>p95 <b data-p95>212</b> ms</span><span><b data-rps>410</b> req/s</span><span><b>0</b> errors</span><span class="trace-ok">goals met ✓</span></div>
+      </div>
+    </section>
+
+    <p class="strip"><span class="wrap" style="display:block">Load tests run on <strong>k6</strong>, the open-source load-testing engine — packaged inside, nothing to install. Imports from <strong>Postman</strong>, <strong>Insomnia</strong>, <strong>OpenAPI</strong> and browser recordings.</span></p>
+
+    <!-- ───────────── Four ways in ───────────── -->
+    <section id="ways" class="ways">
+      <div class="wrap">
+        <div class="kicker">One engine. Every way in.</div>
+        <h2 class="big">Whoever runs the test — you, your pipeline, or an AI — it&rsquo;s the same tests, the same answer.</h2>
+        <div class="ways-grid">
+          <article class="way" data-tilt>
+            <div class="way-art art-send" aria-hidden="true">
+              <span class="art-url"><b>GET</b> /orders/A-1001</span>
+              <span class="art-ok">200 OK · 42 ms</span>
+              <span class="art-check">✓ status is 200</span>
+              <span class="art-check">✓ total is a number</span>
+            </div>
+            <h3>The app</h3>
+            <p>Send requests, check the answers, chain a sign-in, feed in test data. Every term explained in plain words.</p>
           </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></div>
-            <h3>Send and load test in one place</h3>
-            <p>Paste a URL or a curl command, check the answer, then run it with hundreds of simulated users — same request, one click.</p>
+          <article class="way" data-tilt>
+            <div class="way-art art-load" aria-hidden="true">
+              <span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="art-label">users ↗ · p95 steady</span>
+            </div>
+            <h3>Load tests</h3>
+            <p>Up to 500 simulated users, or a steady rate of up to 100,000 requests a second. Watch it live, then read a report that says what it means.</p>
           </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></div>
-            <h3>Reports you arrange yourself</h3>
-            <p>20 charts and numbers to choose from. Drag, resize, and save your own views — one for developers, one for managers.</p>
+          <article class="way" data-tilt>
+            <div class="way-art art-cli" aria-hidden="true">
+              <span><em>$</em> npx apitestcenter suite "Orders"</span>
+              <span class="g">✓ GET  List orders  200 31 ms</span>
+              <span class="g">✓ POST Create order 201 48 ms</span>
+              <span class="g">PASS  2 of 2 passed</span>
+            </div>
+            <h3>Command line &amp; CI</h3>
+            <p>Run the same collections in GitHub Actions, GitLab or Jenkins. JUnit and HTML reports; the build fails when a goal is missed.</p>
           </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg></div>
-            <h3>Real-world tests</h3>
-            <p>Sign in first and reuse the token, feed in users or IDs from a CSV file, set pass/fail goals, and check every answer is correct.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
-            <h3>See if it got faster or slower</h3>
-            <p>Every run is kept. Pick a reference run and later runs show the change. Compare several APIs side by side under the same load.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-            <h3>Private by design</h3>
-            <p>Runs from your computer, so it reaches localhost and internal APIs. Results are plain files you own; saved secrets are encrypted.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></div>
-            <h3>Bring your Postman work</h3>
-            <p>Import Postman and Insomnia collections — folders, environments, auth and scripts (<code>pm.test</code>, <code>pm.sendRequest</code>) run as they are. From OpenAPI, every request checks its answer against the spec.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-            <h3>Every way APIs sign in</h3>
-            <p>OAuth 2.0 (every grant, renewed during load), OAuth 1.0, AWS Signature, JWT, client certificates, Digest and NTLM — plus GraphQL, and company proxies that inspect https.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
-            <h3>Mocks, CI and AI agents</h3>
-            <p>A mock server so the frontend can start before the API is done. <code>npx apitestcenter</code> in your pipeline. And an MCP server, so Claude Code, Cursor or VS Code can run your tests for you.</p>
+          <article class="way" data-tilt>
+            <div class="way-art art-ai" aria-hidden="true">
+              <span class="b you">Why did checkout get slower?</span>
+              <span class="b bot">Comparing the last two runs… p95 went 180 → 640 ms on POST /checkout.</span>
+            </div>
+            <h3>AI agents (MCP)</h3>
+            <p>Claude Code, Cursor or VS Code can send your requests, run load tests and read the reports — with your secrets kept hidden.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="learn">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Learn API testing — free, from zero</h2>
-          <p>Lessons that explain every idea in plain words, each with something to try in the app on a practice API that runs on your computer.</p>
+    <!-- ───────────── Scroll tour ───────────── -->
+    <section id="tour" class="tour">
+      <div class="wrap-wide tour-grid">
+        <div class="tour-frame">
+          <div class="tour-window">
+            <div class="chrome"><i></i><i></i><i></i><span data-tour-title>Send and check</span>
+              <button type="button" class="zoom-btn" data-zoom-current aria-label="Enlarge this demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/></svg>Enlarge</button>
+            </div>
+            <div class="tour-shots" data-zoom-current>
+              <video class="is-on" muted loop playsinline preload="none" poster="assets/clips/send.jpg" data-src="assets/clips/send.webm" data-zoom data-caption="Typing the practice API's address, adding a check, and sending: 200 OK." aria-label="Typing the practice API's address, adding a check, and sending: 200 OK."></video>
+              <video muted loop playsinline preload="none" poster="assets/clips/sign-in.jpg" data-src="assets/clips/sign-in.webm" data-zoom data-caption="The sign-in example: a sign-in request runs first, and the orders request uses its token." aria-label="The sign-in example: a sign-in request runs first, and the orders request uses its token."></video>
+              <video muted loop playsinline preload="none" poster="assets/clips/load-test.jpg" data-src="assets/clips/load-test.webm" data-zoom data-caption="A load test running live: requests per second, response time and errors updating." aria-label="A load test running live: requests per second, response time and errors updating."></video>
+              <img src="assets/screens/report.png" width="1440" height="900" alt="A load test report: requests per second, response time, no failures, and a plain-language result." loading="lazy" data-zoom data-caption="A load test report: requests per second, response time, no failures, and a plain-language result.">
+              <img src="assets/screens/builder.png" width="1440" height="900" alt="Customizing the report: widgets on a grid that can be dragged and resized." loading="lazy" data-zoom data-caption="Customizing the report: widgets on a grid that can be dragged and resized.">
+              <img src="assets/screens/help.png" width="1440" height="900" alt="The help panel explaining terms in plain words." loading="lazy" data-zoom data-caption="The help panel explaining terms in plain words.">
+            </div>
+          </div>
+          <ol class="tour-nav" aria-label="Tour steps">
+            <li><button type="button" data-go="0" class="is-on" aria-current="step"><span class="tn-bar"><i></i></span><span class="tn-no">01</span><span class="tn-label">Send and check</span></button></li>
+            <li><button type="button" data-go="1"><span class="tn-bar"><i></i></span><span class="tn-no">02</span><span class="tn-label">Sign in first</span></button></li>
+            <li><button type="button" data-go="2"><span class="tn-bar"><i></i></span><span class="tn-no">03</span><span class="tn-label">Load test, live</span></button></li>
+            <li><button type="button" data-go="3"><span class="tn-bar"><i></i></span><span class="tn-no">04</span><span class="tn-label">The answer</span></button></li>
+            <li><button type="button" data-go="4"><span class="tn-bar"><i></i></span><span class="tn-no">05</span><span class="tn-label">Your own report</span></button></li>
+            <li><button type="button" data-go="5"><span class="tn-bar"><i></i></span><span class="tn-no">06</span><span class="tn-label">Help on every word</span></button></li>
+          </ol>
         </div>
-        <div class="grid">
-          <a class="card card-link" href="learn/what-is-an-api.html">
-            <h3>APIs from zero</h3>
-            <p>What an API is, requests and methods, headers and bodies, status codes, JSON, and every way APIs sign in.</p>
-          </a>
-          <a class="card card-link" href="learn/what-is-api-testing.html">
-            <h3>Testing APIs</h3>
-            <p>What to check and how strict to be, environments, chaining and test data, contracts, mocks, and tests in a pipeline.</p>
-          </a>
-          <a class="card card-link" href="learn/why-performance-testing.html">
-            <h3>Performance and load testing</h3>
-            <p>Kinds of load tests, users vs requests per second, why the average lies and p95 doesn't, finding the bottleneck, testing safely.</p>
-          </a>
+        <div class="tour-steps">
+          <div class="kicker">A tour in six stops</div>
+          <article class="tour-step" data-step="0" data-title="Send and check">
+            <span class="step-no">01</span>
+            <h3>Paste a URL. Press Send. Know it&rsquo;s right.</h3>
+            <p>Paste a URL or a whole curl command from your browser. Add checks — <em>status is 200</em>, <em>has a total</em>, <em>matches the OpenAPI schema</em> — so a fast-but-wrong answer still fails.</p>
+            <video class="tour-inline" muted loop playsinline preload="none" poster="assets/clips/send.jpg" data-src="assets/clips/send.webm" data-zoom data-caption="Typing the practice API's address, adding a check, and sending: 200 OK." aria-label="Typing the practice API's address, adding a check, and sending: 200 OK."></video>
+          </article>
+          <article class="tour-step" data-step="1" data-title="Sign in first">
+            <span class="step-no">02</span>
+            <h3>Sign in once. Every request uses the token.</h3>
+            <p>Run a login first, keep its token as <code>{{token}}</code>, feed in users from a CSV. OAuth 2.0, OAuth 1.0, AWS, JWT, client certificates, NTLM — all there.</p>
+            <video class="tour-inline" muted loop playsinline preload="none" poster="assets/clips/sign-in.jpg" data-src="assets/clips/sign-in.webm" data-zoom data-caption="The sign-in example: a sign-in request runs first, and the orders request uses its token." aria-label="The sign-in example: a sign-in request runs first, and the orders request uses its token."></video>
+          </article>
+          <article class="tour-step" data-step="2" data-title="Load test, live">
+            <span class="step-no">03</span>
+            <h3>The same request, under real load.</h3>
+            <p>Pick a preset — smoke, average day, stress, spike, soak — or shape your own. Response times and requests per second, live, as it runs.</p>
+            <video class="tour-inline" muted loop playsinline preload="none" poster="assets/clips/load-test.jpg" data-src="assets/clips/load-test.webm" data-zoom data-caption="A load test running live: requests per second, response time and errors updating." aria-label="A load test running live: requests per second, response time and errors updating."></video>
+          </article>
+          <article class="tour-step" data-step="3" data-title="The answer">
+            <span class="step-no">04</span>
+            <h3>An answer, not a spreadsheet.</h3>
+            <p>&ldquo;Meets your goals under this load&rdquo; first — then the detail: where the time went, what broke first, how it compares with last week.</p>
+            <img class="tour-inline" src="assets/screens/report.png" width="1440" height="900" alt="A load test report: requests per second, response time, no failures, and a plain-language result." loading="lazy" data-zoom data-caption="A load test report: requests per second, response time, no failures, and a plain-language result.">
+          </article>
+          <article class="tour-step" data-step="4" data-title="Your own report">
+            <span class="step-no">05</span>
+            <h3>Arrange it for whoever reads it.</h3>
+            <p>Twenty charts and numbers to drag and resize. One view for developers, one for managers. Export to Excel, HTML or JSON, or email a summary.</p>
+            <img class="tour-inline" src="assets/screens/builder.png" width="1440" height="900" alt="Customizing the report: widgets on a grid that can be dragged and resized." loading="lazy" data-zoom data-caption="Customizing the report: widgets on a grid that can be dragged and resized.">
+          </article>
+          <article class="tour-step" data-step="5" data-title="Help on every word">
+            <span class="step-no">06</span>
+            <h3>Never done this before? It teaches you.</h3>
+            <p>A practice API built in, a one-minute tour, help on every term, and <a href="learn/">20 free lessons</a> on APIs, testing and load testing — from zero.</p>
+            <img class="tour-inline" src="assets/screens/help.png" width="1440" height="900" alt="The help panel explaining terms in plain words." loading="lazy" data-zoom data-caption="The help panel explaining terms in plain words.">
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── And everything else ───────────── -->
+    <section class="more">
+      <div class="wrap">
+        <div class="kicker">And the rest of the toolbox</div>
+        <div class="see">
+          <figure class="see-clip">
+            <div class="chrome"><i></i><i></i><i></i><span>Form with files</span></div>
+            <button type="button" class="see-play" aria-label="Enlarge: Form with files">
+              <video muted loop playsinline preload="none" poster="assets/clips/upload.jpg" data-src="assets/clips/upload.webm" data-zoom data-caption="Upload files — a form with files, or one file as the body." aria-label="Upload files — a form with files, or one file as the body."></video>
+              <span class="see-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/></svg></span>
+            </button>
+            <figcaption>Upload files — a form with files, or one file as the body.</figcaption>
+          </figure>
+          <figure class="see-clip">
+            <div class="chrome"><i></i><i></i><i></i><span>WebSocket</span></div>
+            <button type="button" class="see-play" aria-label="Enlarge: WebSocket">
+              <video muted loop playsinline preload="none" poster="assets/clips/websocket.jpg" data-src="assets/clips/websocket.webm" data-zoom data-caption="WebSockets and event streams, live, message by message." aria-label="WebSockets and event streams, live, message by message."></video>
+              <span class="see-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/></svg></span>
+            </button>
+            <figcaption>WebSockets and event streams, live, message by message.</figcaption>
+          </figure>
+          <figure class="see-clip">
+            <div class="chrome"><i></i><i></i><i></i><span>Run collection</span></div>
+            <button type="button" class="see-play" aria-label="Enlarge: Run collection">
+              <video muted loop playsinline preload="none" poster="assets/clips/collection.jpg" data-src="assets/clips/collection.webm" data-zoom data-caption="Run a whole collection in order — sign in first, then every request, each checked." aria-label="Run a whole collection in order — sign in first, then every request, each checked."></video>
+              <span class="see-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/></svg></span>
+            </button>
+            <figcaption>Run a whole collection in order — sign in first, then every request, each checked.</figcaption>
+          </figure>
+          <figure class="see-clip">
+            <div class="chrome"><i></i><i></i><i></i><span>History</span></div>
+            <button type="button" class="see-play" aria-label="Enlarge: History">
+              <video muted loop playsinline preload="none" poster="assets/clips/history.jpg" data-src="assets/clips/history.webm" data-zoom data-caption="Every run is kept: open one, compare it with the last, see what changed." aria-label="Every run is kept: open one, compare it with the last, see what changed."></video>
+              <span class="see-zoom" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="m21 3-7 7"/><path d="m3 21 7-7"/></svg></span>
+            </button>
+            <figcaption>Every run is kept: open one, compare it with the last, see what changed.</figcaption>
+          </figure>
+        </div>
+        <ul class="chips" role="list">
+          <li>Collection runner</li><li>Mock server</li><li>WebSockets</li><li>Event streams (SSE)</li><li>File uploads</li><li>GraphQL</li>
+          <li>Pre-request &amp; test scripts (<code>pm.*</code>)</li><li>OpenAPI schema checks</li><li>Compare APIs side by side</li><li>History &amp; baselines</li>
+          <li>Environments &amp; secrets</li><li>Cookie jar</li><li>Code in 8 languages</li><li>Pass/fail goals</li><li>JUnit, HTML, Excel reports</li><li>Company proxies</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ───────────── CI + AI, side by side ───────────── -->
+    <section class="duo">
+      <div class="wrap duo-grid">
+        <div class="duo-card">
+          <div class="kicker">In your pipeline</div>
+          <h2>Green build, or a reason why.</h2>
+          <p>Commit your tests next to your code. <code>npx apitestcenter init</code> even writes the GitHub Actions workflow for you.</p>
+          <pre class="code" data-type-on-view><code><span class="c"># .github/workflows/api-checks.yml</span>
+- run: npx apitestcenter suite "Orders API" --env UAT --junit report.xml
+- run: npx apitestcenter run "Checkout" --env UAT   <span class="c"># load test, fails on missed goals</span></code></pre>
+          <a class="more-link" href="docs/cli-and-ci.html">The command line and CI →</a>
+        </div>
+        <div class="duo-card">
+          <div class="kicker">With your AI agent</div>
+          <h2>Ask, and it runs the test.</h2>
+          <p>One line connects Claude Code, Cursor, VS Code or Claude Desktop. Load tests only go to hosts you allow; secrets never reach the model.</p>
+          <pre class="code"><code>claude mcp add apitestcenter -- npx apitestcenter mcp</code></pre>
+          <div class="mini-chat">
+            <p class="msg msg-you">Run the Orders collection on UAT and tell me what failed.</p>
+            <p class="msg msg-bot">2 of 14 failed — <b>GET /orders/{id}</b> returned 500 for ids from the CSV rows 7 and 9.</p>
+          </div>
+          <a class="more-link" href="docs/ai-agents.html">AI agents (MCP) →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Private by design ───────────── -->
+    <section class="local">
+      <div class="wrap local-grid">
+        <div>
+          <div class="kicker">Runs where your API lives</div>
+          <h2 class="big">Your computer. Your network. Your files.</h2>
+          <p>Requests go straight from your machine to the API — so it reaches <b>localhost</b>, your <b>VPN</b> and <b>internal</b> services that cloud tools can&rsquo;t. No account. Results are plain files you own; secrets are encrypted with your system&rsquo;s keychain.</p>
+          <a class="more-link" href="privacy.html">What the app and this site do with data →</a>
+        </div>
+        <svg class="net" viewBox="0 0 420 300" aria-hidden="true">
+          <g class="net-links">
+            <path d="M80 150 C 160 150, 200 60, 330 60"/><path d="M80 150 C 170 150, 220 150, 330 150"/><path d="M80 150 C 160 150, 200 240, 330 240"/>
+          </g>
+          <g class="net-flow">
+            <path d="M80 150 C 160 150, 200 60, 330 60"/><path d="M80 150 C 170 150, 220 150, 330 150"/><path d="M80 150 C 160 150, 200 240, 330 240"/>
+          </g>
+          <g class="net-nodes">
+            <rect x="20" y="118" width="96" height="64" rx="12"/><text x="68" y="155">You</text>
+            <rect x="300" y="38" width="104" height="44" rx="10"/><text x="352" y="65">localhost</text>
+            <rect x="300" y="128" width="104" height="44" rx="10"/><text x="352" y="155">VPN · internal</text>
+            <rect x="300" y="218" width="104" height="44" rx="10"/><text x="352" y="245">public API</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ───────────── Learn ───────────── -->
+    <section id="learn" class="learn">
+      <div class="wrap">
+        <div class="kicker">Learn — free, from zero</div>
+        <h2 class="big">New to APIs or load testing? Start here.</h2>
+        <div class="learn-grid">
+          <a class="lcard" href="learn/what-is-an-api.html"><span class="lnum">7 lessons</span><h3>APIs from zero</h3><p>Requests, headers, status codes, JSON, and every way APIs sign in.</p></a>
+          <a class="lcard" href="learn/what-is-api-testing.html"><span class="lnum">7 lessons</span><h3>Testing APIs</h3><p>What to check, test data, contracts, mocks, tests in a pipeline.</p></a>
+          <a class="lcard" href="learn/why-performance-testing.html"><span class="lnum">6 lessons</span><h3>Load testing</h3><p>Users vs requests per second, why averages lie, finding bottlenecks.</p></a>
         </div>
         <p class="section-more"><a href="learn/">All 20 lessons and the A–Z glossary →</a></p>
       </div>
     </section>
 
-    <section id="how">
+    <!-- ───────────── Pricing ───────────── -->
+    <section id="pricing" class="pricing">
       <div class="wrap">
-        <div class="section-head">
-          <h2>From URL to answer in three steps</h2>
-          <p>New to load testing? A built-in practice API and a one-minute tour get you started safely.</p>
-        </div>
-
-        <div class="row">
-          <div class="row-text">
-            <span class="step">Step 1</span>
-            <h3>Send one request and check it works</h3>
-            <p>Paste a URL — or a whole curl command from your browser — and press Send. Add checks like “status is 200” or “has a name field” so a fast-but-wrong answer still fails.</p>
-          </div>
-          <figure class="shot"><img src="assets/screens/send.png" width="1440" height="900" loading="lazy" alt="Sending a request to the practice API: 200 OK, both checks passed, and the JSON product list shown."></figure>
-        </div>
-
-        <div class="row flip">
-          <div class="row-text">
-            <span class="step">Step 2</span>
-            <h3>Run it under load</h3>
-            <p>Choose a preset — smoke, average day, stress, spike, or soak — or set your own users and duration. Watch response time and requests per second live.</p>
+        <div class="kicker">Pricing</div>
+        <h2 class="big">Free during early access. Everything included.</h2>
+        <div class="plans">
+          <article class="plan plan-now">
+            <span class="plan-tag">Available now</span>
+            <h3>Early access</h3>
+            <p class="price"><b>Free</b></p>
             <ul>
-              <li>Simulated users, or a fixed request rate</li>
-              <li>Step-by-step ramps for real traffic shapes</li>
-              <li>Stops early if a goal is clearly missed</li>
+              <li>Every feature — requests, load tests, reports</li>
+              <li>Command line and CI</li>
+              <li>MCP server for AI agents</li>
+              <li>Windows, Mac and Linux</li>
             </ul>
-          </div>
-          <figure class="shot"><img src="assets/screens/charts.png" width="1440" height="900" loading="lazy" alt="Load test charts: responses by outcome, response time distribution, where the time went, and pass/fail goals all met."></figure>
-        </div>
-
-        <div class="row">
-          <div class="row-text">
-            <span class="step">Step 3</span>
-            <h3>Read it, shape it, share it</h3>
-            <p>Get a plain result first, then the detail. Rearrange the report into your own view and export it as Excel, HTML, or JSON — or email a summary.</p>
-          </div>
-          <figure class="shot"><img src="assets/screens/builder.png" width="1440" height="900" loading="lazy" alt="Customizing the report: widgets on a grid that can be dragged and resized."></figure>
-        </div>
-
-        <div class="row flip">
-          <div class="row-text">
-            <span class="step">Beyond the basics</span>
-            <h3>Sign in first, then test</h3>
-            <p>Most real APIs need a token. Pick your sign-in request under <em>Run first</em>, choose the value to keep, and use it as <code>{{token}}</code> — on Send and for every request of a load test.</p>
-          </div>
-          <figure class="shot"><img src="assets/screens/chain.png" width="1440" height="900" loading="lazy" alt="The Run first tab: a saved sign-in request runs first and its token is used by the orders request."></figure>
+            <a class="btn btn-primary" data-download="setup" data-primary href="#download"><span data-primary-label>Download for Windows</span></a>
+          </article>
+          <article class="plan plan-soon">
+            <span class="plan-tag">Coming soon</span>
+            <h3>Pro</h3>
+            <p class="price">For professionals who test every day.</p>
+            <p class="plan-note">Plans and prices will be announced here.</p>
+          </article>
+          <article class="plan plan-soon">
+            <span class="plan-tag">Coming soon</span>
+            <h3>Team</h3>
+            <p class="price">For companies, with licences for everyone.</p>
+            <p class="plan-note">Plans and prices will be announced here.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="download">
+    <!-- ───────────── Download ───────────── -->
+    <section id="download" class="download">
       <div class="wrap">
-        <div class="section-head">
-          <h2>Download APITestCenter</h2>
-          <p>Free for Windows 10 and 11 (64-bit), with Mac and Linux previews. No account, no sign-up.</p>
-        </div>
+        <div class="kicker">Download</div>
+        <h2 class="big">Try it on your own API in two minutes.</h2>
         <div class="dl-main">
           <a class="btn btn-primary btn-lg" data-download="setup" data-primary href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><span data-primary-label>Download for Windows</span></a>
           <p class="fine"><span data-version>Latest version</span> · <a href="whats-new.html">What&rsquo;s new</a> · <span data-primary-alt></span></p>
-          <p class="fine download-note" data-download-note hidden>Download not starting? Your network may be checking the file first — give it a moment, or get it from <a data-releases href="#download">the release page</a>.</p>
         </div>
         <div class="dl-table-wrap">
           <table class="dl-table">
             <caption class="sr-only">All downloads for the latest version</caption>
             <thead><tr><th scope="col">System</th><th scope="col">File</th><th scope="col">Size</th><th scope="col"><span class="sr-only">Download</span></th></tr></thead>
             <tbody>
-            <tr data-row="setup">
-              <td class="dl-platform">Windows</td>
-              <td><strong>Installer</strong><span class="dl-detail">Windows 10 and 11, 64-bit — recommended</span></td>
-              <td class="dl-size" data-size="setup"></td>
-              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="setup" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
-            </tr>
-            <tr data-row="portable">
-              <td class="dl-platform">Windows</td>
-              <td><strong>Portable</strong><span class="dl-detail">One file, no install — handy on locked-down machines</span></td>
-              <td class="dl-size" data-size="portable"></td>
-              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="portable" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
-            </tr>
-            <tr data-row="macArm">
-              <td class="dl-platform">macOS</td>
-              <td><strong>Apple Silicon</strong><span class="dl-detail">M1 and later · preview</span></td>
-              <td class="dl-size" data-size="macArm"></td>
-              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="macArm" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
-            </tr>
-            <tr data-row="macIntel">
-              <td class="dl-platform">macOS</td>
-              <td><strong>Intel</strong><span class="dl-detail">Intel Macs · preview</span></td>
-              <td class="dl-size" data-size="macIntel"></td>
-              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="macIntel" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
-            </tr>
-            <tr data-row="appimage">
-              <td class="dl-platform">Linux</td>
-              <td><strong>AppImage</strong><span class="dl-detail">Most distributions, 64-bit · preview</span></td>
-              <td class="dl-size" data-size="appimage"></td>
-              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="appimage" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
-            </tr>
-            <tr data-row="deb">
-              <td class="dl-platform">Linux</td>
-              <td><strong>.deb</strong><span class="dl-detail">Ubuntu and Debian, 64-bit · preview</span></td>
-              <td class="dl-size" data-size="deb"></td>
-              <td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="deb" href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download</a></td>
-            </tr>
+            <tr data-row="setup"><td class="dl-platform">Windows</td><td><strong>Installer</strong><span class="dl-detail">Windows 10 and 11, 64-bit — recommended</span></td><td class="dl-size" data-size="setup"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="setup" href="#download">Download</a></td></tr>
+            <tr data-row="portable"><td class="dl-platform">Windows</td><td><strong>Portable</strong><span class="dl-detail">One file, no install — handy on locked-down machines</span></td><td class="dl-size" data-size="portable"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="portable" href="#download">Download</a></td></tr>
+            <tr data-row="macArm"><td class="dl-platform">macOS</td><td><strong>Apple Silicon</strong><span class="dl-detail">M1 and later · preview</span></td><td class="dl-size" data-size="macArm"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="macArm" href="#download">Download</a></td></tr>
+            <tr data-row="macIntel"><td class="dl-platform">macOS</td><td><strong>Intel</strong><span class="dl-detail">Intel Macs · preview</span></td><td class="dl-size" data-size="macIntel"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="macIntel" href="#download">Download</a></td></tr>
+            <tr data-row="appimage"><td class="dl-platform">Linux</td><td><strong>AppImage</strong><span class="dl-detail">Most distributions, 64-bit · preview</span></td><td class="dl-size" data-size="appimage"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="appimage" href="#download">Download</a></td></tr>
+            <tr data-row="deb"><td class="dl-platform">Linux</td><td><strong>.deb</strong><span class="dl-detail">Ubuntu and Debian, 64-bit · preview</span></td><td class="dl-size" data-size="deb"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="deb" href="#download">Download</a></td></tr>
             </tbody>
           </table>
         </div>
         <p class="note"><strong>Windows may say &ldquo;Windows protected your PC&rdquo;.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> &rarr; <em>Run anyway</em>. On a Mac, right-click the app and choose <em>Open</em> the first time.</p>
-        <p class="soon">Need an earlier version? <a href="whats-new.html">All versions and what changed in each &rarr;</a></p>
       </div>
     </section>
 
-    <section id="faq">
+    <!-- ───────────── FAQ ───────────── -->
+    <section id="faq" class="faq-sec">
       <div class="wrap">
-        <div class="section-head"><h2>Questions</h2></div>
+        <div class="kicker">Questions</div>
         <div class="faq">
-          <details>
-            <summary>Is it really free?</summary>
-            <p>Yes. Sending requests, load tests, reports, history, and the command line are free. A paid Pro edition with extras for teams may come later; the free features stay free.</p>
-          </details>
-          <details>
-            <summary>Does it send my requests or results anywhere?</summary>
-            <p>No. Requests go straight from your computer to the API you are testing. Results are saved as plain files on your computer, which you can open, move, or delete. There is no account. The app asks once whether you'd share anonymous usage counts — say no and nothing is sent. See the <a href="privacy.html">privacy page</a>.</p>
-          </details>
-          <details>
-            <summary>Can I test APIs on localhost or my company network?</summary>
-            <p>Yes — because the app runs on your computer, it reaches anything your computer can: localhost, VPN, and internal services. Online load-testing services cannot.</p>
-          </details>
-          <details>
-            <summary>I have never done load testing. Where do I start?</summary>
-            <p>Open the app and choose “Try a simple request”. It uses a small practice API built into the app, so you can learn without touching a real system. The one-minute tour and the Help panel explain every term in plain words.</p>
-          </details>
-          <details>
-            <summary>How many users can it simulate?</summary>
-            <p>Up to 500 simulated users, or a fixed rate of up to 100,000 requests per second — limited mostly by your computer and network. The report shows when the machine itself was the bottleneck.</p>
-          </details>
-          <details>
-            <summary>Can I use it in CI?</summary>
-            <p>Yes. The <code>atc</code> command runs a saved request's load test without the window and writes JUnit, JSON, or HTML reports. It exits with an error when a goal is missed.</p>
-          </details>
-          <details>
-            <summary>Is it safe to load test any API?</summary>
-            <p>Only test systems you own or have permission to test. A load test is real traffic; against someone else's API it can look like an attack.</p>
-          </details>
-          <details>
-            <summary>How do I report a bug or ask for a feature?</summary>
-            <p>Open an issue on <a data-issues href="#faq">GitHub</a> or email <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a>. For anything else — feedback, partnerships, press — write to <a href="mailto:hello@apitestcenter.com">hello@apitestcenter.com</a>.</p>
-          </details>
+          <details><summary>Is it really free?</summary><p>Yes — everything is free during early access: requests, load tests, reports, the command line and the MCP server. Paid Pro and Team plans will come later; we&rsquo;ll announce them here first.</p></details>
+          <details><summary>Does it send my requests or results anywhere?</summary><p>No. Requests go straight from your computer to the API you are testing, and results are plain files on your computer. There is no account. The app asks once whether you&rsquo;d share anonymous usage counts — say no and nothing is sent. See the <a href="privacy.html">privacy page</a>.</p></details>
+          <details><summary>I use Postman. Can I bring my collections?</summary><p>Yes — import Postman and Insomnia collections with their folders, environments, auth and scripts (<code>pm.test</code>, <code>pm.sendRequest</code> run as they are), or an OpenAPI file, where every request also checks its answer against the spec.</p></details>
+          <details><summary>I have never done load testing. Where do I start?</summary><p>Open the app and choose &ldquo;Try a simple request&rdquo;. It uses a practice API built into the app, so you learn without touching a real system. The <a href="learn/">free lessons</a> explain every idea from zero.</p></details>
+          <details><summary>How much load can it make?</summary><p>Up to 500 simulated users, or a fixed rate of up to 100,000 requests per second — limited mostly by your computer and network. The report tells you when the machine itself was the bottleneck.</p></details>
+          <details><summary>Is it safe to load test any API?</summary><p>Only test systems you own or have permission to test. A load test is real traffic; against someone else&rsquo;s API it can look like an attack.</p></details>
+          <details><summary>How do I report a bug or ask for a feature?</summary><p>Open an issue on <a data-issues href="#faq">GitHub</a> or email <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a>. For anything else, write to <a href="mailto:hello@apitestcenter.com">hello@apitestcenter.com</a>.</p></details>
         </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap">
+        <h2 class="final-title">Build it. Test it. Load it. <span class="hx-accent">Ship it.</span></h2>
+        <a class="btn btn-primary btn-lg" data-download="setup" data-primary href="#download"><span data-primary-label>Download for Windows</span></a>
       </div>
     </section>
   </main>
