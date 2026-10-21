@@ -260,3 +260,9 @@ details p { margin: 0 0 18px; color: var(--mute); }
 .section-more { text-align: center; margin-top: 22px; }
 .section-more a { color: var(--accent); font-weight: 600; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .card-link { transition: none; } .card-link:hover { transform: none; } }
+
+.is-starting { opacity: 0.8; cursor: progress; }
+.is-starting svg { animation: dl-bounce 0.9s ease-in-out infinite; }
+@keyframes dl-bounce { 50% { transform: translateY(3px); } }
+@media (prefers-reduced-motion: reduce) { .is-starting svg { animation: none; } }
+.download-note { color: var(--mute); }

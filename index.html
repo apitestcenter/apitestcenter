@@ -11,6 +11,10 @@
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#07090d">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <!-- Downloads come from GitHub: connect early, so a click on Download starts sooner. -->
+  <link rel="preconnect" href="https://github.com">
+  <link rel="preconnect" href="https://release-assets.githubusercontent.com">
+  <link rel="preconnect" href="https://objects.githubusercontent.com">
   <link rel="stylesheet" href="styles.css">
   <script>
     try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
@@ -202,6 +206,7 @@
         <div class="dl-main">
           <a class="btn btn-primary btn-lg" data-download="setup" data-primary href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><span data-primary-label>Download for Windows</span></a>
           <p class="fine"><span data-version>Latest version</span> · <a href="whats-new.html">What&rsquo;s new</a> · <span data-primary-alt></span></p>
+          <p class="fine download-note" data-download-note hidden>Download not starting? Your network may be checking the file first — give it a moment, or get it from <a data-releases href="#download">the release page</a>.</p>
         </div>
         <div class="dl-table-wrap">
           <table class="dl-table">

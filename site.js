@@ -160,6 +160,12 @@ if (document.querySelector("[data-version], [data-size], [data-release-list]")) 
       document.querySelectorAll(`[data-size="${kind}"]`).forEach((node) => (node.textContent = file ? mb(file.size) : ""));
       // A system without a file in the latest release is not offered.
       document.querySelectorAll(`[data-row="${kind}"]`).forEach((row) => (row.hidden = !file));
+      // Straight to this version's file: skips GitHub working out which release is "latest" (a slow redirect).
+      if (file?.url) {
+        document.querySelectorAll(`[data-download="${kind}"]`).forEach((link) => (link.href = file.url));
+        if (kind === PRIMARY.kind) document.querySelectorAll("[data-primary]").forEach((link) => (link.href = file.url));
+        if (kind === PRIMARY.alt[0]) document.querySelectorAll("[data-primary-alt] a").forEach((link) => (link.href = file.url));
+      }
     }
     document.querySelectorAll("[data-release-list]").forEach((list) => {
       list.replaceChildren(...releases.map(releaseArticle));
@@ -170,3 +176,22 @@ if (document.querySelector("[data-version], [data-size], [data-release-list]")) 
   .catch(() => {
     /* Offline or no data yet: the buttons still point at the latest release. */
   });
+
+// The file comes from GitHub, which can take a few seconds to start — longer through a company
+// proxy that checks downloads first. Say at once that it's on its way, so a click doesn't look ignored.
+document.addEventListener("click", (e) => {
+  const a = e.target instanceof Element ? e.target.closest("a[data-download], a[data-primary], [data-primary-alt] a") : null;
+  if (!a || a.dataset.starting) return;
+  a.dataset.starting = "1";
+  const label = a.querySelector("[data-primary-label]") ?? (a.children.length ? null : a);
+  const before = label?.textContent;
+  if (label) label.textContent = "Starting your download…";
+  a.classList.add("is-starting");
+  const note = document.querySelector("[data-download-note]");
+  window.setTimeout(() => {
+    if (label) label.textContent = before;
+    a.classList.remove("is-starting");
+    delete a.dataset.starting;
+    if (note) note.hidden = false;
+  }, 6000);
+});
