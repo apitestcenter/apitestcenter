@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-21T09:42:40.854Z",
+  "generatedAt": "2026-10-21T12:43:46.174Z",
   "releases": [
+    {
+      "version": "0.13.1",
+      "date": "2026-10-21T12:43:44Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>The loading bar now covers the whole wait.</strong> It used to finish as soon as the next page appeared, while the page was still loading its data. Now it keeps going until the page's data has arrived, stays long enough to see on fast pages, and is a little thicker.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.13.1",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.13.1.exe",
+          "size": 113663183,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.1/APITestCenter-Setup-0.13.1.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.13.1.exe",
+          "size": 113425389,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.1/APITestCenter-Portable-0.13.1.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.13.1-mac-arm64.dmg",
+          "size": 122021740,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.1/APITestCenter-0.13.1-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.13.1-mac-x64.dmg",
+          "size": 127447795,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.1/APITestCenter-0.13.1-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.13.1-linux-x86_64.AppImage",
+          "size": 111328097,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.1/APITestCenter-0.13.1-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.13.1-linux-amd64.deb",
+          "size": 112886324,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.1/APITestCenter-0.13.1-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.13.0",
       "date": "2026-10-21T09:42:39Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>Upload files.</strong> The Body tab has <strong>Form with files</strong> (text and file fields, the way web pages upload), <strong>File</strong> (one file as the whole body — drop it in) and <strong>Form</strong> (plain form fields). Files are kept in the app's data folder, so saved requests keep working. Load tests upload them too, with test data filled in for each request, and the code the app makes sends them in every language. Try it with the practice API: <code>POST {{practiceApi}}/upload</code> says exactly what arrived.</li><li><strong>Imports bring forms with files</strong> — from Postman, Insomnia, browser recordings, OpenAPI and a pasted <code>curl -F</code> — instead of leaving the body out. Choose the files again; the import says which.</li><li><strong>Learn</strong> — 20 free lessons on APIs, API testing and load testing, from zero, each with something to try in the app, and an A–Z glossary. At apitestcenter.com/learn.</li><li><strong>A loading bar</strong> along the top while a page opens.</li><li><strong>A smaller installer</strong> (about 8 MB less).</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.13.0",
       "files": [
