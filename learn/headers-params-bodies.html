@@ -68,7 +68,24 @@ Content-Type: application/json
 
 { &quot;productId&quot;: 3, &quot;quantity&quot;: 2, &quot;giftWrap&quot;: true }</code></pre>
 <p>The <code>Content-Type</code> header must match what the body is, or the server can't read it. Common types:</p>
-<div class="table-wrap"><table><thead><tr><th>Content-Type</th><th>Body looks like</th><th>Used for</th></tr></thead><tbody><tr><td><code>application/json</code></td><td><code>{ &quot;productId&quot;: 3, &quot;quantity&quot;: 2 }</code></td><td>Most modern APIs (<a href="json.html">JSON</a>)</td></tr><tr><td><code>application/x-www-form-urlencoded</code></td><td><code>username=ann&amp;password=demo</code></td><td>HTML forms, many sign-in (OAuth) endpoints</td></tr><tr><td><code>multipart/form-data</code></td><td>Several parts, each with its own type</td><td>File uploads</td></tr><tr><td><code>application/xml</code>, <code>text/xml</code></td><td><code>&lt;order&gt;&lt;productId&gt;3&lt;/productId&gt;&lt;/order&gt;</code></td><td>Older APIs, SOAP</td></tr><tr><td><code>text/plain</code></td><td>Any text</td><td>Rarely</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Content-Type</th><th>Body looks like</th><th>Used for</th></tr></thead><tbody><tr><td><code>application/json</code></td><td><code>{ &quot;productId&quot;: 3, &quot;quantity&quot;: 2 }</code></td><td>Most modern APIs (<a href="json.html">JSON</a>)</td></tr><tr><td><code>application/x-www-form-urlencoded</code></td><td><code>username=ann&amp;password=demo</code></td><td>HTML forms, many sign-in (OAuth) endpoints</td></tr><tr><td><code>multipart/form-data</code></td><td>Several parts, each with its own type — text fields and files</td><td>File uploads</td></tr><tr><td><code>application/octet-stream</code>, <code>image/png</code>, <code>application/pdf</code>…</td><td>The bytes of one file</td><td>Uploading one file as the whole body</td></tr><tr><td><code>application/xml</code>, <code>text/xml</code></td><td><code>&lt;order&gt;&lt;productId&gt;3&lt;/productId&gt;&lt;/order&gt;</code></td><td>Older APIs, SOAP</td></tr><tr><td><code>text/plain</code></td><td>Any text</td><td>Rarely</td></tr></tbody></table></div>
+<h3 id="what-a-file-upload-looks-like">What a file upload looks like</h3>
+<p>A form with files is split into <strong>parts</strong> by a <em>boundary</em> — a line the client makes up, which the <code>Content-Type</code> header names:</p>
+<pre><code class="lang-http">POST /avatar
+Content-Type: multipart/form-data; boundary=----x7Fq
+
+------x7Fq
+Content-Disposition: form-data; name=&quot;userId&quot;
+
+u-1001
+------x7Fq
+Content-Disposition: form-data; name=&quot;photo&quot;; filename=&quot;me.png&quot;
+Content-Type: image/png
+
+(the bytes of the image)
+------x7Fq--</code></pre>
+<p>Each part has a name, and a file part also has its file name and type. Because the boundary must match the body, let the tool write this header — one typed by hand without the right boundary makes the server see no fields at all.</p>
+<aside class="callout callout-note"><p><strong>Try it</strong> — in the app, choose <strong>Body → Form with files</strong>, add a text field and a file, and send it to <code>POST {{practiceApi}}/upload</code>. The answer lists what arrived, with each file's size and a fingerprint (SHA-256) — the same bytes give the same fingerprint, so you can tell nothing was changed on the way. Then open <strong>Request sent</strong> to see the parts.</p></aside>
 <h2 id="where-should-a-value-go">Where should a value go?</h2>
 <p>Designing or testing an API, you'll often ask which part a value belongs in:</p>
 <ul><li><strong>Which thing?</strong> → the <strong>path</strong>: <code>/orders/A-1001</code>.</li><li><strong>Options about what to return?</strong> → <strong>query parameters</strong>: <code>?status=paid&amp;page=2</code>.</li><li><strong>About the request itself</strong> — format, identity, tracing? → <strong>headers</strong>.</li><li><strong>The data to create or change?</strong> → the <strong>body</strong>.</li></ul>

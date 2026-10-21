@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-21T06:35:25.742Z",
+  "generatedAt": "2026-10-21T09:42:40.854Z",
   "releases": [
+    {
+      "version": "0.13.0",
+      "date": "2026-10-21T09:42:39Z",
+      "latest": true,
+      "notesHtml": "<ul><li><strong>Upload files.</strong> The Body tab has <strong>Form with files</strong> (text and file fields, the way web pages upload), <strong>File</strong> (one file as the whole body — drop it in) and <strong>Form</strong> (plain form fields). Files are kept in the app's data folder, so saved requests keep working. Load tests upload them too, with test data filled in for each request, and the code the app makes sends them in every language. Try it with the practice API: <code>POST {{practiceApi}}/upload</code> says exactly what arrived.</li><li><strong>Imports bring forms with files</strong> — from Postman, Insomnia, browser recordings, OpenAPI and a pasted <code>curl -F</code> — instead of leaving the body out. Choose the files again; the import says which.</li><li><strong>Learn</strong> — 20 free lessons on APIs, API testing and load testing, from zero, each with something to try in the app, and an A–Z glossary. At apitestcenter.com/learn.</li><li><strong>A loading bar</strong> along the top while a page opens.</li><li><strong>A smaller installer</strong> (about 8 MB less).</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.13.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.13.0.exe",
+          "size": 113663087,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.0/APITestCenter-Setup-0.13.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.13.0.exe",
+          "size": 113425296,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.0/APITestCenter-Portable-0.13.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.13.0-mac-arm64.dmg",
+          "size": 122027576,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.0/APITestCenter-0.13.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.13.0-mac-x64.dmg",
+          "size": 127452625,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.0/APITestCenter-0.13.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.13.0-linux-x86_64.AppImage",
+          "size": 111328174,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.0/APITestCenter-0.13.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.13.0-linux-amd64.deb",
+          "size": 112885760,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.13.0/APITestCenter-0.13.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.12.0",
       "date": "2026-10-20T14:18:41Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<ul><li><strong>AI agents can use the app (MCP).</strong> Connect Claude Code, Cursor, VS Code or Claude Desktop with one line, and ask them to send your requests, run collections and load tests, or read the reports. Secrets stay hidden, and load tests only go to hosts you allow.</li><li><strong>WebSockets and event streams.</strong> Type a <code>ws://</code> address and press Connect — send and receive messages live. Event-stream (SSE) answers show their events as they arrive. Try both with the practice API.</li><li><strong><code>pm.sendRequest</code> in scripts</strong> — sign in or look something up from a script, as in Postman. In load tests these extra requests are left out of the numbers.</li><li><strong>Scripts on folders</strong> — write a pre-request or tests script once, for every request inside. Postman collection and folder scripts import to their folders.</li><li><strong>Earlier answers</strong> — a saved request keeps its last 20 answers; open one, or see exactly what changed since (field by field, line by line). Secrets are masked before anything is saved.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.12.0",
       "files": [

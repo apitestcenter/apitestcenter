@@ -45,7 +45,7 @@
         <h2 id="everything-stays-on-your-computer">Everything stays on your computer</h2>
 <p>Requests are sent <strong>from your computer</strong> straight to the API you test — that's what lets the app reach internal and VPN-only APIs. There is no APITestCenter server in between, no account, and nothing about your requests, answers, or results is uploaded.</p>
 <h2 id="where-your-files-are">Where your files are</h2>
-<p>Saved requests, environments, collection run orders, and history are plain files in one folder:</p>
+<p>Saved requests, environments, collection run orders, history, and copies of the files you <a href="sending-requests.html#uploading-files">upload</a> (in <code>files</code>) are plain files in one folder:</p>
 <div class="table-wrap"><table><thead><tr><th>System</th><th>Folder</th></tr></thead><tbody><tr><td>Windows (installer or portable)</td><td><code>%APPDATA%\ApiTestCenter</code></td></tr><tr><td>Windows (Microsoft Store version)</td><td><code>Documents\APITestCenter</code></td></tr><tr><td>macOS</td><td><code>~/Library/Application Support/ApiTestCenter</code></td></tr><tr><td>Linux</td><td><code>~/.local/share/apitestcenter</code></td></tr></tbody></table></div>
 <p><strong>About → Open folder</strong> opens it. You can back it up, copy it to another computer, or keep saved requests in a Git repository for <a href="cli-and-ci.html">CI</a>.</p>
 <p>To use another folder, set the <code>ATC_DATA_DIR</code> environment variable to it before starting the app. The <a href="cli-and-ci.html">command line</a> reads it too, and <code>--data &lt;folder&gt;</code> picks a folder for one command.</p>
