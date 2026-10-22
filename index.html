@@ -433,8 +433,8 @@
             <p class="fine"><span class="soon-badge">Coming soon</span> Waiting for Microsoft&rsquo;s review of the package — use the installer above until then.</p>
           </div>
           <div class="install-panel" role="tabpanel" id="inst-brew" aria-labelledby="tab-brew" hidden>
-            <button class="npx" type="button" data-copy="brew install --cask apitestcenter/tap/apitestcenter" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">$</span><code>brew install --cask apitestcenter/tap/apitestcenter</code><span class="npx-copy" data-copy-label>Copy</span></button>
-            <p class="fine"><span class="soon-badge">Coming soon</span> The Homebrew package is being set up — use the Mac download above until then.</p>
+            <button class="npx" type="button" data-copy="brew tap apitestcenter/tap && brew trust apitestcenter/tap && brew install --cask apitestcenter" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">$</span><code>brew tap apitestcenter/tap &amp;&amp; brew trust apitestcenter/tap &amp;&amp; brew install --cask apitestcenter</code><span class="npx-copy" data-copy-label>Copy</span></button>
+            <p class="fine">Homebrew asks you to trust a tap once before it installs from it; that&rsquo;s the middle part. macOS 12 or later. Updates: the app updates itself, or <code>brew upgrade --cask apitestcenter</code>.</p>
           </div>
         </div>
         <p class="note"><strong>Windows may say &ldquo;Windows protected your PC&rdquo;.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> &rarr; <em>Run anyway</em>. On a Mac, right-click the app and choose <em>Open</em> the first time.</p>
