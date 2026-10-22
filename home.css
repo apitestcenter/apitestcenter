@@ -315,3 +315,33 @@
 .lb-next { right: 18px; top: 50%; translate: 0 -50%; }
 .lb-count { position: absolute; top: 28px; left: 24px; font: 13px var(--mono); color: #9aa6b6; }
 @media (max-width: 600px) { .lb-prev, .lb-next { top: auto; bottom: 18px; translate: none; } }
+
+/* ───────────── Pro signup ───────────── */
+.notify { margin-top: 20px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: center; padding: 28px 30px; border-radius: 22px; border: 1px solid var(--line); background: linear-gradient(120deg, var(--panel), color-mix(in srgb, var(--accent) 7%, var(--panel))); }
+.notify h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.02em; }
+.notify-copy p { margin: 0; color: var(--mute); }
+.notify-fields { display: grid; grid-template-columns: 1fr auto; gap: 10px 12px; align-items: center; }
+.notify input[type="email"] { grid-column: 1; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--canvas); color: var(--ink); font: inherit; min-width: 0; }
+.notify input[type="email"]:focus { outline: none; border-color: var(--accent); }
+.notify .btn { grid-column: 2; grid-row: 1; }
+.notify-plans { grid-column: 1 / -1; display: flex; gap: 18px; color: var(--mute); font-size: 14.5px; }
+.notify-plans label, .notify-consent { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+.notify-consent { grid-column: 1 / -1; color: var(--mute); font-size: 14px; }
+.notify-consent a { color: var(--accent); margin-left: 4px; }
+.notify input[type="radio"], .notify input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
+.notify-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.notify-msg { grid-column: 1 / -1; margin: 0; min-height: 1.4em; font-size: 14.5px; }
+.notify-msg.is-ok { color: var(--ok); }
+.notify-msg.is-bad { color: #ff8a7a; }
+.notify.is-done .notify-fields > :not(.notify-msg) { display: none; }
+
+/* ───────────── Install from the command line ───────────── */
+.install { max-width: 860px; margin: 28px 0 0; }
+.install h3 { font-size: 16px; margin: 0 0 12px; }
+.install-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.install-tabs button { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--mute); font: 600 13.5px system-ui, sans-serif; cursor: pointer; }
+.install-tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.install-panel .fine { margin-top: 10px; }
+.soon-badge { display: inline-block; font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--warn); margin-right: 6px; }
+@media (max-width: 860px) { .notify { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .notify-fields { grid-template-columns: 1fr; } .notify .btn { grid-column: 1; grid-row: auto; justify-content: center; } .install .npx code { font-size: 12.5px; overflow-wrap: anywhere; } }

@@ -177,6 +177,19 @@ if (document.querySelector("[data-version], [data-size], [data-release-list]")) 
     /* Offline or no data yet: the buttons still point at the latest release. */
   });
 
+// One anonymous page view (see privacy.html): the page, the site that linked here, phone or not.
+// Not sent when the browser asks not to be tracked, from a test browser, or off the real site.
+(() => {
+  const optedOut = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+  if (optedOut || navigator.webdriver || !/(^|\.)apitestcenter\.com$/.test(location.hostname)) return;
+  const body = JSON.stringify({ p: location.pathname, r: document.referrer || "", m: matchMedia("(max-width: 760px)").matches });
+  try {
+    if (!navigator.sendBeacon?.("https://usage.apitestcenter.com/v1/visit", body)) throw new Error("no beacon");
+  } catch {
+    fetch("https://usage.apitestcenter.com/v1/visit", { method: "POST", body, keepalive: true, mode: "no-cors" }).catch(() => {});
+  }
+})();
+
 // The file comes from GitHub, which can take a few seconds to start — longer through a company
 // proxy that checks downloads first. Say at once that it's on its way, so a click doesn't look ignored.
 document.addEventListener("click", (e) => {

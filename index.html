@@ -371,6 +371,26 @@
             <p class="plan-note">Plans and prices will be announced here.</p>
           </article>
         </div>
+        <form class="notify" data-notify novalidate>
+          <div class="notify-copy">
+            <h3>Tell me when Pro launches</h3>
+            <p>One email when Pro and Team are ready, with an early-access offer. No newsletter, unsubscribe in one click.</p>
+          </div>
+          <div class="notify-fields">
+            <label class="sr-only" for="notify-email">Email address</label>
+            <input id="notify-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com" maxlength="254">
+            <div class="notify-plans" role="radiogroup" aria-label="Interested in">
+              <label><input type="radio" name="plan" value="pro" checked> Pro</label>
+              <label><input type="radio" name="plan" value="team"> Team</label>
+              <label><input type="radio" name="plan" value="both"> Both</label>
+            </div>
+            <label class="notify-consent"><input type="checkbox" name="consent" required> You may email me about Pro and Team. <a href="privacy.html">How we keep it</a></label>
+            <!-- People never see this field; scripts fill it in. -->
+            <label class="notify-trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+            <button class="btn btn-primary" type="submit">Notify me</button>
+            <p class="notify-msg" role="status" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -396,6 +416,26 @@
             <tr data-row="deb"><td class="dl-platform">Linux</td><td><strong>.deb</strong><span class="dl-detail">Ubuntu and Debian, 64-bit · preview</span></td><td class="dl-size" data-size="deb"></td><td class="dl-get"><a class="btn btn-ghost btn-sm" data-download="deb" href="#download">Download</a></td></tr>
             </tbody>
           </table>
+        </div>
+        <div class="install">
+          <h3>Or install from the command line</h3>
+          <div class="install-tabs" role="tablist" aria-label="How to install">
+            <button type="button" role="tab" aria-selected="true" aria-controls="inst-npm" id="tab-npm">npm</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="inst-winget" id="tab-winget" tabindex="-1">Windows · winget</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="inst-brew" id="tab-brew" tabindex="-1">Mac · Homebrew</button>
+          </div>
+          <div class="install-panel" role="tabpanel" id="inst-npm" aria-labelledby="tab-npm">
+            <button class="npx" type="button" data-copy="npx apitestcenter ui" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">$</span><code>npx apitestcenter ui</code><span class="npx-copy" data-copy-label>Copy</span></button>
+            <p class="fine">Opens the app in a window, with Node.js 20 or later. For CI: <code>npm install -g apitestcenter</code>, then <code>atc</code> — see <a href="docs/cli-and-ci.html">the command line</a>.</p>
+          </div>
+          <div class="install-panel" role="tabpanel" id="inst-winget" aria-labelledby="tab-winget" hidden>
+            <button class="npx" type="button" data-copy="winget install APITestCenter.APITestCenter" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">&gt;</span><code>winget install APITestCenter.APITestCenter</code><span class="npx-copy" data-copy-label>Copy</span></button>
+            <p class="fine"><span class="soon-badge">Coming soon</span> Waiting for Microsoft&rsquo;s review of the package — use the installer above until then.</p>
+          </div>
+          <div class="install-panel" role="tabpanel" id="inst-brew" aria-labelledby="tab-brew" hidden>
+            <button class="npx" type="button" data-copy="brew install --cask apitestcenter/tap/apitestcenter" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">$</span><code>brew install --cask apitestcenter/tap/apitestcenter</code><span class="npx-copy" data-copy-label>Copy</span></button>
+            <p class="fine"><span class="soon-badge">Coming soon</span> The Homebrew package is being set up — use the Mac download above until then.</p>
+          </div>
         </div>
         <p class="note"><strong>Windows may say &ldquo;Windows protected your PC&rdquo;.</strong> That happens with new apps that are not yet code-signed. Choose <em>More info</em> &rarr; <em>Run anyway</em>. On a Mac, right-click the app and choose <em>Open</em> the first time.</p>
       </div>

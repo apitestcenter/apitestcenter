@@ -423,4 +423,60 @@
     const z = t.closest("[data-zoom]");
     if (z) open(z);
   });
+
+  // "Tell me when Pro launches".
+  const form = $("[data-notify]");
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = $(".notify-msg", form);
+    const button = $("button[type=submit]", form);
+    const data = new FormData(form);
+    const email = String(data.get("email") || "").trim();
+    const say = (text, good) => {
+      msg.textContent = text;
+      msg.classList.toggle("is-ok", good);
+      msg.classList.toggle("is-bad", !good);
+    };
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return say("Please enter your email address.", false);
+    if (!data.get("consent")) return say("Please tick the box to say we may email you.", false);
+    button.disabled = true;
+    try {
+      const res = await fetch("https://usage.apitestcenter.com/v1/notify", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, plan: data.get("plan"), consent: true, website: data.get("website") || "" }),
+      });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(out.error || "Something went wrong");
+      form.classList.add("is-done");
+      say("You're on the list — we'll email you when Pro launches. Thank you!", true);
+    } catch (err) {
+      say(`${err.message === "Failed to fetch" ? "Couldn't reach us just now" : err.message}. Try again, or write to hello@apitestcenter.com.`, false);
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  // Install tabs.
+  const tabs = $$(".install-tabs [role=tab]");
+  const pick = (tab) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => pick(t));
+    t.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const next = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+      pick(next);
+      next.focus();
+    });
+  });
+  // Mac visitors see Homebrew first; Windows visitors winget; everyone else npm.
+  const mac = /Mac/.test(navigator.platform || navigator.userAgent);
+  if (tabs.length) pick(tabs[mac ? 2 : /Win/.test(navigator.platform || navigator.userAgent) ? 1 : 0]);
 })();
