@@ -45,7 +45,7 @@
         <aside class="callout callout-note"><p><strong>New to this?</strong> The lessons explain the ideas behind this page: <a href="../learn/checks-and-assertions.html">checks and test scripts</a>.</p></aside>
 <p>Most tests need no code: <a href="checks.html">checks</a>, <a href="chaining.html#save-values">saved values</a> and <a href="environments.html#built-in-values-uuid-timestamp">built-in values</a> cover them. When you need more — compute a value, sign something, test a rule that spans fields — open the <strong>Scripts</strong> tab. There are two:</p>
 <ul><li><strong>Pre-request</strong> runs before the request is sent. It can set values, add or change headers, change the address or the body.</li><li><strong>Tests</strong> runs on the answer. Each <code>pm.test(…)</code> counts like a <a href="checks.html">check</a>: on Send, in <a href="collection-runner.html">collection runs</a> and CI, and for <strong>every request of a load test</strong>, where the report shows its pass rate like any other check.</li></ul>
-<p>The scripts use Postman's <code>pm</code> object, so scripts from an <a href="sending-requests.html#importing-from-postman-insomnia-a-browser-recording-or-openapi">imported Postman collection</a> run as they are. The <strong>Add</strong> buttons above each script put in a working example to change.</p>
+<p>The scripts use Postman's <code>pm</code> object, so scripts from an <a href="sending-requests.html#importing-requests">imported Postman collection</a> run as they are. The <strong>Add</strong> buttons above each script put in a working example to change.</p>
 <pre><code class="lang-js">// Tests
 pm.test(&quot;status is 200&quot;, () =&gt; pm.response.to.have.status(200));
 pm.test(&quot;has items&quot;, () =&gt; {

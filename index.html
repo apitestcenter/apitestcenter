@@ -112,7 +112,7 @@
       </div>
     </section>
 
-    <p class="strip"><span class="wrap" style="display:block">Load tests run on <strong>k6</strong>, the open-source load-testing engine — packaged inside, nothing to install. Imports from <strong>Postman</strong>, <strong>Insomnia</strong>, <strong>OpenAPI</strong> and browser recordings.</span></p>
+    <p class="strip"><span class="wrap" style="display:block">Load tests run on <strong>k6</strong>, the open-source load-testing engine — packaged inside, nothing to install. Imports from <strong>Postman</strong>, <strong>Insomnia</strong>, <strong>Bruno</strong>, <strong>OpenAPI</strong>, <code>.http</code> files, Hurl and browser recordings.</span></p>
 
     <!-- ───────────── Four ways in ───────────── -->
     <section id="ways" class="ways">
@@ -448,7 +448,7 @@
         <div class="faq">
           <details><summary>Is it really free?</summary><p>Yes — everything is free during early access: requests, load tests, reports, the command line and the MCP server. Paid Pro and Team plans will come later; we&rsquo;ll announce them here first.</p></details>
           <details><summary>Does it send my requests or results anywhere?</summary><p>No. Requests go straight from your computer to the API you are testing, and results are plain files on your computer. There is no account. The app asks once whether you&rsquo;d share anonymous usage counts — say no and nothing is sent. See the <a href="privacy.html">privacy page</a>.</p></details>
-          <details><summary>I use Postman. Can I bring my collections?</summary><p>Yes — import Postman and Insomnia collections with their folders, environments, auth and scripts (<code>pm.test</code>, <code>pm.sendRequest</code> run as they are), or an OpenAPI file, where every request also checks its answer against the spec.</p></details>
+          <details><summary>I use Postman. Can I bring my collections?</summary><p>Yes — import Postman, Insomnia and Bruno collections, <code>.http</code> files (VS Code REST Client, JetBrains) and Hurl files with their folders, environments, auth and scripts (<code>pm.test</code>, <code>pm.sendRequest</code> run as they are), or an OpenAPI file, where every request also checks its answer against the spec.</p></details>
           <details><summary>I have never done load testing. Where do I start?</summary><p>Open the app and choose &ldquo;Try a simple request&rdquo;. It uses a practice API built into the app, so you learn without touching a real system. The <a href="learn/">free lessons</a> explain every idea from zero.</p></details>
           <details><summary>How much load can it make?</summary><p>Up to 500 simulated users, or a fixed rate of up to 100,000 requests per second — limited mostly by your computer and network. The report tells you when the machine itself was the bottleneck.</p></details>
           <details><summary>Is it safe to load test any API?</summary><p>Only test systems you own or have permission to test. A load test is real traffic; against someone else&rsquo;s API it can look like an attack.</p></details>
