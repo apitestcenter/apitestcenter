@@ -2,15 +2,15 @@
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #07090d;
-  --panel: #0e1218;
-  --panel-2: #141a22;
-  --line: #232b38;
-  --ink: #e8edf5;
-  --mute: #8b97a8;
-  --accent: #2ee6c7;
-  --accent-ink: #04201b;
-  --accent-dim: #10332e;
+  --canvas: #0d0f12;
+  --panel: #16191f;
+  --panel-2: #1c2027;
+  --line: #262b33;
+  --ink: #e7e9ed;
+  --mute: #9aa3af;
+  --accent: #c8f560;
+  --accent-ink: #10140a;
+  --accent-dim: #283212;
   --ok: #4ade80;
   --warn: #fbbf24;
   --shadow: 0 30px 80px -30px rgb(0 0 0 / 0.8);
@@ -18,15 +18,15 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
-    --canvas: #f4f6f9;
+    --canvas: #f4f5f2;
     --panel: #ffffff;
-    --panel-2: #eef1f6;
-    --line: #d5dce6;
-    --ink: #12151c;
-    --mute: #5c6778;
-    --accent: #08705f;
+    --panel-2: #eef0ea;
+    --line: #d9dcd3;
+    --ink: #141413;
+    --mute: #5c6370;
+    --accent: #3f6212;
     --accent-ink: #ffffff;
-    --accent-dim: #d4f3ec;
+    --accent-dim: #ecf6d2;
     --ok: #137333;
     --warn: #975300;
     --shadow: 0 30px 70px -35px rgb(16 24 40 / 0.35);
@@ -34,15 +34,15 @@
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --canvas: #f4f6f9;
+  --canvas: #f4f5f2;
   --panel: #ffffff;
-  --panel-2: #eef1f6;
-  --line: #d5dce6;
-  --ink: #12151c;
-  --mute: #5c6778;
-  --accent: #08705f;
+  --panel-2: #eef0ea;
+  --line: #d9dcd3;
+  --ink: #141413;
+  --mute: #5c6370;
+  --accent: #3f6212;
   --accent-ink: #ffffff;
-  --accent-dim: #d4f3ec;
+  --accent-dim: #ecf6d2;
   --ok: #137333;
   --warn: #975300;
   --shadow: 0 30px 70px -35px rgb(16 24 40 / 0.35);
@@ -99,7 +99,7 @@ h1 { font-size: clamp(36px, 6vw, 62px); line-height: 1.05; letter-spacing: -0.03
 .shot { margin: 48px auto 0; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; box-shadow: var(--shadow); background: var(--panel); }
 .shot .bar { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--panel-2); }
 .shot .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
-.shot video { display: block; width: 100%; height: auto; background: #07090d; }
+.shot video { display: block; width: 100%; height: auto; background: #0d0f12; }
 
 /* Sections */
 section { padding: 72px 0; }

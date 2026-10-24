@@ -4,12 +4,12 @@
   --mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
   --glass: color-mix(in srgb, var(--panel) 78%, transparent);
   --glass-line: color-mix(in srgb, var(--ink) 12%, transparent);
-  --accent-2: #7c8cff;
+  --accent-2: #5eead4;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   overflow-x: hidden;
 }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .home { --accent-2: #4b5bd6; } }
-:root[data-theme="light"] .home { --accent-2: #4b5bd6; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .home { --accent-2: #0f766e; } }
+:root[data-theme="light"] .home { --accent-2: #0f766e; }
 
 .home main { overflow-x: clip; }
 .home section { padding: 104px 0; position: relative; }
@@ -97,7 +97,7 @@
 .chrome i:first-child { background: #ff5f57; } .chrome i:nth-child(2) { background: #febc2e; } .chrome i:nth-child(3) { background: #28c840; }
 .chrome span { margin-left: 8px; }
 .layer-app { width: 74%; left: 0; top: 214px; z-index: 3; }
-.layer-app video { display: block; width: 100%; height: auto; background: #07090d; }
+.layer-app video { display: block; width: 100%; height: auto; background: #0d0f12; }
 .layer-term { width: 62%; right: 0; top: 0; z-index: 2; }
 .layer-chat { width: 50%; right: 0; bottom: -10px; z-index: 4; }
 .term { margin: 0; padding: 14px 16px; min-height: 172px; font: 12.5px/1.65 var(--mono); color: var(--ink); white-space: pre; overflow: hidden; }
@@ -190,7 +190,7 @@
 .see-clip { transition: transform 0.3s var(--ease), border-color 0.3s; }
 .see-clip:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
 .see-play { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
-.see-clip video { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 800; background: #07090d; }
+.see-clip video { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 800; background: #0d0f12; }
 .see-zoom { position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: color-mix(in srgb, var(--canvas) 70%, transparent); border: 1px solid var(--glass-line); color: var(--ink); opacity: 0; transform: scale(0.9); transition: 0.2s; backdrop-filter: blur(6px); }
 .see-zoom svg { width: 16px; height: 16px; }
 .see-play:hover .see-zoom, .see-play:focus-visible .see-zoom { opacity: 1; transform: none; }
@@ -272,7 +272,7 @@
   .tour-grid { grid-template-columns: 1fr; }
   .tour-frame { display: none; }
   .tour-step { min-height: 0; opacity: 1; margin-bottom: 56px; }
-  .tour-inline { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 800; background: #07090d; margin-top: 18px; border-radius: 12px; border: 1px solid var(--line); }
+  .tour-inline { display: block; width: 100%; height: auto; aspect-ratio: 1280 / 800; background: #0d0f12; margin-top: 18px; border-radius: 12px; border: 1px solid var(--line); }
   .duo-grid, .local-grid, .learn-grid, .plans, .see { grid-template-columns: 1fr; }
   .ways-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -303,7 +303,7 @@
 .lb-backdrop { position: absolute; inset: 0; background: color-mix(in srgb, #02040a 82%, transparent); backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.3s; }
 .lb.is-open .lb-backdrop { opacity: 1; }
 .lb-fig { position: relative; margin: 0; display: grid; gap: 12px; transform-origin: 0 0; transition: transform 0.38s var(--ease), opacity 0.3s; }
-.lb-media { border-radius: 14px; overflow: hidden; border: 1px solid var(--glass-line); background: #07090d; box-shadow: 0 40px 140px -30px rgb(0 0 0 / 0.9); }
+.lb-media { border-radius: 14px; overflow: hidden; border: 1px solid var(--glass-line); background: #0d0f12; box-shadow: 0 40px 140px -30px rgb(0 0 0 / 0.9); }
 .lb-media video, .lb-media img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .lb-fig figcaption { color: #c9d3e0; font-size: 15px; text-align: center; transition: opacity 0.2s; }
 .lb:not(.is-open) .lb-fig figcaption { opacity: 0; }

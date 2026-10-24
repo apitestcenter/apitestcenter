@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="APITestCenter">
-  <rect width="64" height="64" rx="14" fill="#0e1218"/>
-  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#232b38" stroke-width="2"/>
-  <!-- A response-time line that settles: tested, then steady. -->
-  <path d="M10 40 H20 L26 22 L33 46 L39 30 L43 36 H54" fill="none" stroke="#2ee6c7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="0" y="0" width="64" height="64" rx="15" fill="#C8F560"/><path d="M47.4 32.3 V36.7 Q47.4 40.9 43.75 42.98 L35.65 47.72 Q32 49.8 28.35 47.72 L20.25 42.98 Q16.6 40.9 16.6 36.7 V27.3 Q16.6 23.1 20.25 21.02 L28.35 16.28 Q32 14.2 35.65 16.28 L43.75 21.02 Q47.4 23.1 47.4 27.3" fill="none" stroke="#10140A" stroke-width="3.2" stroke-linejoin="round"/><path d="M37.5 29.8 H51.5" stroke="#10140A" stroke-width="1.9"/><circle cx="51.5" cy="29.8" r="2.5" fill="#10140A"/><path d="M22.9 23.7 L29.4 29.8 L22.9 35.9" fill="none" stroke="#10140A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="37.5" cy="29.8" r="3.6" fill="#10140A"/><path d="M27.2 37.9 Q32 42.1 36.8 37.9" fill="none" stroke="#10140A" stroke-width="2.6" stroke-linecap="round"/></svg>
