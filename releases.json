@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-24T18:04:48.102Z",
+  "generatedAt": "2026-10-25T15:28:37.835Z",
   "releases": [
+    {
+      "version": "0.15.0",
+      "date": "2026-10-25T15:28:36Z",
+      "latest": true,
+      "notesHtml": "<p><strong>Connections: set a system up once, use it from every request.</strong> Plus export, smarter params, and variables you don't have to remember.</p>\n<h4 id=\"connections\">Connections</h4>\n<ul><li><strong>A connection is a system set up once</strong> — its base URL, sign-in and headers — with a variable like <code>{{successFactors}}</code>. Any request whose address starts with it is sent there with that sign-in. Change the sign-in once and every request follows; nothing to copy into each request.</li><li><strong>Any sign-in</strong> a request can use: Basic, Bearer, API key, OAuth 2.0 (including SAML bearer for SAP SuccessFactors), OAuth 1.0, NTLM, AWS Signature and more. <code>{{names}}</code> in it come from the environment, so one connection serves test and production.</li><li><strong>Connectors</strong>: <strong>SAP SuccessFactors</strong>, any <strong>OData</strong> service (v2 and v4), any <strong>REST API</strong>, and a <strong>Practice company</strong> to try it without a system of your own.</li><li><strong>Browse OData systems</strong>: their objects with their own names, every field with its label and type, and the records — with conditions, columns (all fields until you pick some), sort, rows at a time, total count, <em>Load more</em> and <em>Copy URL</em>. <strong>Open as request</strong> opens any query as a request, signed in through the connection.</li><li>Works on Send, in collection runs, load tests, the command line and for AI agents.</li></ul>\n<h4 id=\"export\">Export</h4>\n<ul><li><strong>Export saved requests</strong> — a folder, a few requests, or everything — as <strong>APITestCenter</strong>, <strong>Postman v2.1</strong>, <strong>OpenAPI 3.1</strong>, <strong>.http</strong> or <strong>Markdown</strong>. Secrets never go into the file.</li><li><strong>Double-click an <code>.apitestcenter</code> file</strong> and the app opens with it, ready to import.</li></ul>\n<h4 id=\"requests\">Requests</h4>\n<ul><li><strong>Type <code>{{</code></strong> in the address, a param, a header, an auth field or the body: a list of every variable the request can use — connections, folder, environment, saved values, built-in — with their values.</li><li><strong>Params and headers turn off</strong> without being deleted, carry a <strong>description</strong>, and can all be edited as text with <strong>Bulk edit</strong>.</li><li><strong>Right-click a tab</strong>: Close, Close others, Close to the right, Close unchanged, Close all, Duplicate, Copy URL.</li><li><strong>Saved requests</strong>: rename (F2), <em>Move to…</em>, drag and drop, several at once, and <em>New request here</em> in a folder.</li><li>The address that answered is readable and copies on a click. Long dropdowns have a search box.</li></ul>\n<h4 id=\"installer\">Installer</h4>\n<ul><li><strong>Running the installer again</strong> now says what's on your computer and offers <strong>Update</strong>, <strong>Repair</strong> or <strong>Uninstall</strong>. In the app's colours, and a little quicker.</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.15.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.15.0.exe",
+          "size": 113514652,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.15.0/APITestCenter-Setup-0.15.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.15.0.exe",
+          "size": 113242800,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.15.0/APITestCenter-Portable-0.15.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.15.0-mac-arm64.dmg",
+          "size": 121786599,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.15.0/APITestCenter-0.15.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.15.0-mac-x64.dmg",
+          "size": 127177978,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.15.0/APITestCenter-0.15.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.15.0-linux-x86_64.AppImage",
+          "size": 111102575,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.15.0/APITestCenter-0.15.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.15.0-linux-amd64.deb",
+          "size": 112638908,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.15.0/APITestCenter-0.15.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.14.0",
       "date": "2026-10-24T18:04:46Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>A new look, projects, and many requests open at once.</strong> The biggest update so far.</p>\n<h4 id=\"a-new-look\">A new look</h4>\n<ul><li><strong>New logo and colours</strong>: lime on graphite, with a light <em>Paper</em> theme. On the Windows taskbar the icon is the hexagon itself.</li><li><strong>The app's own title bar</strong>, in the theme's colours — no grey system bar.</li><li><strong>A status bar</strong> along the bottom: the engine's state, Import, Cookies, Certificates, Mock server, zoom, density, theme, Help and the version.</li><li><strong>Zoom</strong> (Ctrl + / Ctrl − / Ctrl 0) and <strong>compact or comfortable</strong> rows. Menus and dialogs open smoothly.</li><li><strong>The app now remembers</strong> your theme, zoom, open tabs and environment between restarts (before, a restart forgot them).</li></ul>\n<h4 id=\"work-faster\">Work faster</h4>\n<ul><li><strong>Request tabs</strong>: each request opens in its own tab, keeping its answer. Open tabs come back after a restart.</li><li><strong>Ctrl K</strong> finds and runs anything; <strong>Ctrl+/</strong> lists every shortcut; <strong>Ctrl+B</strong> shows or hides the saved requests; <strong>Ctrl+,</strong> opens Settings.</li><li><strong>Save</strong> sits beside Run load test, with <em>Save as a new request…</em> under its arrow.</li><li><strong>The response beside the request, or below it</strong> — your choice.</li><li><strong>The environment picker</strong> moved to the right of the tabs, with a warning only when a variable is missing.</li><li><strong>Saved requests</strong>: a cleaner panel, a ⋯ menu on requests (Open, Duplicate, Version history, Move to Trash), and right-click on requests and folders.</li></ul>\n<h4 id=\"safer\">Safer</h4>\n<ul><li><strong>Environment colours</strong>: an environment named like <em>Production</em> turns the top of the window red and <strong>asks before a request that changes data, or a load test</strong>. Staging-like names are amber.</li><li><strong>Version history</strong>: every save keeps the version it replaces (the last 50). See what changed and restore any version.</li><li><strong>Trash</strong>: deleted requests wait 30 days, with their secrets, and can be restored.</li></ul>\n<h4 id=\"projects\">Projects</h4>\n<ul><li><strong>Several projects</strong>, each a folder of its own — requests, environments, history — that you can keep in Git. <strong>Home</strong> lists them, makes new ones, opens folders you already have, and switches between them in a second.</li></ul>\n<h4 id=\"also\">Also</h4>\n<ul><li><strong>Settings</strong> in one window: appearance, copy-ready setup for AI assistants (MCP), certificates and cookies, privacy, your files, shortcuts and updates.</li><li><strong>Import</strong> from <strong>Bruno</strong> (a whole folder, with its environments), <strong>.http / .rest</strong> files and <strong>Hurl</strong>, several files at once.</li><li><strong>Homebrew</strong> (macOS) and <strong>winget</strong> (Windows) packages.</li><li>Variables can use other variables (<code>baseUrl = https://{{host}}</code>), and imported requests keep their order in collection runs.</li></ul>\n<p>Already on 0.3.0 or later? The app updates itself (installer version) — just restart when it asks.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.14.0",
       "files": [

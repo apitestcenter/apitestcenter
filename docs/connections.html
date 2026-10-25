@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connections — APITestCenter guide</title>
+  <meta name="description" content="Set a system up once — base URL, sign-in, headers — and every request that starts with its variable uses it. Browse SAP SuccessFactors and other OData services.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li><li><a href="working-in-the-app.html">Working in the app</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="live-connections.html">WebSockets and event streams</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="load-tests.html">Load tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="scripts.html">Scripts</a></li><li><a href="collection-runner.html">Run a collection</a></li><li><a href="mock-server.html">Mock server</a></li><li><a href="connections.html" aria-current="page">Connections</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="ci-walkthrough.html">From the app to your pipeline</a></li><li><a href="cli-and-ci.html">Command line and CI</a></li><li><a href="ai-agents.html">AI agents (MCP)</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Testing APIs</p>
+        <h1>Connections</h1>
+        <p class="docs-lead">Set a system up once — base URL, sign-in, headers — and every request that starts with its variable uses it. Browse SAP SuccessFactors and other OData services.</p>
+        <p>A <strong>connection</strong> is a system set up once: its <strong>base URL</strong>, its <strong>sign-in</strong> and any <strong>headers</strong> it needs. Each connection has a <strong>variable</strong>, like <code>{{successFactors}}</code>. Any request whose address starts with it is sent to that system with that sign-in — you never type the sign-in into a request again, and changing it on the connection changes it for every request.</p>
+<pre><code>GET {{successFactors}}/User?$top=10
+GET {{successFactors}}/EmpJob?$filter=userId eq 'admin'</code></pre>
+<p>Open <strong>Connections</strong> in the sidebar (or <em>Connections</em> in the <a href="working-in-the-app.html#the-command-palette">command palette</a>).</p>
+<h2 id="add-a-connection">Add a connection</h2>
+<p><strong>Add connection</strong> asks what to connect:</p>
+<div class="table-wrap"><table><thead><tr><th>Type</th><th>For</th></tr></thead><tbody><tr><td><strong>SAP SuccessFactors</strong></td><td>Its OData API. The base URL is your data center's API server with <code>/odata/v2</code> (from SAP's list of API servers, or your admin). For <strong>Basic</strong> sign-in the user name is <code>user@companyID</code>; for OAuth pick <strong>OAuth 2.0 → SAML 2.0 bearer</strong>.</td></tr><tr><td><strong>OData service</strong></td><td>SAP Gateway, Microsoft Dynamics, any OData v2 or v4 API. The base URL is the service root — the part before <code>/$metadata</code>.</td></tr><tr><td><strong>REST API</strong></td><td>Any HTTP API: the part every address starts with, like <code>https://api.example.com/v1</code>.</td></tr><tr><td><strong>Practice company</strong></td><td>A pretend OData company built into the app (Departments, Employees, Products), to try it all without a system of your own.</td></tr></tbody></table></div>
+<p>Then:</p>
+<ul><li><strong>Name</strong> and <strong>Variable</strong> — the variable follows the name (<em>SuccessFactors</em> → <code>{{successFactors}}</code>) until you change it. Two connections can't share one.</li><li><strong>Sign-in</strong> — any type a request can use: Bearer, Basic, API key, OAuth 2.0 (client credentials, password, authorization code, JWT bearer, SAML bearer), OAuth 1.0, Digest, NTLM, AWS Signature, JWT. <code>{{names}}</code> in it come from the active <a href="environments.html">environment</a>, so one connection can serve test and production.</li><li><strong>Headers</strong> — sent with every request through it.</li></ul>
+<p><strong>Test connection</strong> checks it: for OData it reads <code>$metadata</code> and says what it found — <em>Connected — OData 2.0, 960 objects, 420 ms</em>; for a REST API it checks the server answers and takes the sign-in. If it fails it says why, with what to try. Secrets are kept encrypted with your other <a href="privacy-and-data.html#secrets">secrets</a>, in this <a href="working-in-the-app.html#projects">project</a>.</p>
+<h2 id="use-it-in-requests">Use it in requests</h2>
+<p>Start the address with the variable and leave <strong>Auth</strong> on <strong>From folder or connection</strong> — the default for new requests. The Auth tab then says <em>Uses the Basic of the connection SuccessFactors</em>. A request that picks its own auth type keeps it; a folder's auth, when the request is inside one that sets some, comes before the connection's.</p>
+<p>It works everywhere a request runs: <strong>Send</strong>, <a href="collection-runner.html">collection runs</a>, <a href="load-tests.html">load tests</a>, the <a href="cli-and-ci.html">command line</a> and the <a href="ai-agents.html">AI agent tools</a>.</p>
+<h2 id="browse-an-odata-system">Browse an OData system</h2>
+<p>Open a SuccessFactors or OData connection with the arrow next to it: its objects appear under it (connections stay folded or open as you left them), with the system's own names (<em>Hire date</em> for <code>hireDate</code>), and a search for long lists. <strong>⋯ → Read objects again</strong> after the system changes. Pick an object:</p>
+<ul><li><strong>Records</strong> — the first 50, with the total. <strong>Condition</strong> adds a filter (a field, <em>is</em>, <em>contains</em>, <em>starts with</em>, <em>more than</em>… and a value; every condition must hold). <strong>All fields</strong> shows everything the service sends; pick fields there (search, <strong>Pick these</strong> for every match, <strong>Clear</strong> to go back to all) to ask for only those — that's <code>$select</code>. <strong>Sort</strong> orders them. <strong>Rows</strong> sets how many come at a time (10 to 1,000, or <strong>All, page by page</strong>, which follows the service's own next-page links); <strong>Load more</strong> gets the next ones. <strong>Total count</strong> asks for the number of matching records too — <code>$inlinecount=allpages</code> in OData v2, <code>$count=true</code> in v4; turn it off for very large objects if it's slow. Values are written the way the service expects — type a date as <code>2024-01-31</code>. <strong>Copy URL</strong> copies the address that was asked, readable.</li><li><strong>Fields</strong> — each field's label, type, length, and whether it's the key, required, or can't be filtered or sorted on; <strong>Links</strong> lists what <code>$expand</code> can bring.</li><li><strong>Query</strong> — the query as text, to change and run, with the raw answer and <strong>Copy URL</strong>.</li></ul>
+<p><strong>Open as request</strong> opens the query as <code>{{variable}}/…</code> in a new tab — signed in through the connection, ready to check, save or load-test.</p>
+<aside class="callout callout-note"><p>Load-test a production system only with its owner's agreement: a load test sends many requests.</p></aside>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="mock-server.html"><span>Previous</span>Mock server</a><a class="next" href="reading-the-report.html"><span>Next</span>Reading the report</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#add-a-connection">Add a connection</a></li><li><a href="#use-it-in-requests">Use it in requests</a></li><li><a href="#browse-an-odata-system">Browse an OData system</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
