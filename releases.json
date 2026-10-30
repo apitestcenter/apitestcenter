@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-27T09:51:19.394Z",
+  "generatedAt": "2026-10-30T08:35:13.430Z",
   "releases": [
+    {
+      "version": "0.17.0",
+      "date": "2026-10-30T08:35:12Z",
+      "latest": true,
+      "notesHtml": "<p><strong>API docs from your collections, API descriptions set up in one place, the app in the tray, resting to free memory, and panes you can resize.</strong> Plus updates that ask first, and the command line's version in Settings.</p>\n<h4 id=\"api-docs\">API docs</h4>\n<ul><li><strong>A Docs tab on requests and folders</strong>: write a description in Markdown, with a preview.</li><li><strong>Export → API docs (HTML)</strong> makes one page to share or host: a searchable list, each request's description, parameters, headers, body, an example answer, its checks, and curl, JavaScript and Python code. Secrets are left out.</li><li>Descriptions go out with Postman, OpenAPI and Markdown exports, and come in from Postman, OpenAPI, Insomnia and Bruno.</li></ul>\n<h4 id=\"api-descriptions\">API descriptions</h4>\n<ul><li><strong>Set up in one place</strong>: <em>Ctrl+K → API descriptions</em> shows four steps (added, a folder uses it, requests for its operations, send or run), and each is done from there. Pick a folder, or make a new one, and <strong>Use it for this folder</strong>.</li><li><strong>Add the missing requests</strong> from the dialog or from the folder's own settings, which show what that folder covers. Requests already in the folder stay and count for their operation; ones that aren't in the description are listed by name.</li><li><strong>The new requests know where the API runs</strong>: when the description gives only a path, the address it was fetched from fills in the rest, or you type it once.</li><li><strong>Paste its text</strong> when an address can't be fetched, say behind a sign-in. Fetching from an address now trusts the same certificates as Send.</li><li><strong>Find an operation</strong>: show all, those with no request, or those with one, and search.</li><li>A file that isn't an API description says which one and why, with a sample of the format.</li></ul>\n<ul><li><strong>AI agents (MCP)</strong> can see which operations have no request, and add them: <code>list_api_descriptions</code>, <code>api_description_coverage</code> and <code>add_missing_requests</code>.</li></ul>\n<h4 id=\"running-in-the-background\">Running in the background</h4>\n<ul><li><strong>Closing the window keeps the app in the tray</strong> while something is running (a request waiting for its answer, a collection run, a performance test, a scheduled check). The tray menu says what's running. <strong>Hide to tray</strong> from the command palette puts it there on purpose.</li><li><em>Settings → Running in the background</em>: keep scheduled checks running (the default), always stay in the tray, or quit. <strong>Start with Windows</strong> opens into the tray; the installer's last page offers it too, off by default.</li><li><strong>Resting</strong>: when the window has been put away for a while (10 minutes by default) with nothing running, the app rests to free memory and comes back as you left it. Scheduled checks keep running and still notify you.</li></ul>\n<h4 id=\"test-api\">Test API</h4>\n<ul><li><strong>Resize the panes</strong>: drag the line beside <strong>Saved requests</strong>, and the one between the request and the answer, side by side or one above the other. History, Connections and Compare have one beside their list too. Arrow keys move them; double-click to reset.</li><li><strong>Drop files</strong> on the import, API description and other file dialogs.</li><li><strong>Guide links</strong> in dialogs open the page about what you're doing.</li></ul>\n<h4 id=\"command-line\">Command line</h4>\n<ul><li><strong>Settings → Command line</strong> says whether <code>atc</code> is installed and which version runs. <strong>Install</strong> puts it on your PATH in one click, no administrator needed.</li><li>When an older <code>atc</code> from npm comes first, it says <em>New version available</em>: <strong>Update</strong>, or <strong>Use the app's copy</strong>, which updates with the app.</li></ul>\n<h4 id=\"learn\">Learn</h4>\n<ul><li><strong>A new lesson: OData, the API of business systems</strong> (SAP, SuccessFactors, Dynamics): <code>$metadata</code>, <code>$filter</code>, paging, v2 against v4, and what to test, tried on the practice company.</li><li><strong>Contracts and schemas</strong> now checks a whole API against its description, with the practice shop's.</li></ul>\n<h4 id=\"updates-and-settings\">Updates and settings</h4>\n<ul><li><strong>Updates ask first</strong>: a check shows what's new; nothing downloads until you say so, then you see its progress and choose to restart now or later.</li><li><strong>Anonymous usage counts</strong> moved to <em>Settings → Privacy</em>. Help links there.</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.17.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.17.0.exe",
+          "size": 113723892,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.0/APITestCenter-Setup-0.17.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.17.0.exe",
+          "size": 113451714,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.0/APITestCenter-Portable-0.17.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.17.0-mac-arm64.dmg",
+          "size": 121773486,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.0/APITestCenter-0.17.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.17.0-mac-x64.dmg",
+          "size": 127349843,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.0/APITestCenter-0.17.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.17.0-linux-x86_64.AppImage",
+          "size": 111278936,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.0/APITestCenter-0.17.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.17.0-linux-amd64.deb",
+          "size": 112948128,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.0/APITestCenter-0.17.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.16.0",
       "date": "2026-10-27T09:51:18Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>Contract tests, scheduled checks, Salesforce and NetSuite connections, performance tests by type, and a proxy setting.</strong> Plus answers shown whole, and a card like this one after every update.</p>\n<h4 id=\"contract-tests\">Contract tests</h4>\n<ul><li><strong>Check every answer against your API's OpenAPI file.</strong> A folder names an <strong>API description</strong>, and each answer inside is checked: is the operation in it, is the status documented (error answers too), is the content type, does the body match the documented schema, are required headers there. On Send, in collection runs, on the command line and for AI agents.</li><li><strong>Importing an OpenAPI file</strong> keeps it as the collection's description, so its requests are checked from the start.</li><li><strong>See which operations have no test yet</strong>, and add a request for each in one click.</li><li>Add a description from a file, a web address, or the practice shop's own, at <code>{{practiceApi}}/openapi.json</code>. <em>Ctrl+K → API descriptions</em>.</li></ul>\n<h4 id=\"connections\">Connections</h4>\n<ul><li><strong>Salesforce</strong>: sign in with OAuth 2.0 (authorization code or client credentials), browse every queryable object and its fields, and build SOQL with the same builder as OData. <strong>Total count</strong>, related fields like <code>Owner.Name</code>, and <em>Paste URL</em> take SOQL too.</li><li><strong>NetSuite</strong>: account ID and token-based sign-in (or OAuth 2.0), record types from the metadata catalog, and SuiteQL from the builder, 1,000 rows a page.</li><li><strong>Names for IDs</strong> in NetSuite: a lookup shows its name next to its ID (<em>Asha Rao · 500</em>), and a condition can compare a lookup by its name. Lookups NetSuite won't name show the ID only, and the query still runs.</li><li><strong>Related data</strong>: pick a link's fields as columns, click a record to see all of it as a tree, and edit the filter as text.</li><li><strong>Export records</strong> as <strong>CSV</strong> or <strong>Excel</strong>: the ones loaded, or all matching, read page by page (up to 50,000).</li><li><strong>Save as request</strong> keeps a query as a saved request in the folder you pick, signed in by the connection.</li><li>Practice Salesforce org and NetSuite account in the practice API, so you can try both without a system of your own.</li></ul>\n<h4 id=\"scheduled-checks\">Scheduled checks</h4>\n<ul><li><strong>Run a collection on a schedule</strong> while the app is open, from every 5 minutes to every day, with the environment you pick. <em>Run collection → Scheduled checks</em>.</li><li><strong>A notification when it starts failing, and when it's fixed</strong>, saying which request failed and why; or on every failure, every run, or never.</li><li>Each one shows its last runs as green and red bars, when it runs next, and the last failure in full. <strong>Run now</strong>, <strong>Pause</strong>, and it follows its folder when you move it.</li><li><strong>Download for CI</strong>'s pipeline has an hourly schedule ready to turn on, for checks while your computer is off.</li></ul>\n<h4 id=\"performance-tests\">Performance tests</h4>\n<ul><li><strong>Load tests are now performance tests, in six types</strong>: <strong>Smoke</strong>, <strong>Load</strong>, <strong>Stress</strong>, <strong>Spike</strong>, <strong>Soak</strong> and <strong>Breakpoint</strong>. Pick one and the users, duration and stages are set for you.</li><li><strong>Each report answers its type's question</strong>: how it did at the peak (Stress), whether it recovered (Spike), whether it slowed down over time (Soak), and the most it handled before a target broke (Breakpoint).</li><li><strong>Breakpoint</strong> adds users steadily and stops by itself once your targets are missed, or p95 2 s and 5% errors if you haven't set any.</li><li>On the command line: <code>--preset load</code> and <code>--preset breakpoint</code>.</li></ul>\n<h4 id=\"requests\">Requests</h4>\n<ul><li><strong>Answers are shown whole</strong>, up to 20 MB (was 64 KB). Very big ones wait behind a panel: show it, show it as plain text, or save it to a file.</li><li><strong>A Send shows its steps as they happen</strong> (Run first, scripts, sign-in, waiting for the host, downloading) with <strong>Cancel</strong>.</li><li><strong>New requests wait 5 minutes</strong> for an answer (was 60 seconds). When one runs out of time, the answer says how long it waited and offers <em>Wait up to 5m and send again</em>.</li><li><strong>Production is what you say it is</strong>: tick <em>This is production</em> on an environment to get the red edge and the question before changes and performance tests. Nothing is guessed from names.</li></ul>\n<h4 id=\"settings\">Settings</h4>\n<ul><li>New sections: <strong>Requests</strong> (defaults for new requests), <strong>Network and proxy</strong>, <strong>Performance tests</strong> (the type new tests start with) and <strong>Command line</strong>.</li><li><strong>Proxy</strong>: none, the computer's own (<code>HTTPS_PROXY</code>, the default), or one you enter with its sign-in and the hosts that go direct. Used by Send, sign-in, connections, WebSockets, performance tests and the command line. <em>Reach it</em> checks it works.</li></ul>\n<h4 id=\"updates\">Updates</h4>\n<ul><li><strong>What's new</strong>: after an update the app shows what changed, like this. Open it again any time from <strong>About</strong>.</li><li><strong>Important updates say so</strong>: they ask you to restart, and say why. Other updates download quietly, show <em>Update ready</em> in the status bar, and install when you close the app.</li></ul>\n<h4 id=\"look-and-feel\">Look and feel</h4>\n<ul><li>Window buttons match the light and dark themes, and every dialog opens in the middle of the window.</li><li><strong>Anonymous usage counts</strong> are on, with a notice before anything is sent. <em>See exactly what's sent</em>, or turn them off in Settings.</li></ul>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.16.0",
       "files": [

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OData, the API of business systems — Learn API testing — APITestCenter</title>
+  <meta name="description" content="SAP, SuccessFactors, Microsoft Dynamics and many other business systems answer in OData. What a service root and $metadata are, how $filter, $select, $expand and paging work, v2 against v4, and what to test.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata.html" aria-current="page">OData, the API of business systems</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Business systems</p>
+        <h1>OData, the API of business systems</h1>
+        <p class="docs-lead">SAP, SuccessFactors, Microsoft Dynamics and many other business systems answer in OData. What a service root and $metadata are, how $filter, $select, $expand and paging work, v2 against v4, and what to test.</p>
+        <p>Ask a company's HR, finance or sales system for data and there's a good chance it answers in <strong>OData</strong>: SAP (S/4HANA, Gateway, SuccessFactors), Microsoft Dynamics 365 and Business Central, SharePoint, and many more. OData is REST with rules: every service is shaped the same way, so once you can read one, you can read them all.</p>
+<h2 id="the-service-root-and-its-tables">The service root and its tables</h2>
+<p>An OData API starts at its <strong>service root</strong>, an address such as <code>https://api.example.com/odata/v4</code>. Under it are <strong>entity sets</strong>, which behave like tables: <code>Employees</code>, <code>Departments</code>, <code>Products</code>. Each <strong>entity</strong> in a set is a row, with <strong>properties</strong> (columns) and a <strong>key</strong> that picks one:</p>
+<pre><code>GET /odata/v4/Employees             every employee (a page at a time)
+GET /odata/v4/Employees('E1001')    one, by its key
+GET /odata/v4/Departments(5)        a number key has no quotes</code></pre>
+<h2 id="metadata-the-api-describes-itself">$metadata: the API describes itself</h2>
+<p>Add <code>/$metadata</code> to the service root and the service answers with an XML file listing every entity set, each property with its type (<code>Edm.String</code>, <code>Edm.Int32</code>, <code>Edm.DateTime</code>…), which are keys, and <strong>navigation properties</strong>: the links between sets, like an employee's <code>Department</code>. Tools read it to show you the tables and fields, and to build queries for you. It is to OData what an <a href="contract-testing.html">OpenAPI file</a> is to a REST API.</p>
+<h2 id="asking-for-exactly-what-you-need">Asking for exactly what you need</h2>
+<p>Query options go after the <code>?</code>, and all start with <code>$</code>:</p>
+<div class="table-wrap"><table><thead><tr><th>Option</th><th>Does</th><th>Example</th></tr></thead><tbody><tr><td><code>$select</code></td><td>only these properties</td><td><code>$select=FirstName,LastName</code></td></tr><tr><td><code>$filter</code></td><td>only matching rows</td><td><code>$filter=DepartmentID eq 1 and Active eq true</code></td></tr><tr><td><code>$orderby</code></td><td>sorted</td><td><code>$orderby=LastName desc</code></td></tr><tr><td><code>$top</code>, <code>$skip</code></td><td>how many, from where</td><td><code>$top=10&amp;$skip=20</code></td></tr><tr><td><code>$expand</code></td><td>include linked entities</td><td><code>Departments(5)?$expand=Employees</code></td></tr><tr><td><code>$count</code></td><td>how many match, in total</td><td><code>$count=true</code> (v2: <code>$inlinecount=allpages</code>)</td></tr></tbody></table></div>
+<p>Filters compare with words, not symbols: <code>eq</code>, <code>ne</code>, <code>gt</code>, <code>ge</code>, <code>lt</code>, <code>le</code>, joined with <code>and</code> and <code>or</code>. Text has functions: <code>startswith(LastName,'P')</code>, <code>contains(Email,'sales')</code> (v2 says <code>substringof('sales',Email)</code>). Text values go in single quotes.</p>
+<h2 id="paging-the-answer-is-rarely-everything">Paging: the answer is rarely everything</h2>
+<p>A service gives a page at a time, often 50, 100 or 1,000 rows, and a link to the next page: <code>@odata.nextLink</code> in v4, <code>__next</code> in v2. A test that reads only the first answer and counts the rows is counting one page. Ask for <code>$count</code> to know the total, and follow the next links to read everything.</p>
+<h2 id="v2-and-v4-look-different">v2 and v4 look different</h2>
+<p>The same employee, from the same service, in its two versions:</p>
+<pre><code class="lang-json">// v4
+{ &quot;value&quot;: [ { &quot;EmployeeID&quot;: &quot;E1001&quot;, &quot;HireDate&quot;: &quot;2012-01-01&quot;, &quot;Salary&quot;: 42000 } ], &quot;@odata.count&quot;: 140 }
+
+// v2
+{ &quot;d&quot;: { &quot;results&quot;: [ { &quot;__metadata&quot;: { … }, &quot;EmployeeID&quot;: &quot;E1001&quot;,
+  &quot;HireDate&quot;: &quot;/Date(1325376000000)/&quot;, &quot;Salary&quot;: &quot;42000.00&quot; } ], &quot;__count&quot;: &quot;140&quot; } }</code></pre>
+<p>In v2 the rows sit in <code>d.results</code>, dates are <code>/Date(milliseconds)/</code> and decimals and counts come as text. In v4 they're in <code>value</code>, with ISO dates and real numbers. SAP Gateway and SuccessFactors mostly speak v2; Dynamics and newer SAP services, v4. Checks written for one break on the other, so know which one you're testing.</p>
+<h2 id="signing-in-and-writing">Signing in, and writing</h2>
+<p>Most services want <a href="authentication.html">Basic sign-in or OAuth</a>. SAP services that let you change data also ask for a <strong>CSRF token</strong>: first a <code>GET</code> with the header <code>X-CSRF-Token: Fetch</code>, then the token from its answer on the <code>POST</code>, <code>PATCH</code> or <code>DELETE</code>. A write without it fails with <code>403</code>, whatever your permissions.</p>
+<h2 id="what-to-test">What to test</h2>
+<ul><li><strong>The filters you rely on</strong>, at their edges: a date on the boundary, an empty result, text with an apostrophe (<code>'O''Brien'</code>: doubled inside quotes).</li><li><strong>Paging</strong>: the total from <code>$count</code> matches what you read by following every next link.</li><li><strong>Permissions</strong>: a user without access should get <code>403</code>, or fewer rows, or a property left out. Business systems often hide rows and fields rather than refuse.</li><li><strong>What isn't allowed</strong>: some properties can't be filtered or sorted on, and say so with a <code>400</code>. A test can expect that error.</li><li><strong>Speed</strong>: <code>$select</code> keeps answers small; a wide <code>$expand</code> can turn one fast request into a slow one. Measure before you ship a query that runs every few minutes.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong>: a pretend company's OData service, built into the app.</p>
+<ol><li>Open <strong>Connections → Add connection → Practice company</strong>. The app reads its <code>$metadata</code> and lists <strong>Departments</strong>, <strong>Employees</strong> and <strong>Products</strong>; open <strong>Employees</strong> to see its fields and their types.</li><li>On <strong>Test API</strong>, send <code>GET {{practiceApi}}/odata/v4/Employees?$top=2</code> with <strong>Basic</strong> sign-in: any user name, password <code>demo</code>. Two employees come back in <code>value</code>.</li><li>Add <code>&amp;$count=true</code>: <code>@odata.count</code> says 140, though you only got 2. Remove <code>$top</code> and you get 50 and an <code>@odata.nextLink</code>, a page at a time.</li><li>Send <code>{{practiceApi}}/odata/v4/Employees?$select=FirstName,LastName,JobTitle&amp;$filter=DepartmentID eq 1 and Active eq true&amp;$orderby=LastName&amp;$count=true</code>: 16 active people in Engineering, three columns each.</li><li>Send <code>{{practiceApi}}/odata/v4/Departments(5)?$expand=Employees</code>: the Support department with its people inside.</li><li>Change <code>v4</code> to <code>v2</code> in step 2 and compare: <code>d.results</code>, <code>/Date(…)/</code>, the salary as text.</li><li>Filter on <code>Salary gt 50000</code>: a <code>400</code>, <em>Salary can't be used in $filter</em>. A real service refuses some filters too.</li></ol></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>An OData service has a <strong>service root</strong>, <strong>entity sets</strong> like tables, and a <strong><code>$metadata</code></strong> file that describes every one of them.</li><li><strong><code>$select</code>, <code>$filter</code>, <code>$orderby</code>, <code>$top</code>, <code>$expand</code> and <code>$count</code></strong> ask for exactly what you need, in the URL.</li><li>Answers come <strong>a page at a time</strong>. Use <code>$count</code> and the next links before you count anything.</li><li><strong>v2 and v4</strong> shape the same data differently, so your checks must match the version.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/connections.html">Connections: browse and query OData, Salesforce and NetSuite</a> · <a href="../docs/sending-requests.html#the-tabs-under-the-request">Signing in</a></p>
+<p><strong>Next:</strong> <a href="glossary.html">Glossary, A to Z</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="testing-safely.html"><span>Previous</span>Testing safely and realistically</a><a class="next" href="glossary.html"><span>Next</span>Glossary, A to Z</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-service-root-and-its-tables">The service root and its tables</a></li><li><a href="#metadata-the-api-describes-itself">$metadata: the API describes itself</a></li><li><a href="#asking-for-exactly-what-you-need">Asking for exactly what you need</a></li><li><a href="#paging-the-answer-is-rarely-everything">Paging: the answer is rarely everything</a></li><li><a href="#v2-and-v4-look-different">v2 and v4 look different</a></li><li><a href="#signing-in-and-writing">Signing in, and writing</a></li><li><a href="#what-to-test">What to test</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
