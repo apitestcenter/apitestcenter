@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-10-30T08:35:13.430Z",
+  "generatedAt": "2026-10-30T12:40:55.169Z",
   "releases": [
+    {
+      "version": "0.17.1",
+      "date": "2026-10-30T12:40:53Z",
+      "latest": true,
+      "notesHtml": "<p><strong>AI agents can now set up requests themselves, and ask you before anything that changes data.</strong></p>\n<h4 id=\"ai-agents-mcp\">AI agents (MCP)</h4>\n<ul><li><strong>Describe a request in the call</strong>: method, address, parameters, headers, body (JSON, text, form or GraphQL), sign-in and checks. Send it without saving it, change a saved one for one call, or save it.</li><li><strong>Sign-in set up by the agent</strong>: Bearer, Basic, Digest, NTLM, API key, OAuth 2.0 client credentials or password — on a request, or once on a folder (<code>set_folder_auth</code>). Tokens go in secret environment variables (<code>save_environment</code>) and are never shown to the agent again.</li><li><strong>Performance tests shaped in full</strong>: the type, then users or requests per second, duration, ramp up and down, custom stages, think time and targets.</li><li><strong>You say yes before anything changes data.</strong> GET, HEAD and OPTIONS go straight away. A POST, PUT, PATCH or DELETE — alone, in a collection run, sent first by another request, or under load — waits for your answer in the agent's window (Claude Code 2.1.76 or later, VS Code). The question comes from the app, so the agent can't answer it for you. With an agent that can't ask, they aren't sent, unless you connect with <code>--allow-changes</code>.</li><li>New tools: <code>get_request</code>, <code>save_request</code>, <code>set_folder_auth</code>, <code>save_environment</code>. Changes to a request keep its earlier versions in <strong>Version history</strong>. An agent can't delete anything, and won't change a request whose secret only the app can read.</li></ul>\n<h4 id=\"plans\">Plans</h4>\n<ul><li><strong>Settings → Plan</strong>: you're on Free during early access, with every feature included. Pro and Team are coming; <em>Tell me when Pro launches</em> gets you one email when they do.</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.17.1",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.17.1.exe",
+          "size": 113732784,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.1/APITestCenter-Setup-0.17.1.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.17.1.exe",
+          "size": 113460699,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.1/APITestCenter-Portable-0.17.1.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.17.1-mac-arm64.dmg",
+          "size": 121821105,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.1/APITestCenter-0.17.1-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.17.1-mac-x64.dmg",
+          "size": 127321565,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.1/APITestCenter-0.17.1-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.17.1-linux-x86_64.AppImage",
+          "size": 111287174,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.1/APITestCenter-0.17.1-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.17.1-linux-amd64.deb",
+          "size": 112956612,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.17.1/APITestCenter-0.17.1-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.17.0",
       "date": "2026-10-30T08:35:12Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>API docs from your collections, API descriptions set up in one place, the app in the tray, resting to free memory, and panes you can resize.</strong> Plus updates that ask first, and the command line's version in Settings.</p>\n<h4 id=\"api-docs\">API docs</h4>\n<ul><li><strong>A Docs tab on requests and folders</strong>: write a description in Markdown, with a preview.</li><li><strong>Export → API docs (HTML)</strong> makes one page to share or host: a searchable list, each request's description, parameters, headers, body, an example answer, its checks, and curl, JavaScript and Python code. Secrets are left out.</li><li>Descriptions go out with Postman, OpenAPI and Markdown exports, and come in from Postman, OpenAPI, Insomnia and Bruno.</li></ul>\n<h4 id=\"api-descriptions\">API descriptions</h4>\n<ul><li><strong>Set up in one place</strong>: <em>Ctrl+K → API descriptions</em> shows four steps (added, a folder uses it, requests for its operations, send or run), and each is done from there. Pick a folder, or make a new one, and <strong>Use it for this folder</strong>.</li><li><strong>Add the missing requests</strong> from the dialog or from the folder's own settings, which show what that folder covers. Requests already in the folder stay and count for their operation; ones that aren't in the description are listed by name.</li><li><strong>The new requests know where the API runs</strong>: when the description gives only a path, the address it was fetched from fills in the rest, or you type it once.</li><li><strong>Paste its text</strong> when an address can't be fetched, say behind a sign-in. Fetching from an address now trusts the same certificates as Send.</li><li><strong>Find an operation</strong>: show all, those with no request, or those with one, and search.</li><li>A file that isn't an API description says which one and why, with a sample of the format.</li></ul>\n<ul><li><strong>AI agents (MCP)</strong> can see which operations have no request, and add them: <code>list_api_descriptions</code>, <code>api_description_coverage</code> and <code>add_missing_requests</code>.</li></ul>\n<h4 id=\"running-in-the-background\">Running in the background</h4>\n<ul><li><strong>Closing the window keeps the app in the tray</strong> while something is running (a request waiting for its answer, a collection run, a performance test, a scheduled check). The tray menu says what's running. <strong>Hide to tray</strong> from the command palette puts it there on purpose.</li><li><em>Settings → Running in the background</em>: keep scheduled checks running (the default), always stay in the tray, or quit. <strong>Start with Windows</strong> opens into the tray; the installer's last page offers it too, off by default.</li><li><strong>Resting</strong>: when the window has been put away for a while (10 minutes by default) with nothing running, the app rests to free memory and comes back as you left it. Scheduled checks keep running and still notify you.</li></ul>\n<h4 id=\"test-api\">Test API</h4>\n<ul><li><strong>Resize the panes</strong>: drag the line beside <strong>Saved requests</strong>, and the one between the request and the answer, side by side or one above the other. History, Connections and Compare have one beside their list too. Arrow keys move them; double-click to reset.</li><li><strong>Drop files</strong> on the import, API description and other file dialogs.</li><li><strong>Guide links</strong> in dialogs open the page about what you're doing.</li></ul>\n<h4 id=\"command-line\">Command line</h4>\n<ul><li><strong>Settings → Command line</strong> says whether <code>atc</code> is installed and which version runs. <strong>Install</strong> puts it on your PATH in one click, no administrator needed.</li><li>When an older <code>atc</code> from npm comes first, it says <em>New version available</em>: <strong>Update</strong>, or <strong>Use the app's copy</strong>, which updates with the app.</li></ul>\n<h4 id=\"learn\">Learn</h4>\n<ul><li><strong>A new lesson: OData, the API of business systems</strong> (SAP, SuccessFactors, Dynamics): <code>$metadata</code>, <code>$filter</code>, paging, v2 against v4, and what to test, tried on the practice company.</li><li><strong>Contracts and schemas</strong> now checks a whole API against its description, with the practice shop's.</li></ul>\n<h4 id=\"updates-and-settings\">Updates and settings</h4>\n<ul><li><strong>Updates ask first</strong>: a check shows what's new; nothing downloads until you say so, then you see its progress and choose to restart now or later.</li><li><strong>Anonymous usage counts</strong> moved to <em>Settings → Privacy</em>. Help links there.</li></ul>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.17.0",
       "files": [
