@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-11-01T10:56:20.522Z",
+  "generatedAt": "2026-11-01T14:23:39.819Z",
   "releases": [
+    {
+      "version": "0.18.1",
+      "date": "2026-11-01T14:23:38Z",
+      "latest": true,
+      "notesHtml": "<p><strong>Sign-in is easier to find, the yearly saving is easier to see, and Settings is bigger.</strong></p>\n<ul><li><strong>Sign in</strong> sits at the top right of the window. It's optional: everything works without it. Signed in, the button shows your initial and opens your account.</li><li><strong>The yearly saving shows.</strong> In Settings → Plan, yearly prices show the full twelve months crossed out next to what you pay: Pro ~~$108~~ <strong>$90</strong> a year.</li><li><strong>A bigger Settings window</strong>, so the plans and long settings fit without scrolling.</li><li>The website has <strong>Sign in</strong> in its header too, and says &quot;No account needed&quot; instead of &quot;No account&quot;.</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.18.1",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.18.1.exe",
+          "size": 113742767,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.1/APITestCenter-Setup-0.18.1.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.18.1.exe",
+          "size": 113470710,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.1/APITestCenter-Portable-0.18.1.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.18.1-mac-arm64.dmg",
+          "size": 121834559,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.1/APITestCenter-0.18.1-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.18.1-mac-x64.dmg",
+          "size": 127340312,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.1/APITestCenter-0.18.1-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.18.1-linux-x86_64.AppImage",
+          "size": 111295512,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.1/APITestCenter-0.18.1-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.18.1-linux-amd64.deb",
+          "size": 112965636,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.1/APITestCenter-0.18.1-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.18.0",
       "date": "2026-11-01T10:56:19Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>Accounts: sign in with your email, and your plan comes to your computer. Optional — everything works without one.</strong></p>\n<h4 id=\"sign-in\">Sign in</h4>\n<ul><li><strong>Settings → Plan → Sign in</strong>: type your email, then the 6-digit code we email you. No password.</li><li>Bought Pro, or on your company's Team? The plan turns on by itself — no key to paste.</li><li>A plan works on up to 3 of your computers. On a 4th, the app lists the other 3 so you can sign one out.</li><li>Signed in, you see your computers and can sign any of them out. Signing out takes the plan off that computer; everything you made stays.</li><li>Your requests and results still stay on each computer. Signing in only brings your plan.</li></ul>\n<h4 id=\"your-account-on-the-website\">Your account on the website</h4>\n<ul><li><strong>apitestcenter.com/account.html</strong>: your plan, Manage subscription, your computers, and Delete my account.</li><li><strong>Team</strong>: the admin adds people by their work email, up to the seats bought, and each one gets an email saying what to do. Someone not on the list can ask the admin from the same page.</li></ul>\n<h4 id=\"fixed\">Fixed</h4>\n<ul><li><strong>The app no longer freezes for up to half a minute on a busy computer.</strong> Looking for web servers on your computer (for the Base URL list) asked every listening program at once; with hundreds of them, everything else waited. It now asks a few at a time.</li></ul>\n<p>Pro and Team aren't on sale yet — Free still includes every feature during early access.</p>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.18.0",
       "files": [

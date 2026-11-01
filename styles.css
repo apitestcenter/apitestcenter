@@ -76,6 +76,8 @@ code, .mono { font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, m
 .nav-links { display: flex; gap: 20px; margin-left: auto; }
 .nav-links a { color: var(--mute); text-decoration: none; font-size: 15px; }
 .nav-links a:hover { color: var(--ink); }
+.nav-signin { color: var(--mute); text-decoration: none; font-size: 15px; padding: 6px 4px; white-space: nowrap; }
+.nav-signin:hover, .nav-signin[aria-current] { color: var(--ink); }
 .theme-btn { background: none; border: 1px solid var(--line); color: var(--mute); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
 .theme-btn:hover { color: var(--ink); border-color: var(--mute); }
 @media (max-width: 760px) { .nav-links { display: none; } .nav .btn { margin-left: auto; } }

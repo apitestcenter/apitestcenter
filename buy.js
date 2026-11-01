@@ -42,6 +42,9 @@
     const each = USD[plan][billing];
     const per = team ? ` per person (${n} people: $${each * n})` : "";
     $("price").textContent = billing === "yearly" ? `$${each} a year${per}` : `$${each} a month${per}`;
+    // Yearly is 2 months free: twelve months at the monthly price, struck out.
+    $("was").textContent = billing === "yearly" ? `$${USD[plan].monthly * 12 * n}` : "";
+    $("was").hidden = billing !== "yearly";
     $("price-note").textContent =
       billing === "yearly"
         ? `Then $${USD[plan].ladder[1]} the second year and $${USD[plan].ladder[2]} from the third${team ? " (per person)" : ""}, as long as you keep renewing. Depending on your country, tax is included or added at checkout.`
