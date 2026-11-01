@@ -21,6 +21,9 @@
   const params = new URLSearchParams(location.search);
   const pick = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
   const seats = () => Math.min(500, Math.max(3, Math.round(Number($("seats").value) || 3)));
+  // From the signed-in app (Settings → Plan → Buy Pro): the plan goes to that account.
+  const accountId = /^acc_[\w-]{8,40}$/.test(params.get("account") ?? "") ? params.get("account") : null;
+  const email = /^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/i.test(params.get("email") ?? "") ? params.get("email") : null;
 
   if (ENV === "sandbox") $("test-banner").hidden = false;
   for (const name of ["plan", "billing"]) {
@@ -62,6 +65,12 @@
       try {
         const res = await fetch(`${LICENSE_SERVER}/v1/license/claim`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ transaction_id: transactionId }) });
         const body = await res.json().catch(() => ({}));
+        if (res.ok && body.team) {
+          // A Team has no key: the admin adds the people, who sign in with their own email.
+          $("team-box").hidden = false;
+          status($("claim-status"), `Team, ${body.seats} people — paid. Now add the people who'll use it.`);
+          return;
+        }
         if (res.ok && body.license) {
           $("key").value = body.license;
           $("key-box").hidden = false;
@@ -141,6 +150,8 @@
       const billing = pick("billing");
       window.Paddle.Checkout.open({
         items: [{ priceId: account.prices[plan][billing], quantity: plan === "team" ? seats() : 1 }],
+        ...(accountId ? { customData: { account_id: accountId } } : {}),
+        ...(email ? { customer: { email } } : {}),
         settings: { displayMode: "overlay", theme: document.documentElement.dataset.theme === "light" ? "light" : "dark", variant: "one-page" },
       });
     });

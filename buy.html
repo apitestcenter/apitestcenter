@@ -62,7 +62,7 @@
       <h2>Plan</h2>
       <div class="choice" role="radiogroup" aria-label="Plan">
         <label><input type="radio" name="plan" value="pro" checked>Pro<small>For one person, on up to 3 computers.</small></label>
-        <label><input type="radio" name="plan" value="team">Team<small>For a company: one bill, at least 3 people.</small></label>
+        <label><input type="radio" name="plan" value="team">Team<small>For a company: one bill, at least 3 people. You choose who gets the seats.</small></label>
       </div>
 
       <h2>Billing</h2>
@@ -90,6 +90,11 @@
     <section id="done" hidden aria-labelledby="done-title">
       <h1 id="done-title">Thank you!</h1>
       <p class="status" id="claim-status" role="status">Getting your license key…</p>
+      <div id="team-box" hidden>
+        <p>Your Team's seats are for the people you add, by their work email; each one gets an email saying what to do. Using the app yourself? Add yourself too: it takes one seat.</p>
+        <div class="row"><a class="btn btn-primary" href="account.html">Add your people</a></div>
+        <p class="fine">Sign in there with the email you paid with. We've also emailed you these steps from billing@apitestcenter.com. Paddle emails your receipt and tax invoice separately.</p>
+      </div>
       <div id="key-box" hidden>
         <h2>Your license key</h2>
         <textarea class="key" id="key" readonly aria-label="License key"></textarea>
@@ -125,6 +130,7 @@
         <a href="./#download">Download</a>
         <a href="docs/">Docs</a>
         <a href="learn/">Learn</a>
+        <a href="account.html">Account</a>
         <a href="privacy.html">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
         <a href="mailto:hello@apitestcenter.com">Contact</a>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your account — APITestCenter</title>
+  <meta name="description" content="Sign in to your APITestCenter account: your plan, your computers, and your Team's people.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="site.js" defer></script>
+  <script src="account.js" defer></script>
+  <style>
+    .account { max-width: 680px; }
+    .card { border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; background: var(--panel); margin: 0 0 18px; }
+    .card h2 { margin-top: 0; }
+    .field { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+    .field input { min-width: 0; flex: 1 1 220px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); font: inherit; }
+    .field input.code { flex: 0 0 150px; font-family: ui-monospace, Consolas, monospace; letter-spacing: 0.3em; }
+    .list { list-style: none; padding: 0; margin: 8px 0; }
+    .list li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+    .list li:first-child { border-top: 0; }
+    .list .who { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+    .list small { color: var(--mute); margin-left: 6px; }
+    .key { width: 100%; height: 90px; resize: none; font: 12px/1.5 ui-monospace, Consolas, monospace; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+    .status { color: var(--mute); min-height: 1.5em; }
+    .status.bad { color: var(--warn); }
+    .danger { color: var(--warn); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="./#features">Features</a>
+        <a href="./#download">Download</a>
+        <a href="docs/">Docs</a>
+        <a href="learn/">Learn</a>
+        <a href="whats-new.html">What&rsquo;s new</a>
+        <a href="./#faq">FAQ</a>
+      </nav>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="./#download">Download</a>
+    </div>
+  </header>
+
+  <main id="main" class="wrap page account">
+    <h1>Your account</h1>
+
+    <section id="signin" class="card" aria-labelledby="signin-title">
+      <h2 id="signin-title">Sign in</h2>
+      <p>With the email you use in the app, or paid with. No password: we email you a 6-digit code.</p>
+      <form id="email-form" class="field">
+        <label for="email" class="sr-only">Email</label>
+        <input id="email" type="email" required autocomplete="email" placeholder="you@company.com">
+        <button class="btn btn-primary" type="submit">Email me a code</button>
+      </form>
+      <form id="code-form" class="field" hidden>
+        <label for="code" class="sr-only">6-digit code</label>
+        <input id="code" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="000000">
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        <button class="btn" type="button" id="other-email">Use another email</button>
+      </form>
+      <p class="status" id="signin-status" role="status"></p>
+    </section>
+
+    <div id="signed-in" hidden>
+      <section class="card" aria-labelledby="me-title">
+        <h2 id="me-title">Signed in as <span id="me-email"></span></h2>
+        <p id="me-plan"></p>
+        <div class="row">
+          <button class="btn" type="button" id="manage" hidden>Manage subscription</button>
+          <a class="btn" href="buy.html" id="buy" hidden>Buy Pro or Team</a>
+          <button class="btn" type="button" id="signout">Sign out</button>
+        </div>
+        <div id="key-box" hidden>
+          <h3>Your license key</h3>
+          <p class="fine">Easier: sign in to the app with this email. Or paste the key in Settings → Plan → Enter a license key.</p>
+          <textarea class="key" id="key" readonly aria-label="License key"></textarea>
+          <div class="row"><button class="btn" type="button" id="copy">Copy the key</button></div>
+        </div>
+        <p class="status" id="me-status" role="status"></p>
+      </section>
+
+      <section class="card" id="computers-card" aria-labelledby="computers-title">
+        <h2 id="computers-title">Computers</h2>
+        <p class="fine">Where the app is signed in. A plan works on up to 3 at once; signing one out frees it.</p>
+        <ul class="list" id="computers"></ul>
+        <p class="fine" id="no-computers" hidden>The app isn't signed in anywhere yet: open it, then Settings → Plan → Sign in.</p>
+      </section>
+
+      <section class="card" id="team-card" aria-labelledby="team-title" hidden>
+        <h2 id="team-title">Your Team</h2>
+        <p id="team-seats"></p>
+        <form id="add-form" class="field">
+          <label for="add-email" class="sr-only">Work email to add</label>
+          <input id="add-email" type="email" required placeholder="colleague@company.com">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </form>
+        <ul class="list" id="members"></ul>
+        <p class="fine">People get an email with what to do: download the app and sign in with that email. Remove someone and their app goes back to Free within a day.</p>
+        <p class="status" id="team-status" role="status"></p>
+      </section>
+
+      <section class="card" id="ask-card" aria-labelledby="ask-title" hidden>
+        <h2 id="ask-title">On your company's Team?</h2>
+        <p>You're not on a Team plan yet. Ask your admin (the person who bought it) to add you.</p>
+        <form id="ask-form" class="field">
+          <label for="admin-email" class="sr-only">Your admin's email</label>
+          <input id="admin-email" type="email" required placeholder="admin@company.com">
+          <button class="btn" type="submit">Ask for access</button>
+        </form>
+        <p class="status" id="ask-status" role="status"></p>
+      </section>
+
+      <section class="card" aria-labelledby="delete-title">
+        <h2 id="delete-title">Delete my account</h2>
+        <p class="fine">Removes your email and signs out every computer. What you made in the app stays on your computers. If you pay for a plan, cancel it first.</p>
+        <button class="btn danger" type="button" id="delete">Delete my account</button>
+        <p class="status" id="delete-status" role="status"></p>
+      </section>
+    </div>
+
+    <p class="fine">We keep only your email for your account, and the computer names you sign in from. Payments and invoices are with Paddle, our reseller. <a href="privacy.html">Privacy</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="./#download">Download</a>
+        <a href="docs/">Docs</a>
+        <a href="learn/">Learn</a>
+        <a href="account.html">Account</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+        <a href="mailto:hello@apitestcenter.com">Contact</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
