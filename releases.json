@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-11-02T01:06:07.278Z",
+  "generatedAt": "2026-11-02T10:59:44.734Z",
   "releases": [
+    {
+      "version": "0.18.3",
+      "date": "2026-11-02T10:59:43Z",
+      "latest": true,
+      "notesHtml": "<p><strong>Postman examples come along, and two fixes for things that could go missing.</strong></p>\n<h4 id=\"coming-from-postman\">Coming from Postman</h4>\n<ul><li><strong>Saved examples come along.</strong> Importing a Postman collection now keeps each request's saved example as its <strong>Example</strong>, so the mock server answers with it straight away. If a request has several, the first successful one is kept, and the import says how many came along.</li><li><strong>A new guide page, &quot;Coming from Postman&quot;,</strong> on apitestcenter.com/docs. It covers exporting from Postman, what comes across, and where each Postman feature lives in APITestCenter.</li></ul>\n<h4 id=\"fixed\">Fixed</h4>\n<ul><li><strong>Exports could fail to save on a busy computer.</strong> A report, a collection or API docs could silently not download. Now they always save.</li><li><strong>A request tab could disappear.</strong> Opening a request (from Connections, say) and moving to another page within a moment could lose the new tab. Now a change is kept the moment you leave the page.</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.18.3",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.18.3.exe",
+          "size": 113858496,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.3/APITestCenter-Setup-0.18.3.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.18.3.exe",
+          "size": 113586441,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.3/APITestCenter-Portable-0.18.3.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.18.3-mac-arm64.dmg",
+          "size": 122208471,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.3/APITestCenter-0.18.3-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.18.3-mac-x64.dmg",
+          "size": 127606637,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.3/APITestCenter-0.18.3-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.18.3-linux-x86_64.AppImage",
+          "size": 111418173,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.3/APITestCenter-0.18.3-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.18.3-linux-amd64.deb",
+          "size": 113071904,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.18.3/APITestCenter-0.18.3-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.18.2",
       "date": "2026-11-02T01:06:06Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>Safer behind the scenes, and a guide page for signing in.</strong></p>\n<h4 id=\"security\">Security</h4>\n<ul><li><strong>Only the app's own window can use its engine.</strong> The engine is the part that sends your requests and keeps your secrets. Each time the app starts it makes a new secret that only its window knows, so other programs on your computer, and other people signed in to it, can't reach your saved requests or secrets through the engine.</li><li><strong>The app's screens can't load scripts from elsewhere or send data anywhere but to the app itself.</strong></li><li><strong>Up-to-date libraries</strong>, with every known security fix.</li></ul>\n<h4 id=\"guide\">Guide</h4>\n<ul><li><strong>A new page, &quot;Signing in and your plan&quot;,</strong> on apitestcenter.com/docs. It covers why you might sign in, your computers, and how to use the same project on two computers by keeping its folder in OneDrive, Dropbox or Git.</li></ul>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.18.2",
       "files": [

@@ -104,7 +104,8 @@
     const blob = new Blob([`APITestCenter license key\r\n\r\n${$("key").value}\r\n\r\nSettings → Plan → Enter a license key.\r\n`], { type: "text/plain" });
     const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "APITestCenter-license.txt" });
     a.click();
-    URL.revokeObjectURL(a.href);
+    // Freed later: the browser starts the download after this returns.
+    setTimeout(() => URL.revokeObjectURL(a.href), 60_000);
   });
 
   // Lost your key: the license server emails it to the address the plan was bought with.
