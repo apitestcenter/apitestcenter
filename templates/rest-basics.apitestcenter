@@ -1,0 +1,97 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "REST basics",
+  "description": "Three requests to the practice store, each with checks. Run the collection to see them all pass.",
+  "variables": [
+    {
+      "key": "baseUrl",
+      "value": "{{practiceApi}}",
+      "secret": false,
+      "note": "Your API's address, e.g. https://api.example.com"
+    }
+  ],
+  "requests": [
+    {
+      "name": "List products",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products",
+        "description": "Every product, with how many there are.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "items",
+            "op": "length",
+            "value": ">= 1"
+          },
+          {
+            "type": "json",
+            "path": "total",
+            "op": "type",
+            "value": "number"
+          },
+          {
+            "type": "time",
+            "maxMs": 2000
+          }
+        ]
+      }
+    },
+    {
+      "name": "Get one product",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products/1",
+        "description": "One product by its id.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "id",
+            "op": "equals",
+            "value": "1"
+          },
+          {
+            "type": "json",
+            "path": "name",
+            "op": "type",
+            "value": "string"
+          },
+          {
+            "type": "header",
+            "name": "content-type",
+            "op": "contains",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "A product that isn't there",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/products/999",
+        "description": "An id that doesn't exist: the API should say 404 and why.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "404"
+          },
+          {
+            "type": "json",
+            "path": "error",
+            "op": "exists",
+            "value": ""
+          }
+        ]
+      }
+    }
+  ]
+}

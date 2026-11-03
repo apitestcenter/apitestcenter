@@ -1,0 +1,88 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "Speed and reliability",
+  "description": "Open a request and press Load test to see how it holds up under many users.",
+  "variables": [
+    {
+      "key": "baseUrl",
+      "value": "{{practiceApi}}",
+      "secret": false,
+      "note": "Your API's address"
+    }
+  ],
+  "requests": [
+    {
+      "name": "Answers within half a second",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/slow",
+        "params": [
+          {
+            "key": "ms",
+            "value": "200"
+          }
+        ],
+        "description": "Waits about 200 ms. The time check fails if it takes over 500 ms.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "time",
+            "maxMs": 500
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sometimes fails",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/flaky",
+        "description": "Fails about 1 time in 10, on purpose. Run it as a load test to see the error rate.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "2xx,500"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Upload a form",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/upload",
+        "bodyMode": "multipart",
+        "formRows": [
+          {
+            "key": "title",
+            "value": "Quarterly report",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "pages",
+            "value": "12",
+            "kind": "text",
+            "file": null
+          }
+        ],
+        "description": "A multipart form; add a file row to send a file too.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "fields.title",
+            "op": "equals",
+            "value": "Quarterly report"
+          }
+        ]
+      }
+    }
+  ]
+}

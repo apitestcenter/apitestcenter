@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Templates — APITestCenter guide</title>
+  <meta name="description" content="Ready-made collections of requests with their checks — REST basics, signing in, Salesforce, NetSuite and OData — that run straight away against the practice systems built into the app.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/" aria-current="true">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <a class="nav-signin" href="../account.html">Sign in</a>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Guide</summary>
+        <a class="docs-home" href="./">Overview</a>
+        <div class="docs-nav-group"><p>Start here</p><ul><li><a href="getting-started.html">Getting started</a></li><li><a href="working-in-the-app.html">Working in the app</a></li><li><a href="from-postman.html">Coming from Postman</a></li><li><a href="templates.html" aria-current="page">Templates</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="sending-requests.html">Sending requests</a></li><li><a href="live-connections.html">WebSockets and event streams</a></li><li><a href="environments.html">Environments and variables</a></li><li><a href="checks.html">Checks</a></li><li><a href="contract-tests.html">Contract tests</a></li><li><a href="load-tests.html">Performance tests</a></li><li><a href="chaining.html">Chaining and test data</a></li><li><a href="scripts.html">Scripts</a></li><li><a href="collection-runner.html">Run a collection</a></li><li><a href="mock-server.html">Mock server</a></li><li><a href="connections.html">Connections</a></li></ul></div><div class="docs-nav-group"><p>Results</p><ul><li><a href="reading-the-report.html">Reading the report</a></li><li><a href="compare.html">Compare APIs</a></li><li><a href="history.html">History and reference runs</a></li><li><a href="exports.html">Exports and sharing</a></li></ul></div><div class="docs-nav-group"><p>Automation</p><ul><li><a href="ci-walkthrough.html">From the app to your pipeline</a></li><li><a href="cli-and-ci.html">Command line and CI</a></li><li><a href="ai-agents.html">AI agents (MCP)</a></li></ul></div><div class="docs-nav-group"><p>Help</p><ul><li><a href="troubleshooting.html">Troubleshooting</a></li><li><a href="privacy-and-data.html">Privacy and your data</a></li><li><a href="accounts.html">Signing in and your plan</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Start here</p>
+        <h1>Templates</h1>
+        <p class="docs-lead">Ready-made collections of requests with their checks — REST basics, signing in, Salesforce, NetSuite and OData — that run straight away against the practice systems built into the app.</p>
+        <p>A template is a ready-made collection: requests, their checks, and an environment with the values they use. Each one runs straight away against the practice systems built into the app, so you need no account and no one's data. When you're ready, point it at your own system by changing the environment's values.</p>
+<h2 id="start-from-one">Start from one</h2>
+<ul><li><strong>In the app:</strong> on the Home page, choose <strong>Start from a template</strong>. You can also press Ctrl+K and type <em>template</em>. Pick one and the Import window shows exactly what it adds, before anything is saved. Press <strong>Import</strong>.</li><li><strong>From this page:</strong> <strong>Open in APITestCenter</strong> opens the installed app on that template. <strong>Download</strong> gives you the file: open it with the app, or import it with <strong>Import</strong>.</li><li><strong>From a terminal:</strong> run <code>atc import template:&lt;name&gt;</code>, then <code>atc suite &quot;&lt;collection&gt;&quot; --env &quot;&lt;collection&gt;&quot;</code>. <code>atc templates</code> lists them all. See <a href="cli-and-ci.html">CLI and CI</a>.</li></ul>
+<p>Then open <strong>Run collection</strong> and press <strong>Run</strong>. Every request should pass.</p>
+<h2 id="the-templates">The templates</h2>
+<div class="table-wrap"><table><thead><tr><th>Template</th><th>What it shows</th><th></th></tr></thead><tbody><tr><td><strong>REST basics</strong>: read a list, read one item and check a missing one</td><td>GET requests, <a href="checks.html">checks</a> on status, body and speed, a <a href="collection-runner.html">collection run</a></td><td><a href="apitestcenter://template/rest-basics">Open in APITestCenter</a> · <a href="../templates/rest-basics.apitestcenter">Download</a> · <code>atc import template:rest-basics</code></td></tr><tr><td><strong>Sign in, create, read back</strong>: sign in once, use the token, pass a new order's id along</td><td>Bearer token, <a href="chaining.html">Run first and Save values</a></td><td><a href="apitestcenter://template/sign-in-and-chain">Open in APITestCenter</a> · <a href="../templates/sign-in-and-chain.apitestcenter">Download</a> · <code>atc import template:sign-in-and-chain</code></td></tr><tr><td><strong>Salesforce: objects and SOQL</strong>: list objects, describe one, run SOQL queries</td><td>OAuth 2.0 client credentials, SOQL, describe</td><td><a href="apitestcenter://template/salesforce-soql">Open in APITestCenter</a> · <a href="../templates/salesforce-soql.apitestcenter">Download</a> · <code>atc import template:salesforce-soql</code></td></tr><tr><td><strong>NetSuite: SuiteQL and records</strong>: read the record catalog and run SuiteQL</td><td>OAuth 2.0, SuiteQL, metadata</td><td><a href="apitestcenter://template/netsuite-suiteql">Open in APITestCenter</a> · <a href="../templates/netsuite-suiteql.apitestcenter">Download</a> · <code>atc import template:netsuite-suiteql</code></td></tr><tr><td><strong>OData (SAP SuccessFactors style)</strong>: <code>$metadata</code>, then <code>$filter</code>, <code>$select</code>, <code>$top</code> and <code>$expand</code></td><td>Basic sign-in, OData v2 and v4</td><td><a href="apitestcenter://template/odata-sap">Open in APITestCenter</a> · <a href="../templates/odata-sap.apitestcenter">Download</a> · <code>atc import template:odata-sap</code></td></tr><tr><td><strong>Speed and reliability checks</strong>: a slow request, one that sometimes fails, a form upload</td><td>Time limits, a start for <a href="load-tests.html">performance tests</a>, multipart forms</td><td><a href="apitestcenter://template/reliability-checks">Open in APITestCenter</a> · <a href="../templates/reliability-checks.apitestcenter">Download</a> · <code>atc import template:reliability-checks</code></td></tr></tbody></table></div>
+<p><strong>Open in APITestCenter</strong> needs the desktop app, version 0.19 or later. If nothing happens, use <strong>Download</strong> instead.</p>
+<h2 id="use-one-on-your-own-system">Use one on your own system</h2>
+<p>Each template keeps its addresses and sign-in details in its environment. Your requests stay the same; only the values change:</p>
+<ol><li>Pick the template's environment next to the URL bar, then open it to edit the values.</li><li>Replace the practice address (<code>{{practiceApi}}/…</code>) with your system's, and the practice sign-in (<code>practice</code> / <code>demo</code>) with your own.</li><li>Tick <strong>secret</strong> for passwords and client secrets. They're then encrypted on your computer and left out of every <a href="exports.html">export</a>.</li></ol>
+<p>Try a sandbox or test system first, never production. The Import window also tells you what each template needs:</p>
+<ul><li><strong>Salesforce:</strong> your org's My Domain address (<code>https://your-company.my.salesforce.com</code>), plus a connected app's consumer key and secret.</li><li><strong>NetSuite:</strong> <code>https://&lt;account-id&gt;.suitetalk.api.netsuite.com</code>. A real account usually signs in with OAuth 2.0 using a certificate or a browser sign-in, as its integration record allows. Choose it on the Auth tab, or let <a href="connections.html">Connections</a> set it up.</li><li><strong>OData / SuccessFactors:</strong> your service's address (for SuccessFactors, <code>https://&lt;api-server&gt;/odata/v2</code>), and an API user's name (<code>username@companyId</code>) and password. Then change the entity names to your service's.</li></ul>
+<p>APITestCenter works with these systems through their public APIs. It isn't made or endorsed by Salesforce, Oracle NetSuite or SAP.</p>
+<h2 id="share-your-own">Share your own</h2>
+<p>Any collection can become a template for your team. Choose <strong>Export requests</strong> (Ctrl+K), then <em>APITestCenter</em>. The file opens in the app with a double-click and imports with <code>atc import</code>. See <a href="exports.html">Exports</a>.</p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="from-postman.html"><span>Previous</span>Coming from Postman</a><a class="next" href="sending-requests.html"><span>Next</span>Sending requests</a></nav>
+      <p class="docs-help">Something unclear or missing? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — the guide improves with every question.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#start-from-one">Start from one</a></li><li><a href="#the-templates">The templates</a></li><li><a href="#use-one-on-your-own-system">Use one on your own system</a></li><li><a href="#share-your-own">Share your own</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>

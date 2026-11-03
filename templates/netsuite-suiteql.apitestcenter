@@ -1,0 +1,184 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "NetSuite",
+  "description": "Runs against the app's practice NetSuite account. For a real account, change nsUrl and the sign-in.",
+  "variables": [
+    {
+      "key": "nsUrl",
+      "value": "{{practiceApi}}/netsuite",
+      "secret": false,
+      "note": "Your account: https://<account-id>.suitetalk.api.netsuite.com"
+    },
+    {
+      "key": "clientId",
+      "value": "practice",
+      "secret": false
+    },
+    {
+      "key": "clientSecret",
+      "value": "demo",
+      "secret": false,
+      "note": "A real one: mark it secret"
+    }
+  ],
+  "requests": [
+    {
+      "ref": "sign-in",
+      "name": "Sign in",
+      "request": {
+        "method": "POST",
+        "url": "{{nsUrl}}/services/rest/auth/oauth2/v1/token",
+        "bodyMode": "form",
+        "formRows": [
+          {
+            "key": "grant_type",
+            "value": "client_credentials",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "client_id",
+            "value": "{{clientId}}",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "client_secret",
+            "value": "{{clientSecret}}",
+            "kind": "text",
+            "file": null
+          }
+        ],
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "access_token",
+            "op": "exists",
+            "value": ""
+          }
+        ],
+        "description": "The token for the requests after it."
+      }
+    },
+    {
+      "name": "Record types",
+      "request": {
+        "method": "GET",
+        "url": "{{nsUrl}}/services/rest/record/v1/metadata-catalog",
+        "authMode": "bearer",
+        "token": "{{nsToken}}",
+        "description": "The record types you can read.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "items",
+            "op": "length",
+            "value": ">= 1"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "nsToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Customer fields",
+      "request": {
+        "method": "GET",
+        "url": "{{nsUrl}}/services/rest/record/v1/metadata-catalog/customer",
+        "authMode": "bearer",
+        "token": "{{nsToken}}",
+        "description": "The customer record's fields, as a JSON schema.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "properties",
+            "op": "exists",
+            "value": ""
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "nsToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Query customers (SuiteQL)",
+      "request": {
+        "method": "POST",
+        "url": "{{nsUrl}}/services/rest/query/v1/suiteql",
+        "params": [
+          {
+            "key": "limit",
+            "value": "10"
+          }
+        ],
+        "headers": [
+          {
+            "key": "Prefer",
+            "value": "transient"
+          }
+        ],
+        "authMode": "bearer",
+        "token": "{{nsToken}}",
+        "bodyMode": "json",
+        "bodyText": "{\n  \"q\": \"SELECT id, email, balance FROM customer ORDER BY id\"\n}",
+        "description": "A SuiteQL query. `hasMore: true` means there's a next page (the `next` link).",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "items",
+            "op": "length",
+            "value": ">= 1"
+          },
+          {
+            "type": "json",
+            "path": "hasMore",
+            "op": "type",
+            "value": "boolean"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "nsToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    }
+  ]
+}

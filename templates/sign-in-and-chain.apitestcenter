@@ -1,0 +1,148 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "Sign in and chain",
+  "description": "The sign-in request runs first for the others, and the new order's id is saved for the last request.",
+  "variables": [
+    {
+      "key": "baseUrl",
+      "value": "{{practiceApi}}",
+      "secret": false,
+      "note": "Your API's address"
+    },
+    {
+      "key": "username",
+      "value": "practice-user",
+      "secret": false
+    },
+    {
+      "key": "password",
+      "value": "demo",
+      "secret": false,
+      "note": "The practice store takes any user name with the password demo. A real password: mark it secret"
+    }
+  ],
+  "requests": [
+    {
+      "ref": "sign-in",
+      "name": "Sign in",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/login",
+        "bodyMode": "json",
+        "bodyText": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+        "description": "Returns a token for the requests after it.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "data.token",
+            "op": "exists",
+            "value": ""
+          }
+        ]
+      }
+    },
+    {
+      "name": "Create an order",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "authMode": "bearer",
+        "token": "{{token}}",
+        "bodyMode": "json",
+        "bodyText": "{\n  \"productId\": 2,\n  \"quantity\": 3\n}",
+        "saveValues": [
+          {
+            "name": "orderId",
+            "from": "json",
+            "path": "id"
+          }
+        ],
+        "description": "Signs in first, then creates an order and saves its id as {{orderId}}.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "201"
+          },
+          {
+            "type": "json",
+            "path": "quantity",
+            "op": "equals",
+            "value": "3"
+          },
+          {
+            "type": "json",
+            "path": "status",
+            "op": "equals",
+            "value": "new"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "token",
+            "from": "json",
+            "path": "data.token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Read the order back",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/orders/{{orderId}}",
+        "authMode": "bearer",
+        "token": "{{token}}",
+        "description": "The order created by the request before, by the id it saved.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "id",
+            "op": "matches",
+            "value": "^A-[0-9]+$"
+          },
+          {
+            "type": "json",
+            "path": "quantity",
+            "op": "equals",
+            "value": "3"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "token",
+            "from": "json",
+            "path": "data.token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Without signing in",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/orders",
+        "description": "No token: the API should turn the request away.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "401"
+          }
+        ]
+      }
+    }
+  ]
+}

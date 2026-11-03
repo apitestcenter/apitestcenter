@@ -1,0 +1,226 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "Salesforce",
+  "description": "Runs against the app's practice Salesforce org. For a real org, change sfUrl, clientId and clientSecret.",
+  "variables": [
+    {
+      "key": "sfUrl",
+      "value": "{{practiceApi}}/salesforce",
+      "secret": false,
+      "note": "Your org: https://your-company.my.salesforce.com"
+    },
+    {
+      "key": "apiVersion",
+      "value": "62.0",
+      "secret": false
+    },
+    {
+      "key": "clientId",
+      "value": "practice",
+      "secret": false,
+      "note": "The connected app's consumer key"
+    },
+    {
+      "key": "clientSecret",
+      "value": "demo",
+      "secret": false,
+      "note": "The connected app's consumer secret — mark it secret when you put a real one in"
+    }
+  ],
+  "requests": [
+    {
+      "ref": "sign-in",
+      "name": "Sign in",
+      "request": {
+        "method": "POST",
+        "url": "{{sfUrl}}/services/oauth2/token",
+        "bodyMode": "form",
+        "formRows": [
+          {
+            "key": "grant_type",
+            "value": "client_credentials",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "client_id",
+            "value": "{{clientId}}",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "client_secret",
+            "value": "{{clientSecret}}",
+            "kind": "text",
+            "file": null
+          }
+        ],
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "access_token",
+            "op": "exists",
+            "value": ""
+          }
+        ],
+        "description": "Client credentials flow: the token for the requests after it."
+      }
+    },
+    {
+      "name": "List objects",
+      "request": {
+        "method": "GET",
+        "url": "{{sfUrl}}/services/data/v{{apiVersion}}/sobjects",
+        "authMode": "bearer",
+        "token": "{{sfToken}}",
+        "description": "Every object the user can see.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "sobjects",
+            "op": "length",
+            "value": ">= 1"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "sfToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Describe Account",
+      "request": {
+        "method": "GET",
+        "url": "{{sfUrl}}/services/data/v{{apiVersion}}/sobjects/Account/describe",
+        "authMode": "bearer",
+        "token": "{{sfToken}}",
+        "description": "Account's fields: names, types and lengths — what you can query.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "name",
+            "op": "equals",
+            "value": "Account"
+          },
+          {
+            "type": "json",
+            "path": "fields",
+            "op": "length",
+            "value": ">= 1"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "sfToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Query accounts (SOQL)",
+      "request": {
+        "method": "GET",
+        "url": "{{sfUrl}}/services/data/v{{apiVersion}}/query",
+        "params": [
+          {
+            "key": "q",
+            "value": "SELECT Id, Name, Industry FROM Account ORDER BY Name LIMIT 10"
+          }
+        ],
+        "authMode": "bearer",
+        "token": "{{sfToken}}",
+        "description": "A SOQL query. `done: false` means there's a next page at `nextRecordsUrl`.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "records",
+            "op": "length",
+            "value": ">= 1"
+          },
+          {
+            "type": "json",
+            "path": "records[0].Name",
+            "op": "exists",
+            "value": ""
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "sfToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Count contacts",
+      "request": {
+        "method": "GET",
+        "url": "{{sfUrl}}/services/data/v{{apiVersion}}/query",
+        "params": [
+          {
+            "key": "q",
+            "value": "SELECT COUNT() FROM Contact"
+          }
+        ],
+        "authMode": "bearer",
+        "token": "{{sfToken}}",
+        "description": "COUNT() returns only `totalSize`.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "totalSize",
+            "op": "type",
+            "value": "number"
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "sfToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    }
+  ]
+}

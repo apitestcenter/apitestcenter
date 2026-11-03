@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-11-02T10:59:44.734Z",
+  "generatedAt": "2026-11-03T11:06:14.871Z",
   "releases": [
+    {
+      "version": "0.19.0",
+      "date": "2026-11-03T11:06:12Z",
+      "latest": true,
+      "notesHtml": "<p><strong>Templates: ready-made requests that run straight away.</strong></p>\n<h4 id=\"templates\">Templates</h4>\n<ul><li><strong>Start from a template.</strong> Find it on the Home page, in Ctrl+K (<em>New from template</em>), or under Import. There are six to start with: REST basics; signing in and passing values along; Salesforce objects and SOQL; NetSuite SuiteQL; OData in the SAP SuccessFactors style; and speed and reliability checks.</li><li><strong>Each one runs at once</strong> against the practice systems built into the app, so you need no account. To use one on your own system, change its environment's values. The Import window says what each template needs.</li><li><strong>On the website,</strong> the new Templates page (apitestcenter.com/docs/templates.html) has an <strong>Open in APITestCenter</strong> button that opens the template in the desktop app, and a download for each one.</li><li><strong>From a terminal:</strong> <code>atc import template:&lt;name&gt;</code> imports one, and <code>atc templates</code> lists them.</li></ul>\n<h4 id=\"fixed\">Fixed</h4>\n<ul><li><strong>Form fields now fill in <code>{{variables}}</code> from the environment.</strong> Before, a form body (such as an OAuth token request) sent <code>{{clientId}}</code> as it was written. Values saved from an earlier request were already filled in.</li><li><strong>A collection file's query parameters are kept.</strong> A shared <code>.apitestcenter</code> file that listed its parameters apart from the URL now adds them to the URL, instead of dropping them.</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.19.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.19.0.exe",
+          "size": 122430204,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.19.0/APITestCenter-Setup-0.19.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.19.0.exe",
+          "size": 114075810,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.19.0/APITestCenter-Portable-0.19.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.19.0-mac-arm64.dmg",
+          "size": 123083189,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.19.0/APITestCenter-0.19.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.19.0-mac-x64.dmg",
+          "size": 128617850,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.19.0/APITestCenter-0.19.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.19.0-linux-x86_64.AppImage",
+          "size": 111434700,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.19.0/APITestCenter-0.19.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.19.0-linux-amd64.deb",
+          "size": 113073776,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.19.0/APITestCenter-0.19.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.18.3",
       "date": "2026-11-02T10:59:43Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>Postman examples come along, and two fixes for things that could go missing.</strong></p>\n<h4 id=\"coming-from-postman\">Coming from Postman</h4>\n<ul><li><strong>Saved examples come along.</strong> Importing a Postman collection now keeps each request's saved example as its <strong>Example</strong>, so the mock server answers with it straight away. If a request has several, the first successful one is kept, and the import says how many came along.</li><li><strong>A new guide page, &quot;Coming from Postman&quot;,</strong> on apitestcenter.com/docs. It covers exporting from Postman, what comes across, and where each Postman feature lives in APITestCenter.</li></ul>\n<h4 id=\"fixed\">Fixed</h4>\n<ul><li><strong>Exports could fail to save on a busy computer.</strong> A report, a collection or API docs could silently not download. Now they always save.</li><li><strong>A request tab could disappear.</strong> Opening a request (from Connections, say) and moving to another page within a moment could lose the new tab. Now a change is kept the moment you leave the page.</li></ul>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.18.3",
       "files": [

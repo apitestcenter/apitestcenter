@@ -1,0 +1,134 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "OData",
+  "description": "Runs against the app's practice OData service. For a real one, change odataUrl and the sign-in.",
+  "variables": [
+    {
+      "key": "odataUrl",
+      "value": "{{practiceApi}}/odata/v2",
+      "secret": false,
+      "note": "Your service, e.g. https://<api-server>/odata/v2"
+    },
+    {
+      "key": "odataV4Url",
+      "value": "{{practiceApi}}/odata/v4",
+      "secret": false
+    },
+    {
+      "key": "odataUser",
+      "value": "practice-user",
+      "secret": false,
+      "note": "SuccessFactors: username@companyId"
+    },
+    {
+      "key": "odataPassword",
+      "value": "demo",
+      "secret": false,
+      "note": "A real one: mark it secret"
+    }
+  ],
+  "requests": [
+    {
+      "name": "Service metadata",
+      "request": {
+        "method": "GET",
+        "url": "{{odataUrl}}/$metadata",
+        "authMode": "basic",
+        "username": "{{odataUser}}",
+        "password": "{{odataPassword}}",
+        "description": "Every entity, its fields and its links, in XML.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "body",
+            "op": "contains",
+            "value": "EntityType"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Employees in a department (v2)",
+      "request": {
+        "method": "GET",
+        "url": "{{odataUrl}}/Employees",
+        "params": [
+          {
+            "key": "$filter",
+            "value": "DepartmentID eq 1"
+          },
+          {
+            "key": "$select",
+            "value": "EmployeeID,FirstName,LastName"
+          },
+          {
+            "key": "$top",
+            "value": "5"
+          },
+          {
+            "key": "$format",
+            "value": "json"
+          }
+        ],
+        "authMode": "basic",
+        "username": "{{odataUser}}",
+        "password": "{{odataPassword}}",
+        "description": "OData v2 wraps the rows in `d.results`.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "d.results",
+            "op": "length",
+            "value": ">= 1"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Departments with their employees (v4)",
+      "request": {
+        "method": "GET",
+        "url": "{{odataV4Url}}/Departments",
+        "params": [
+          {
+            "key": "$expand",
+            "value": "Employees"
+          },
+          {
+            "key": "$top",
+            "value": "2"
+          }
+        ],
+        "authMode": "basic",
+        "username": "{{odataUser}}",
+        "password": "{{odataPassword}}",
+        "description": "OData v4 puts the rows in `value`; $expand brings the linked rows along.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "value",
+            "op": "length",
+            "value": ">= 1"
+          },
+          {
+            "type": "json",
+            "path": "value[0].Employees",
+            "op": "exists",
+            "value": ""
+          }
+        ]
+      }
+    }
+  ]
+}
