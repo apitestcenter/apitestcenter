@@ -54,6 +54,10 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
+  /* The footer sits at the bottom of the window even when the page is short. */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--canvas);
   color: var(--ink);
   font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -168,7 +172,7 @@ details[open] summary::after { content: "–"; }
 details p { margin: 0 0 18px; color: var(--mute); }
 
 /* Footer */
-.site-footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--mute); font-size: 14px; }
+.site-footer { margin-top: auto; border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--mute); font-size: 14px; }
 .footer-row { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
 .footer-row nav { display: flex; gap: 20px; flex-wrap: wrap; }
 .footer-row a { color: var(--mute); }
