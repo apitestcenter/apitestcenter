@@ -205,17 +205,15 @@ details p { margin: 0 0 18px; color: var(--mute); }
 .docs-menu { border: 0; padding: 0; }
 .docs-menu > summary { display: none; }
 .docs-home { display: block; color: var(--ink); text-decoration: none; font-weight: 600; padding: 4px 10px; border-radius: 8px; margin-bottom: 10px; }
-.docs-nav-group { margin-bottom: 6px; border-bottom: 0; padding: 0; }
-.docs-side .docs-nav-group > summary::after { content: none; }
-.docs-nav-group > summary { display: flex; align-items: center; gap: 8px; list-style: none; cursor: pointer; margin: 0; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--mute); }
-.docs-nav-group > summary::-webkit-details-marker { display: none; }
-.docs-nav-group > summary::before { content: ""; width: 6px; height: 6px; flex: none; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform 0.15s; }
-.docs-nav-group[open] > summary::before { transform: rotate(45deg); }
-.docs-nav-group > summary:hover { color: var(--ink); background: var(--panel-2); }
-.docs-nav-group > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.docs-nav-count { margin-left: auto; font-weight: 500; letter-spacing: 0; opacity: 0.7; }
-.docs-nav-group[open] > summary { color: var(--ink); }
-.docs-nav-group ul { list-style: none; margin: 0 0 8px; padding: 0; }
+.docs-nav-group { margin-bottom: 16px; }
+.docs-nav-group p { margin: 0 0 4px; padding: 0 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink); }
+/* A tree: a line down from the heading, and a short branch to each page. */
+.docs-nav-group ul { list-style: none; margin: 0 0 0 16px; padding: 0; }
+.docs-nav-group li { position: relative; padding-left: 14px; }
+.docs-nav-group li::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; border-left: 1px solid var(--line); }
+.docs-nav-group li:last-child::before { bottom: auto; height: 17px; }
+.docs-nav-group li::after { content: ""; position: absolute; left: 0; top: 17px; width: 10px; border-top: 1px solid var(--line); }
+.docs-side .docs-nav-group a { padding-left: 8px; }
 .docs-side a { display: block; color: var(--mute); text-decoration: none; padding: 4px 10px; border-radius: 8px; }
 .docs-side a:hover { color: var(--ink); background: var(--panel-2); }
 .docs-side a[aria-current="page"] { color: var(--accent); background: var(--accent-dim); font-weight: 600; }
