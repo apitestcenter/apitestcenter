@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The SAP SuccessFactors OData API — Learn API testing — APITestCenter</title>
+  <meta name="description" content="How SAP SuccessFactors' OData API works and how to test it — API servers and company IDs, Basic and OAuth SAML bearer sign-in, the entities HR integrations use, effective dating with asOfDate, paging, upsert answers that hide errors, and testing safely.">
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>
+    try { const t = localStorage.getItem("atc-site-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <script src="../site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="../#features">Features</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/" aria-current="true">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../#faq">FAQ</a>
+      </nav>
+      <a class="nav-signin" href="../account.html">Sign in</a>
+      <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
+      <a class="btn btn-primary btn-sm" href="../#download">Download</a>
+    </div>
+  </header>
+
+  <div class="wrap docs">
+    <aside class="docs-side">
+      <details class="docs-menu" open>
+        <summary>Learn</summary>
+        <a class="docs-home" href="./">All lessons</a>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata.html">OData, the API of business systems</a></li><li><a href="salesforce-api.html">The Salesforce REST API</a></li><li><a href="netsuite-api.html">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api.html" aria-current="page">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+      </details>
+    </aside>
+    <main id="main" class="docs-main">
+      <article class="docs-article">
+        <p class="docs-kicker">Business systems</p>
+        <h1>The SAP SuccessFactors OData API</h1>
+        <p class="docs-lead">How SAP SuccessFactors' OData API works and how to test it — API servers and company IDs, Basic and OAuth SAML bearer sign-in, the entities HR integrations use, effective dating with asOfDate, paging, upsert answers that hide errors, and testing safely.</p>
+        <p>SAP SuccessFactors holds a company's people: who works there, in which job, for which manager, on what pay. Payroll, IT accounts, learning systems and reports all read it, and a few write back. They do it through its <strong>OData API</strong>. If you've read <a href="odata.html">OData, the API of business systems</a>, you know the shape already. This lesson is what SuccessFactors adds: where its API lives, how it signs in, <strong>effective dating</strong>, and an answer that says <code>200</code> while a record failed.</p>
+<h2 id="where-the-api-lives">Where the API lives</h2>
+<p>Each SuccessFactors customer has a <strong>company ID</strong> and lives in a <strong>data center</strong>. The API is on that data center's <strong>API server</strong>, not the address you log in to in a browser:</p>
+<pre><code>https://&lt;api-server&gt;/odata/v2/</code></pre>
+<p>SAP publishes the list of API servers; your SuccessFactors administrator knows which one is yours and which is your <strong>test instance</strong>. Most of the API is <strong>OData v2</strong>. Some newer areas are v4, each with its own address.</p>
+<h2 id="signing-in">Signing in</h2>
+<ul><li><strong>Basic</strong>: the user name is <code>user@companyID</code>, with the user's password. It's simple for a first look, but SAP is retiring Basic sign-in for its APIs, so don't build on it.</li><li><strong>OAuth 2.0 with a SAML bearer assertion</strong>: the way SAP recommends. An administrator registers your client in <em>Admin Center → Manage OAuth2 Client Applications</em>, with an X.509 certificate. Your test makes a <strong>SAML assertion</strong> for the API user, signed with that certificate, and exchanges it at <code>https://&lt;api-server&gt;/oauth/token</code> (with <code>grant_type=urn:ietf:params:oauth:grant-type:saml2-bearer</code>, <code>client_id</code>, <code>company_id</code> and the <code>assertion</code>). You get a Bearer token back. APITestCenter does this for you: pick <strong>OAuth 2.0 → SAML 2.0 bearer</strong>.</li></ul>
+<p>The <strong>API user's permissions</strong> (role-based permissions) decide which entities and fields come back. A field the user may not see is left out, not refused, so a test run as an admin passes and the integration user's run doesn't.</p>
+<h2 id="the-entities-hr-integrations-use">The entities HR integrations use</h2>
+<div class="table-wrap"><table><thead><tr><th>Entity</th><th>Holds</th></tr></thead><tbody><tr><td><code>User</code></td><td>the basic profile: user ID, name, email, manager, department</td></tr><tr><td><code>PerPerson</code>, <code>PerPersonal</code></td><td>the person, and their personal details over time</td></tr><tr><td><code>EmpEmployment</code></td><td>an employment: start date, end date</td></tr><tr><td><code>EmpJob</code></td><td>the job: position, department, manager, location, over time</td></tr><tr><td><code>FODepartment</code>, <code>FOCompany</code>, <code>FOLocation</code></td><td>the organization: departments, legal companies, locations</td></tr></tbody></table></div>
+<p><code>$metadata</code> describes them all, and the full one is very large, so ask for one entity's: <code>GET /odata/v2/EmpJob/$metadata</code>. <em>Admin Center → OData API Data Dictionary</em> shows the same, readably.</p>
+<p>Add <strong><code>$format=json</code></strong> (or the header <code>Accept: application/json</code>): without it, SuccessFactors answers in XML.</p>
+<pre><code>GET /odata/v2/User?$select=userId,firstName,lastName,department&amp;$top=100&amp;$format=json</code></pre>
+<h2 id="effective-dating-which-version-of-the-truth">Effective dating: which version of the truth?</h2>
+<p>Jobs, personal details and the organization change over time, and SuccessFactors keeps every version, each valid from one date to another. These entities are <strong>effective-dated</strong>. Ask for <code>EmpJob</code> and you get each person's job <strong>as of today</strong>. To see a different day, or the history:</p>
+<pre><code>GET /odata/v2/EmpJob?asOfDate=2025-01-31&amp;$filter=userId eq '1001'
+GET /odata/v2/EmpJob?fromDate=2024-01-01&amp;toDate=2024-12-31&amp;$filter=userId eq '1001'</code></pre>
+<p>This is where tests of HR integrations most often go wrong:</p>
+<ul><li>A test that passes today can fail next month, when a future-dated change (a promotion entered in advance) becomes today's version. Fix the date with <code>asOfDate</code> when the test needs a stable answer.</li><li>A payroll sync for last month should ask for last month, not for today.</li><li>A new hire with a start date next week isn't in today's <code>EmpJob</code> yet.</li></ul>
+<h2 id="paging">Paging</h2>
+<p>Answers come a page at a time, with the next page's address in <code>__next</code> (<code>d.__next</code> in v2 JSON). Follow it until there's none. Ask for <code>$inlinecount=allpages</code> to get the total in <code>__count</code>, <strong>as text</strong>. For large reads, SuccessFactors also offers <strong>snapshot paging</strong> (<code>paging=snapshot</code>) on entities that support it, so records that change while you read don't shift between pages.</p>
+<h2 id="writing-and-the-200-that-hides-an-error">Writing, and the <code>200</code> that hides an error</h2>
+<p>Changes are usually sent to one function, <strong>upsert</strong> (create, or change if it exists):</p>
+<pre><code>POST /odata/v2/upsert?$format=json
+{ &quot;__metadata&quot;: { &quot;uri&quot;: &quot;User('1001')&quot; }, &quot;email&quot;: &quot;new.address@example.com&quot; }</code></pre>
+<p>It answers <code>200</code> <strong>even when the record failed</strong>. The real result is in the body, one entry per record:</p>
+<pre><code class="lang-json">{ &quot;d&quot;: [ { &quot;key&quot;: &quot;User/userId=1001&quot;, &quot;status&quot;: &quot;ERROR&quot;, &quot;message&quot;: &quot;Invalid email address&quot;, &quot;httpCode&quot;: 400 } ] }</code></pre>
+<p>So never test an upsert by its status code alone. Check that every entry's <code>status</code> is <code>&quot;OK&quot;</code>, and that the record reads back changed.</p>
+<h2 id="testing-safely">Testing safely</h2>
+<ul><li><strong>Use the test instance.</strong> SuccessFactors holds personal data, and a test that writes to production changes real people's records.</li><li><strong>Agree load tests with the administrator</strong> (and SAP, for anything large). The instance is shared by the whole company, and heavy API use slows it for everyone.</li><li><strong>Keep personal data out of test files and reports</strong>: read IDs and counts, not names and salaries, unless the test needs them.</li></ul>
+<h2 id="what-to-test">What to test</h2>
+<ul><li><strong>Sign-in</strong> as the integration's API user, with its permissions, and a <code>401</code> with a wrong password or assertion.</li><li><strong>The fields you read</strong> are still there: check the entity's <code>$metadata</code>, and that a field the user can't see is handled when it's missing.</li><li><strong>Effective dating</strong>: <code>asOfDate</code> on the date your integration means, including future-dated changes and new hires.</li><li><strong>Paging</strong>: the count from <code>$inlinecount</code> matches what you read through <code>__next</code>.</li><li><strong>Upserts</strong>: every entry's <code>status</code> is <code>&quot;OK&quot;</code>, not just the <code>200</code>.</li><li><strong>v2 shapes</strong>: rows in <code>d.results</code>, dates as <code>/Date(…)/</code>, numbers as text.</li></ul>
+<aside class="callout callout-note"><p><strong>Try it</strong>: a practice OData company built into the app, in the SuccessFactors style: OData v2 with SAP labels, Basic sign-in with any user name and the password <code>demo</code>. Its entities are <code>Departments</code>, <code>Employees</code> and <code>Products</code>, rather than SuccessFactors' own.</p>
+<ol><li><a href="apitestcenter://template/odata-sap">Open the OData template in APITestCenter</a>, or in the app choose <strong>Start from a template → OData (SAP SuccessFactors style)</strong>, then <strong>Import</strong>. <strong>Run collection</strong>: <code>$metadata</code>, a v2 query and a v4 query pass.</li><li>Open <strong>Employees in a department (v2)</strong>, add the param <code>$inlinecount</code> = <code>allpages</code> and send it: <code>d.__count</code> is a number written as text.</li><li>Add <code>HireDate</code> to <code>$select</code>: dates come as <code>/Date(…)/</code>.</li><li>Remove <code>$top</code> and <code>$filter</code>: 50 rows and a <code>__next</code> link. Follow it for the next page.</li><li>On the <strong>Auth</strong> tab, change the password and send again: <code>401</code>.</li></ol>
+<p>To use the template on your own instance, change <code>odataUrl</code> to <code>https://&lt;api-server&gt;/odata/v2</code> and the sign-in to your API user, and the entity names to SuccessFactors' (<code>User</code>, <code>EmpJob</code>).</p></aside>
+<h2 id="key-takeaways">Key takeaways</h2>
+<ul><li>The API is on your data center's <strong>API server</strong> at <code>/odata/v2</code>; the user name for Basic is <strong><code>user@companyID</code></strong>, but use <strong>OAuth 2.0 SAML bearer</strong>.</li><li>Add <strong><code>$format=json</code></strong>, and ask one entity for its <code>$metadata</code>.</li><li>Jobs and personal details are <strong>effective-dated</strong>: you get today's version unless you say <strong><code>asOfDate</code></strong>, or <code>fromDate</code> and <code>toDate</code>.</li><li><strong>Upsert answers <code>200</code> even when a record fails</strong>. Check each entry's <code>status</code>.</li><li>Test in the <strong>test instance</strong>: it's people's personal data.</li></ul>
+<p><strong>In the app:</strong> <a href="../docs/connections.html">Connect SuccessFactors and browse its entities</a> · <a href="../docs/templates.html">Templates</a> · <a href="../docs/checks.html">Checks on JSON fields</a></p>
+<p><em>SAP and SuccessFactors are trademarks of SAP SE. APITestCenter works with its API and isn't endorsed by SAP.</em></p>
+<p><strong>Next:</strong> <a href="glossary.html">Glossary, A to Z</a></p>
+      </article>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="netsuite-api.html"><span>Previous</span>NetSuite REST web services and SuiteQL</a><a class="next" href="glossary.html"><span>Next</span>Glossary, A to Z</a></nav>
+      <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
+    </main>
+    <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#where-the-api-lives">Where the API lives</a></li><li><a href="#signing-in">Signing in</a></li><li><a href="#the-entities-hr-integrations-use">The entities HR integrations use</a></li><li><a href="#effective-dating-which-version-of-the-truth">Effective dating: which version of the truth?</a></li><li><a href="#paging">Paging</a></li><li><a href="#writing-and-the-200-that-hides-an-error">Writing, and the 200 that hides an error</a></li><li><a href="#testing-safely">Testing safely</a></li><li><a href="#what-to-test">What to test</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="24" height="24">APITestCenter</a>
+      <nav aria-label="Footer">
+        <a href="../#download">Download</a>
+        <a href="../docs/">Docs</a>
+        <a href="../learn/">Learn</a>
+        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="mailto:support@apitestcenter.com">Support</a>
+      </nav>
+      <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
