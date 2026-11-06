@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Status codes — Learn API testing — APITestCenter</title>
   <meta name="description" content="The first thing in every answer is a three-digit status code. What the five families mean, the codes you'll meet every day, and what to do about each.">
-  <link rel="canonical" href="https://apitestcenter.com/learn/status-codes.html">
+  <link rel="canonical" href="https://apitestcenter.com/learn/status-codes">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon.ico" sizes="48x48">
   <link rel="apple-touch-icon" href="../assets/logo-512.png">
@@ -24,13 +24,13 @@
         <a href="../#ways">Product</a>
         <a href="../#pricing">Pricing</a>
         <a href="../docs/">Docs</a>
-        <a href="../docs/templates.html">Templates</a>
+        <a href="../docs/templates">Templates</a>
         <a href="../learn/" aria-current="true">Learn</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../whats-new">What&rsquo;s new</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="../#download">Download</a>
-      <a class="nav-signin" href="../account.html">Sign in</a>
+      <a class="nav-signin" href="../account">Sign in</a>
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </header>
@@ -40,7 +40,7 @@
       <details class="docs-menu" open>
         <summary>Learn</summary>
         <a class="docs-home" href="./">All lessons</a>
-        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html" aria-current="page">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata.html">OData, the API of business systems</a></li><li><a href="salesforce-api.html">The Salesforce REST API</a></li><li><a href="netsuite-api.html">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api.html">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api">What an API is</a></li><li><a href="http-requests">Requests — addresses and methods</a></li><li><a href="headers-params-bodies">Headers, query parameters and bodies</a></li><li><a href="status-codes" aria-current="page">Status codes</a></li><li><a href="json">JSON</a></li><li><a href="authentication">Signing in — authentication</a></li><li><a href="api-styles">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing">What API testing is</a></li><li><a href="checks-and-assertions">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables">Environments and variables</a></li><li><a href="chaining-and-test-data">Chaining requests and test data</a></li><li><a href="contract-testing">Contracts and schemas</a></li><li><a href="mocking">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing">Why test performance</a></li><li><a href="users-and-requests-per-second">Users and requests per second</a></li><li><a href="reading-results">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks">Finding the bottleneck</a></li><li><a href="performance-goals">Goals and regressions</a></li><li><a href="testing-safely">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata">OData, the API of business systems</a></li><li><a href="salesforce-api">The Salesforce REST API</a></li><li><a href="netsuite-api">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary">Glossary, A to Z</a></li></ul></div>
       </details>
     </aside>
     <main id="main" class="docs-main">
@@ -65,16 +65,16 @@
 <p>5xx codes are the server team's problem — but finding them is the tester's job. And under load they're the clearest sign that something gave way: a test where 500s and 503s start appearing at 200 users tells you where the limit is.</p>
 <h2 id="a-status-code-isnt-the-whole-story">A status code isn't the whole story</h2>
 <p>Two traps:</p>
-<ul><li><strong><code>200</code> with an error inside.</strong> Some APIs answer <code>200 OK</code> with <code>{ &quot;success&quot;: false, &quot;error&quot;: &quot;Card declined&quot; }</code>. The status says <em>fine</em>; the body says <em>failed</em>. A test that only checks the status passes something broken. That's why <a href="checks-and-assertions.html">checks</a> look at the body too.</li><li><strong>The wrong success code.</strong> An API that answers <code>200</code> where it should answer <code>201</code> might be fine — or might be telling you it didn't create anything. Know which code the API is meant to give.</li></ul>
+<ul><li><strong><code>200</code> with an error inside.</strong> Some APIs answer <code>200 OK</code> with <code>{ &quot;success&quot;: false, &quot;error&quot;: &quot;Card declined&quot; }</code>. The status says <em>fine</em>; the body says <em>failed</em>. A test that only checks the status passes something broken. That's why <a href="checks-and-assertions">checks</a> look at the body too.</li><li><strong>The wrong success code.</strong> An API that answers <code>200</code> where it should answer <code>201</code> might be fine — or might be telling you it didn't create anything. Know which code the API is meant to give.</li></ul>
 <aside class="callout callout-note"><p><strong>Try it</strong> — make each family happen.</p>
 <ol><li><code>GET {{practiceApi}}/products/1</code> → <strong>200</strong>.</li><li><code>GET {{practiceApi}}/products/99</code> → <strong>404</strong>: no such product. Read the body: it says which ids exist.</li><li><code>GET {{practiceApi}}/orders</code> (not signed in) → <strong>401</strong>.</li><li><code>GET {{practiceApi}}/flaky</code> a few times → mostly 200, but about 1 in 10 is a <strong>500</strong>: the practice API pretends to fail. Imagine that 1 in 10 under real load.</li></ol>
 <p>In APITestCenter the status is coloured: green 2xx, teal 3xx, amber 4xx, red 5xx — and a load-test report explains failing codes in plain words.</p></aside>
 <h2 id="key-takeaways">Key takeaways</h2>
 <ul><li><strong>2xx</strong> worked, <strong>3xx</strong> go elsewhere, <strong>4xx</strong> your request was wrong, <strong>5xx</strong> the server failed.</li><li><strong>401</strong> = not signed in; <strong>403</strong> = not allowed; <strong>429</strong> = too many requests, slow down.</li><li>A <strong>200 can still be a failure</strong> — check the body, not just the code.</li></ul>
-<p><strong>In the app:</strong> <a href="../docs/sending-requests.html#reading-the-answer">Reading the answer</a> · <a href="../docs/reading-the-report.html#failing-status-codes-in-plain-words">Failing status codes in a report</a> · <a href="../docs/troubleshooting.html#blocked-429-or-403">Blocked: 429 or 403</a></p>
-<p><strong>Next:</strong> <a href="json.html">JSON</a></p>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests#reading-the-answer">Reading the answer</a> · <a href="../docs/reading-the-report#failing-status-codes-in-plain-words">Failing status codes in a report</a> · <a href="../docs/troubleshooting#blocked-429-or-403">Blocked: 429 or 403</a></p>
+<p><strong>Next:</strong> <a href="json">JSON</a></p>
       </article>
-      <nav class="docs-pager" aria-label="Previous and next"><a href="headers-params-bodies.html"><span>Previous</span>Headers, query parameters and bodies</a><a class="next" href="json.html"><span>Next</span>JSON</a></nav>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="headers-params-bodies"><span>Previous</span>Headers, query parameters and bodies</a><a class="next" href="json"><span>Next</span>JSON</a></nav>
       <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
     </main>
     <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-codes-youll-meet-every-day">The codes you'll meet every day</a></li><li><a href="#a-status-code-isnt-the-whole-story">A status code isn't the whole story</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
@@ -88,8 +88,8 @@
         <a href="../docs/">Docs</a>
         <a href="../learn/">Learn</a>
         <a href="../report/">Report viewer</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
-        <a href="../privacy.html">Privacy</a>
+        <a href="../whats-new">What&rsquo;s new</a>
+        <a href="../privacy">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
       </nav>
       <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>

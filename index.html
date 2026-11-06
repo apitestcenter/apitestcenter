@@ -37,13 +37,13 @@
         <a href="#ways">Product</a>
         <a href="#pricing">Pricing</a>
         <a href="docs/">Docs</a>
-        <a href="docs/templates.html">Templates</a>
+        <a href="docs/templates">Templates</a>
         <a href="learn/">Learn</a>
-        <a href="whats-new.html">What&rsquo;s new</a>
+        <a href="whats-new">What&rsquo;s new</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="#download">Download</a>
-      <a class="nav-signin" href="account.html">Sign in</a>
+      <a class="nav-signin" href="account">Sign in</a>
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </header>
@@ -82,7 +82,7 @@
               <span class="npx-prompt" aria-hidden="true">$</span><code>npx apitestcenter ui</code><span class="npx-copy" data-copy-label>Copy</span>
             </button>
           </div>
-          <p class="fine"><span data-version>Latest version</span> · <a href="whats-new.html">What&rsquo;s new</a> · <span data-primary-alt></span></p>
+          <p class="fine"><span data-version>Latest version</span> · <a href="whats-new">What&rsquo;s new</a> · <span data-primary-alt></span></p>
           <p class="fine download-note" data-download-note hidden>Download not starting? Your network may be checking the file first — give it a moment, or get it from <a data-releases href="#download">the release page</a>.</p>
         </div>
 
@@ -289,7 +289,7 @@
           <pre class="code" data-type-on-view><code><span class="c"># .github/workflows/api-checks.yml</span>
 - run: npx apitestcenter suite "Orders API" --env UAT --junit report.xml
 - run: npx apitestcenter run "Checkout" --env UAT   <span class="c"># load test, fails on missed goals</span></code></pre>
-          <a class="more-link" href="docs/cli-and-ci.html">The command line and CI →</a>
+          <a class="more-link" href="docs/cli-and-ci">The command line and CI →</a>
         </div>
         <div class="duo-card">
           <div class="kicker">With your AI agent</div>
@@ -300,7 +300,7 @@
             <p class="msg msg-you">Run the Orders collection on UAT and tell me what failed.</p>
             <p class="msg msg-bot">2 of 14 failed — <b>GET /orders/{id}</b> returned 500 for ids from the CSV rows 7 and 9.</p>
           </div>
-          <a class="more-link" href="docs/ai-agents.html">AI agents (MCP) →</a>
+          <a class="more-link" href="docs/ai-agents">AI agents (MCP) →</a>
         </div>
       </div>
     </section>
@@ -312,7 +312,7 @@
           <div class="kicker">Runs where your API lives</div>
           <h2 class="big">Your computer. Your network. Your files.</h2>
           <p>Requests go straight from your machine to the API — so it reaches <b>localhost</b>, your <b>VPN</b> and <b>internal</b> services that cloud tools can&rsquo;t. No account needed. Each project is a folder of plain files you own &mdash; keep it in Git if you like; secrets are encrypted with your system&rsquo;s keychain.</p>
-          <a class="more-link" href="privacy.html">What the app and this site do with data →</a>
+          <a class="more-link" href="privacy">What the app and this site do with data →</a>
         </div>
         <svg class="net" viewBox="0 0 420 300" aria-hidden="true">
           <g class="net-links">
@@ -337,9 +337,9 @@
         <div class="kicker">Learn — free, from zero</div>
         <h2 class="big">New to APIs or load testing? Start here.</h2>
         <div class="learn-grid">
-          <a class="lcard" href="learn/what-is-an-api.html"><span class="lnum">7 lessons</span><h3>APIs from zero</h3><p>Requests, headers, status codes, JSON, and every way APIs sign in.</p></a>
-          <a class="lcard" href="learn/what-is-api-testing.html"><span class="lnum">7 lessons</span><h3>Testing APIs</h3><p>What to check, test data, contracts, mocks, tests in a pipeline.</p></a>
-          <a class="lcard" href="learn/why-performance-testing.html"><span class="lnum">6 lessons</span><h3>Load testing</h3><p>Users vs requests per second, why averages lie, finding bottlenecks.</p></a>
+          <a class="lcard" href="learn/what-is-an-api"><span class="lnum">7 lessons</span><h3>APIs from zero</h3><p>Requests, headers, status codes, JSON, and every way APIs sign in.</p></a>
+          <a class="lcard" href="learn/what-is-api-testing"><span class="lnum">7 lessons</span><h3>Testing APIs</h3><p>What to check, test data, contracts, mocks, tests in a pipeline.</p></a>
+          <a class="lcard" href="learn/why-performance-testing"><span class="lnum">6 lessons</span><h3>Load testing</h3><p>Users vs requests per second, why averages lie, finding bottlenecks.</p></a>
         </div>
         <p class="section-more"><a href="learn/">All 21 lessons and the A–Z glossary →</a></p>
       </div>
@@ -389,7 +389,7 @@
               <label><input type="radio" name="plan" value="team"> Team</label>
               <label><input type="radio" name="plan" value="both"> Both</label>
             </div>
-            <label class="notify-consent"><input type="checkbox" name="consent" required> You may email me about Pro and Team. <a href="privacy.html">How we keep it</a></label>
+            <label class="notify-consent"><input type="checkbox" name="consent" required> You may email me about Pro and Team. <a href="privacy">How we keep it</a></label>
             <!-- People never see this field; scripts fill it in. -->
             <label class="notify-trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
             <button class="btn btn-primary" type="submit">Notify me</button>
@@ -406,7 +406,7 @@
         <h2 class="big">Try it on your own API in two minutes.</h2>
         <div class="dl-main">
           <a class="btn btn-primary btn-lg" data-download="setup" data-primary href="#download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg><span data-primary-label>Download for Windows</span></a>
-          <p class="fine"><span data-version>Latest version</span> · <a href="whats-new.html">What&rsquo;s new</a> · <span data-primary-alt></span></p>
+          <p class="fine"><span data-version>Latest version</span> · <a href="whats-new">What&rsquo;s new</a> · <span data-primary-alt></span></p>
         </div>
         <div class="dl-table-wrap">
           <table class="dl-table">
@@ -431,7 +431,7 @@
           </div>
           <div class="install-panel" role="tabpanel" id="inst-npm" aria-labelledby="tab-npm">
             <button class="npx" type="button" data-copy="npx apitestcenter ui" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">$</span><code>npx apitestcenter ui</code><span class="npx-copy" data-copy-label>Copy</span></button>
-            <p class="fine">Opens the app in a window, with Node.js 20 or later. For CI: <code>npm install -g apitestcenter</code>, then <code>atc</code> — see <a href="docs/cli-and-ci.html">the command line</a>.</p>
+            <p class="fine">Opens the app in a window, with Node.js 20 or later. For CI: <code>npm install -g apitestcenter</code>, then <code>atc</code> — see <a href="docs/cli-and-ci">the command line</a>.</p>
           </div>
           <div class="install-panel" role="tabpanel" id="inst-winget" aria-labelledby="tab-winget" hidden>
             <button class="npx" type="button" data-copy="winget install APITestCenter.APITestCenter" title="Copy to clipboard"><span class="npx-prompt" aria-hidden="true">&gt;</span><code>winget install APITestCenter.APITestCenter</code><span class="npx-copy" data-copy-label>Copy</span></button>
@@ -452,9 +452,9 @@
         <div class="kicker">Questions</div>
         <div class="faq">
           <details><summary>Is it really free?</summary><p>Yes — everything is free during early access: requests, load tests, reports, the command line and the MCP server. Paid Pro and Team plans will come later; we&rsquo;ll announce them here first.</p></details>
-          <details><summary>Does it send my requests or results anywhere?</summary><p>No. Requests go straight from your computer to the API you are testing, and results are plain files on your computer. You don&rsquo;t need an account. Signing in is optional and only brings a Pro or Team plan to your computer; your requests and results never go to us. The app asks once whether you&rsquo;d share anonymous usage counts — say no and nothing is sent. See the <a href="privacy.html">privacy page</a>.</p></details>
-          <details><summary>I use more than one computer. Do my requests sync?</summary><p>Not by us: your work stays on each computer, which is how it never leaves your hands. Projects are plain files, so keep them in git or a synced folder (OneDrive, Dropbox), or export and import (<a href="docs/accounts.html#your-work-on-more-than-one-computer">how</a>). A Pro or Team plan works on up to 3 of your computers at once: sign in on each.</p></details>
-          <details><summary>I use Postman. Can I bring my collections?</summary><p>Yes — import Postman, Insomnia and Bruno collections, <code>.http</code> files (VS Code REST Client, JetBrains) and Hurl files with their folders, environments, auth and scripts (<code>pm.test</code>, <code>pm.sendRequest</code> run as they are), or an OpenAPI file, where every request also checks its answer against the spec. <a href="docs/from-postman.html">Coming from Postman</a> shows where each Postman feature lives.</p></details>
+          <details><summary>Does it send my requests or results anywhere?</summary><p>No. Requests go straight from your computer to the API you are testing, and results are plain files on your computer. You don&rsquo;t need an account. Signing in is optional and only brings a Pro or Team plan to your computer; your requests and results never go to us. The app asks once whether you&rsquo;d share anonymous usage counts — say no and nothing is sent. See the <a href="privacy">privacy page</a>.</p></details>
+          <details><summary>I use more than one computer. Do my requests sync?</summary><p>Not by us: your work stays on each computer, which is how it never leaves your hands. Projects are plain files, so keep them in git or a synced folder (OneDrive, Dropbox), or export and import (<a href="docs/accounts#your-work-on-more-than-one-computer">how</a>). A Pro or Team plan works on up to 3 of your computers at once: sign in on each.</p></details>
+          <details><summary>I use Postman. Can I bring my collections?</summary><p>Yes — import Postman, Insomnia and Bruno collections, <code>.http</code> files (VS Code REST Client, JetBrains) and Hurl files with their folders, environments, auth and scripts (<code>pm.test</code>, <code>pm.sendRequest</code> run as they are), or an OpenAPI file, where every request also checks its answer against the spec. <a href="docs/from-postman">Coming from Postman</a> shows where each Postman feature lives.</p></details>
           <details><summary>I have never done load testing. Where do I start?</summary><p>Open the app and choose &ldquo;Try a simple request&rdquo;. It uses a practice API built into the app, so you learn without touching a real system. The <a href="learn/">free lessons</a> explain every idea from zero.</p></details>
           <details><summary>How much load can it make?</summary><p>Up to 500 simulated users, or a fixed rate of up to 100,000 requests per second — limited mostly by your computer and network. The report tells you when the machine itself was the bottleneck.</p></details>
           <details><summary>Is it safe to load test any API?</summary><p>Only test systems you own or have permission to test. A load test is real traffic; against someone else&rsquo;s API it can look like an attack.</p></details>
@@ -477,12 +477,12 @@
       <nav aria-label="Footer">
         <a href="#download">Download</a>
         <a href="docs/">Docs</a>
-        <a href="docs/templates.html">Templates</a>
+        <a href="docs/templates">Templates</a>
         <a href="learn/">Learn</a>
         <a href="report/">Report viewer</a>
-        <a href="account.html">Account</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="whats-new.html">What&rsquo;s new</a>
+        <a href="account">Account</a>
+        <a href="privacy">Privacy</a>
+        <a href="whats-new">What&rsquo;s new</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
         <a href="mailto:hello@apitestcenter.com">Contact</a>
       </nav>

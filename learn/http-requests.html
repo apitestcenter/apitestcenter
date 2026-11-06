@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Requests — addresses and methods — Learn API testing — APITestCenter</title>
   <meta name="description" content="Every API request says where to go (the URL) and what to do (the method). How URLs are built, and what GET, POST, PUT, PATCH and DELETE mean.">
-  <link rel="canonical" href="https://apitestcenter.com/learn/http-requests.html">
+  <link rel="canonical" href="https://apitestcenter.com/learn/http-requests">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon.ico" sizes="48x48">
   <link rel="apple-touch-icon" href="../assets/logo-512.png">
@@ -24,13 +24,13 @@
         <a href="../#ways">Product</a>
         <a href="../#pricing">Pricing</a>
         <a href="../docs/">Docs</a>
-        <a href="../docs/templates.html">Templates</a>
+        <a href="../docs/templates">Templates</a>
         <a href="../learn/" aria-current="true">Learn</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../whats-new">What&rsquo;s new</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="../#download">Download</a>
-      <a class="nav-signin" href="../account.html">Sign in</a>
+      <a class="nav-signin" href="../account">Sign in</a>
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </header>
@@ -40,7 +40,7 @@
       <details class="docs-menu" open>
         <summary>Learn</summary>
         <a class="docs-home" href="./">All lessons</a>
-        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html" aria-current="page">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata.html">OData, the API of business systems</a></li><li><a href="salesforce-api.html">The Salesforce REST API</a></li><li><a href="netsuite-api.html">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api.html">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api">What an API is</a></li><li><a href="http-requests" aria-current="page">Requests — addresses and methods</a></li><li><a href="headers-params-bodies">Headers, query parameters and bodies</a></li><li><a href="status-codes">Status codes</a></li><li><a href="json">JSON</a></li><li><a href="authentication">Signing in — authentication</a></li><li><a href="api-styles">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing">What API testing is</a></li><li><a href="checks-and-assertions">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables">Environments and variables</a></li><li><a href="chaining-and-test-data">Chaining requests and test data</a></li><li><a href="contract-testing">Contracts and schemas</a></li><li><a href="mocking">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing">Why test performance</a></li><li><a href="users-and-requests-per-second">Users and requests per second</a></li><li><a href="reading-results">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks">Finding the bottleneck</a></li><li><a href="performance-goals">Goals and regressions</a></li><li><a href="testing-safely">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata">OData, the API of business systems</a></li><li><a href="salesforce-api">The Salesforce REST API</a></li><li><a href="netsuite-api">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary">Glossary, A to Z</a></li></ul></div>
       </details>
     </aside>
     <main id="main" class="docs-main">
@@ -72,10 +72,10 @@ scheme          host        port     path               query</code></pre>
 <ol><li>Send <code>GET {{practiceApi}}/products</code> — the product list. A <em>safe</em> request: send it as often as you like.</li><li>Change the method (the menu left of the URL) to <strong>POST</strong> and the URL to <code>{{practiceApi}}/login</code>. Open the <strong>Body</strong> tab, choose JSON, and write <code>{ &quot;username&quot;: &quot;you&quot;, &quot;password&quot;: &quot;demo&quot; }</code>. Send. The answer contains a token — you just <em>did</em> something rather than read something.</li><li>Send <code>GET {{practiceApi}}/products?page=2</code>. The practice API ignores the query here, but look at the <strong>Params</strong> tab: the app split <code>page=2</code> out of the URL for you, one row per parameter.</li><li>Type <code>/products</code> in an empty URL bar and look at the menu that appears on its left: it offers base URLs — that's the split between <em>base URL</em> and <em>path</em>.</li></ol></aside>
 <h2 id="key-takeaways">Key takeaways</h2>
 <ul><li>The <strong>URL</strong> is the address: scheme, host, port, path and query. The <strong>base URL</strong> is the server; the <strong>path</strong> names the resource.</li><li>The <strong>method</strong> says what to do: <strong>GET</strong> reads, <strong>POST</strong> creates, <strong>PUT</strong> replaces, <strong>PATCH</strong> changes part, <strong>DELETE</strong> removes.</li><li><strong>GET is safe</strong> (changes nothing) and <strong>POST isn't idempotent</strong> (sent twice, it acts twice) — remember both before you load-test.</li></ul>
-<p><strong>In the app:</strong> <a href="../docs/sending-requests.html#the-request-bar">The request bar</a> · <a href="../docs/environments.html#choosing-a-base-url">Choosing a base URL</a></p>
-<p><strong>Next:</strong> <a href="headers-params-bodies.html">Headers, query parameters and bodies</a></p>
+<p><strong>In the app:</strong> <a href="../docs/sending-requests#the-request-bar">The request bar</a> · <a href="../docs/environments#choosing-a-base-url">Choosing a base URL</a></p>
+<p><strong>Next:</strong> <a href="headers-params-bodies">Headers, query parameters and bodies</a></p>
       </article>
-      <nav class="docs-pager" aria-label="Previous and next"><a href="what-is-an-api.html"><span>Previous</span>What an API is</a><a class="next" href="headers-params-bodies.html"><span>Next</span>Headers, query parameters and bodies</a></nav>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="what-is-an-api"><span>Previous</span>What an API is</a><a class="next" href="headers-params-bodies"><span>Next</span>Headers, query parameters and bodies</a></nav>
       <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
     </main>
     <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-url-an-address-piece-by-piece">The URL: an address, piece by piece</a></li><li><a href="#the-method-what-to-do">The method: what to do</a></li><li><a href="#putting-it-together">Putting it together</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
@@ -89,8 +89,8 @@ scheme          host        port     path               query</code></pre>
         <a href="../docs/">Docs</a>
         <a href="../learn/">Learn</a>
         <a href="../report/">Report viewer</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
-        <a href="../privacy.html">Privacy</a>
+        <a href="../whats-new">What&rsquo;s new</a>
+        <a href="../privacy">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
       </nav>
       <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>

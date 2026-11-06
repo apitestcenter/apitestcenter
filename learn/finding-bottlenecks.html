@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Finding the bottleneck — Learn API testing — APITestCenter</title>
   <meta name="description" content="When an API slows down under load, something specific ran out first — CPU, a connection pool, a database lock, a slow dependency. The usual suspects, the signs each one leaves, and how to narrow it down.">
-  <link rel="canonical" href="https://apitestcenter.com/learn/finding-bottlenecks.html">
+  <link rel="canonical" href="https://apitestcenter.com/learn/finding-bottlenecks">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon.ico" sizes="48x48">
   <link rel="apple-touch-icon" href="../assets/logo-512.png">
@@ -24,13 +24,13 @@
         <a href="../#ways">Product</a>
         <a href="../#pricing">Pricing</a>
         <a href="../docs/">Docs</a>
-        <a href="../docs/templates.html">Templates</a>
+        <a href="../docs/templates">Templates</a>
         <a href="../learn/" aria-current="true">Learn</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../whats-new">What&rsquo;s new</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="../#download">Download</a>
-      <a class="nav-signin" href="../account.html">Sign in</a>
+      <a class="nav-signin" href="../account">Sign in</a>
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </header>
@@ -40,7 +40,7 @@
       <details class="docs-menu" open>
         <summary>Learn</summary>
         <a class="docs-home" href="./">All lessons</a>
-        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html" aria-current="page">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata.html">OData, the API of business systems</a></li><li><a href="salesforce-api.html">The Salesforce REST API</a></li><li><a href="netsuite-api.html">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api.html">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api">What an API is</a></li><li><a href="http-requests">Requests — addresses and methods</a></li><li><a href="headers-params-bodies">Headers, query parameters and bodies</a></li><li><a href="status-codes">Status codes</a></li><li><a href="json">JSON</a></li><li><a href="authentication">Signing in — authentication</a></li><li><a href="api-styles">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing">What API testing is</a></li><li><a href="checks-and-assertions">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables">Environments and variables</a></li><li><a href="chaining-and-test-data">Chaining requests and test data</a></li><li><a href="contract-testing">Contracts and schemas</a></li><li><a href="mocking">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing">Why test performance</a></li><li><a href="users-and-requests-per-second">Users and requests per second</a></li><li><a href="reading-results">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks" aria-current="page">Finding the bottleneck</a></li><li><a href="performance-goals">Goals and regressions</a></li><li><a href="testing-safely">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata">OData, the API of business systems</a></li><li><a href="salesforce-api">The Salesforce REST API</a></li><li><a href="netsuite-api">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary">Glossary, A to Z</a></li></ul></div>
       </details>
     </aside>
     <main id="main" class="docs-main">
@@ -58,16 +58,16 @@
 <h2 id="how-to-narrow-it-down">How to narrow it down</h2>
 <ol><li><strong>Find where the time goes in one request.</strong> Is it the network (connection, TLS, download) or the server (time to first byte)? A high TTFB means <em>inside</em> the API.</li><li><strong>Test endpoints separately.</strong> If <code>/products</code> stays fast and <code>/orders</code> slows, the problem is in what <code>/orders</code> does — not the servers in general.</li><li><strong>Change one thing at a time</strong> and compare: more users, a bigger page size, a different endpoint. Two changes at once tell you nothing.</li><li><strong>Watch the server while you test.</strong> A load test only sees the outside. Look at the API's own monitoring at the same time: CPU, memory, the database's busiest queries, the connection pool, garbage-collection pauses, errors in the logs. The load test makes the problem happen; monitoring shows where.</li><li><strong>Find the knee.</strong> Run a step test (rising load in steps) and note where response times bend upward or errors start. That number is your current capacity.</li><li><strong>Rule out the test itself.</strong> If the load machine's CPU is maxed or requests weren't sent, the bottleneck may be the test. Run from a bigger machine, or closer to the API.</li><li><strong>Fix the bottleneck, then test again</strong> — the next one is now in charge.</li></ol>
 <h2 id="things-that-fool-you">Things that fool you</h2>
-<ul><li><strong>Warm-up.</strong> The first minute is slower: caches fill, connections open, code gets optimised (JIT). Ramp up, and judge the steady part.</li><li><strong>Caching.</strong> The same request a thousand times may be served from a cache — fast and meaningless. Use <a href="chaining-and-test-data.html">test data</a> so requests differ like real ones.</li><li><strong>Autoscaling.</strong> A cloud system may add servers mid-test: times rise, then fall. Know whether it's on, and how long it takes to react.</li><li><strong>Shared environments.</strong> Someone else's test on the same system makes your numbers worse. Book the environment.</li><li><strong>A different environment.</strong> A test server with a quarter of production's resources finds a quarter of its capacity — useful for comparing, risky for promising.</li></ul>
+<ul><li><strong>Warm-up.</strong> The first minute is slower: caches fill, connections open, code gets optimised (JIT). Ramp up, and judge the steady part.</li><li><strong>Caching.</strong> The same request a thousand times may be served from a cache — fast and meaningless. Use <a href="chaining-and-test-data">test data</a> so requests differ like real ones.</li><li><strong>Autoscaling.</strong> A cloud system may add servers mid-test: times rise, then fall. Know whether it's on, and how long it takes to react.</li><li><strong>Shared environments.</strong> Someone else's test on the same system makes your numbers worse. Book the environment.</li><li><strong>A different environment.</strong> A test server with a quarter of production's resources finds a quarter of its capacity — useful for comparing, risky for promising.</li></ul>
 <aside class="callout callout-note"><p><strong>Try it</strong> — find a &quot;bottleneck&quot; in the practice API.</p>
 <ol><li>Compare two endpoints under the same load: run <strong>Average</strong> (10 users) on <code>{{practiceApi}}/products</code>, then on <code>{{practiceApi}}/slow?ms=300</code>. Same users, very different throughput — the slow endpoint holds each user for 300 ms.</li><li>In the second report, look at <strong>Server time</strong> (TTFB): nearly all the response time is the server working — the network isn't the problem.</li><li>Open <strong>Compare</strong>, put both requests side by side under the same load, and run them together.</li></ol>
 <p>On a real API, step 2 is when you'd open the server's monitoring to see <em>what</em> it was doing.</p></aside>
 <h2 id="key-takeaways">Key takeaways</h2>
 <ul><li>One resource runs out first — the <strong>bottleneck</strong> — and queues in front of it make response times <strong>bend sharply</strong> near its limit.</li><li>The usual suspects: <strong>CPU, memory, database (and N+1 queries), connection pools, threads, slow dependencies, locks, rate limits — and the load machine itself</strong>.</li><li>Narrow it down: <strong>time in the server or the network</strong>, <strong>one endpoint and one change at a time</strong>, and <strong>watch the server's monitoring during the test</strong>.</li></ul>
-<p><strong>In the app:</strong> <a href="../docs/reading-the-report.html">Reading the report</a> · <a href="../docs/compare.html">Compare</a></p>
-<p><strong>Next:</strong> <a href="performance-goals.html">Goals and regressions</a></p>
+<p><strong>In the app:</strong> <a href="../docs/reading-the-report">Reading the report</a> · <a href="../docs/compare">Compare</a></p>
+<p><strong>Next:</strong> <a href="performance-goals">Goals and regressions</a></p>
       </article>
-      <nav class="docs-pager" aria-label="Previous and next"><a href="reading-results.html"><span>Previous</span>Reading results — response times, percentiles, errors</a><a class="next" href="performance-goals.html"><span>Next</span>Goals and regressions</a></nav>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="reading-results"><span>Previous</span>Reading results — response times, percentiles, errors</a><a class="next" href="performance-goals"><span>Next</span>Goals and regressions</a></nav>
       <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
     </main>
     <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#queues-why-a-bit-slower-becomes-suddenly-unusable">Queues: why &quot;a bit slower&quot; becomes &quot;suddenly unusable&quot;</a></li><li><a href="#the-usual-suspects">The usual suspects</a></li><li><a href="#how-to-narrow-it-down">How to narrow it down</a></li><li><a href="#things-that-fool-you">Things that fool you</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
@@ -81,8 +81,8 @@
         <a href="../docs/">Docs</a>
         <a href="../learn/">Learn</a>
         <a href="../report/">Report viewer</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
-        <a href="../privacy.html">Privacy</a>
+        <a href="../whats-new">What&rsquo;s new</a>
+        <a href="../privacy">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
       </nav>
       <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>

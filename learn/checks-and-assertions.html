@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Checks — deciding what a correct answer is — Learn API testing — APITestCenter</title>
   <meta name="description" content="A check (or assertion) is a rule a correct answer must follow. Which checks to write, how strict to be, and how scripts go further when a rule needs code.">
-  <link rel="canonical" href="https://apitestcenter.com/learn/checks-and-assertions.html">
+  <link rel="canonical" href="https://apitestcenter.com/learn/checks-and-assertions">
   <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon.ico" sizes="48x48">
   <link rel="apple-touch-icon" href="../assets/logo-512.png">
@@ -24,13 +24,13 @@
         <a href="../#ways">Product</a>
         <a href="../#pricing">Pricing</a>
         <a href="../docs/">Docs</a>
-        <a href="../docs/templates.html">Templates</a>
+        <a href="../docs/templates">Templates</a>
         <a href="../learn/" aria-current="true">Learn</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
+        <a href="../whats-new">What&rsquo;s new</a>
       </nav>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="../#download">Download</a>
-      <a class="nav-signin" href="../account.html">Sign in</a>
+      <a class="nav-signin" href="../account">Sign in</a>
       <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </header>
@@ -40,7 +40,7 @@
       <details class="docs-menu" open>
         <summary>Learn</summary>
         <a class="docs-home" href="./">All lessons</a>
-        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api.html">What an API is</a></li><li><a href="http-requests.html">Requests — addresses and methods</a></li><li><a href="headers-params-bodies.html">Headers, query parameters and bodies</a></li><li><a href="status-codes.html">Status codes</a></li><li><a href="json.html">JSON</a></li><li><a href="authentication.html">Signing in — authentication</a></li><li><a href="api-styles.html">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing.html">What API testing is</a></li><li><a href="checks-and-assertions.html" aria-current="page">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables.html">Environments and variables</a></li><li><a href="chaining-and-test-data.html">Chaining requests and test data</a></li><li><a href="contract-testing.html">Contracts and schemas</a></li><li><a href="mocking.html">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci.html">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing.html">Why test performance</a></li><li><a href="users-and-requests-per-second.html">Users and requests per second</a></li><li><a href="reading-results.html">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks.html">Finding the bottleneck</a></li><li><a href="performance-goals.html">Goals and regressions</a></li><li><a href="testing-safely.html">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata.html">OData, the API of business systems</a></li><li><a href="salesforce-api.html">The Salesforce REST API</a></li><li><a href="netsuite-api.html">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api.html">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary.html">Glossary, A to Z</a></li></ul></div>
+        <div class="docs-nav-group"><p>APIs from zero</p><ul><li><a href="what-is-an-api">What an API is</a></li><li><a href="http-requests">Requests — addresses and methods</a></li><li><a href="headers-params-bodies">Headers, query parameters and bodies</a></li><li><a href="status-codes">Status codes</a></li><li><a href="json">JSON</a></li><li><a href="authentication">Signing in — authentication</a></li><li><a href="api-styles">Kinds of APIs</a></li></ul></div><div class="docs-nav-group"><p>Testing APIs</p><ul><li><a href="what-is-api-testing">What API testing is</a></li><li><a href="checks-and-assertions" aria-current="page">Checks — deciding what a correct answer is</a></li><li><a href="environments-and-variables">Environments and variables</a></li><li><a href="chaining-and-test-data">Chaining requests and test data</a></li><li><a href="contract-testing">Contracts and schemas</a></li><li><a href="mocking">Mocks — testing without the real API</a></li><li><a href="api-tests-in-ci">API tests in a pipeline</a></li></ul></div><div class="docs-nav-group"><p>Performance and load testing</p><ul><li><a href="why-performance-testing">Why test performance</a></li><li><a href="users-and-requests-per-second">Users and requests per second</a></li><li><a href="reading-results">Reading results — response times, percentiles, errors</a></li><li><a href="finding-bottlenecks">Finding the bottleneck</a></li><li><a href="performance-goals">Goals and regressions</a></li><li><a href="testing-safely">Testing safely and realistically</a></li></ul></div><div class="docs-nav-group"><p>Business systems</p><ul><li><a href="odata">OData, the API of business systems</a></li><li><a href="salesforce-api">The Salesforce REST API</a></li><li><a href="netsuite-api">NetSuite REST web services and SuiteQL</a></li><li><a href="successfactors-api">The SAP SuccessFactors OData API</a></li></ul></div><div class="docs-nav-group"><p>Reference</p><ul><li><a href="glossary">Glossary, A to Z</a></li></ul></div>
       </details>
     </aside>
     <main id="main" class="docs-main">
@@ -70,10 +70,10 @@
 <ol><li>Send <code>GET {{practiceApi}}/products</code>. On <strong>Checks</strong> add: <em>Status</em> is <code>2xx</code>; <em>JSON field</em> <code>items</code> <em>has length</em> <code>&gt;0</code>; <em>JSON field</em> <code>items[0].price</code> <em>is of type</em> <code>number</code>; <em>Response time</em> within <code>500</code> ms. Send — all pass.</li><li>Now break one on purpose: change the type check to <code>string</code>. Send — it fails, and says why: <em>is a number</em>.</li><li>Open <strong>Scripts → Tests</strong> and press <strong>Add → A list is not empty</strong>. Send: the script's test appears next to the checks.</li><li>Run a quick load test (<strong>Run load test</strong> with the Smoke preset): the report shows the pass rate of every check across all the requests.</li></ol></aside>
 <h2 id="key-takeaways">Key takeaways</h2>
 <ul><li>A <strong>check</strong> is a rule a correct answer must follow — status, values, types, lengths, patterns, headers, time, shape.</li><li>Be <strong>strict about what must be true</strong>, loose about what may change; check <strong>type or pattern</strong> for values that vary.</li><li>Use <strong>test scripts</strong> for rules a single check can't express — and run your checks <strong>under load</strong> too.</li></ul>
-<p><strong>In the app:</strong> <a href="../docs/checks.html">Checks</a> · <a href="../docs/scripts.html">Scripts</a></p>
-<p><strong>Next:</strong> <a href="environments-and-variables.html">Environments and variables</a></p>
+<p><strong>In the app:</strong> <a href="../docs/checks">Checks</a> · <a href="../docs/scripts">Scripts</a></p>
+<p><strong>Next:</strong> <a href="environments-and-variables">Environments and variables</a></p>
       </article>
-      <nav class="docs-pager" aria-label="Previous and next"><a href="what-is-api-testing.html"><span>Previous</span>What API testing is</a><a class="next" href="environments-and-variables.html"><span>Next</span>Environments and variables</a></nav>
+      <nav class="docs-pager" aria-label="Previous and next"><a href="what-is-api-testing"><span>Previous</span>What API testing is</a><a class="next" href="environments-and-variables"><span>Next</span>Environments and variables</a></nav>
       <p class="docs-help">A question these lessons don’t answer? Write to <a href="mailto:support@apitestcenter.com">support@apitestcenter.com</a> — we add lessons for the questions people ask.</p>
     </main>
     <nav class="docs-toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#the-kinds-of-check">The kinds of check</a></li><li><a href="#how-strict-should-a-check-be">How strict should a check be?</a></li><li><a href="#many-checks-one-answer">Many checks, one answer</a></li><li><a href="#when-a-rule-needs-code-test-scripts">When a rule needs code: test scripts</a></li><li><a href="#checks-under-load">Checks under load</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ul></nav>
@@ -87,8 +87,8 @@
         <a href="../docs/">Docs</a>
         <a href="../learn/">Learn</a>
         <a href="../report/">Report viewer</a>
-        <a href="../whats-new.html">What&rsquo;s new</a>
-        <a href="../privacy.html">Privacy</a>
+        <a href="../whats-new">What&rsquo;s new</a>
+        <a href="../privacy">Privacy</a>
         <a href="mailto:support@apitestcenter.com">Support</a>
       </nav>
       <span>© <span data-year>2026</span> Ratul Roy. All rights reserved.</span>

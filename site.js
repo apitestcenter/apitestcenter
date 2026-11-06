@@ -218,12 +218,10 @@ document.addEventListener("click", (e) => {
     links.classList.toggle("open", open);
     menu.setAttribute("aria-expanded", String(open));
   };
-  menu.addEventListener("click", (e) => {
-    e.stopPropagation();
-    set(!links.classList.contains("open"));
-  });
+  // One menu open at a time: a click anywhere else (the account badge too) closes this one.
+  menu.addEventListener("click", () => set(!links.classList.contains("open")));
   links.addEventListener("click", (e) => e.target.closest("a") && set(false));
-  document.addEventListener("click", (e) => !links.contains(e.target) && set(false));
+  document.addEventListener("click", (e) => !links.contains(e.target) && !menu.contains(e.target) && set(false));
   document.addEventListener("keydown", (e) => e.key === "Escape" && set(false));
 })();
 
@@ -277,10 +275,7 @@ document.addEventListener("click", (e) => {
       button.setAttribute("aria-expanded", String(open));
       if (open) pop.querySelector("[role=menuitem]")?.focus();
     };
-    button.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggle(pop.hidden);
-    });
+    button.addEventListener("click", () => toggle(pop.hidden));
     document.addEventListener("click", (e) => !wrap.contains(e.target) && toggle(false));
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && !pop.hidden) {

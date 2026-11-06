@@ -113,6 +113,7 @@
     for (const s of ["email", "code", "wait", "done"]) $(`step-${s}`).hidden = s !== name;
   }
   function signedOut(message = "") {
+    document.documentElement.classList.remove("has-session");
     session = null;
     me = null;
     keep(null);
@@ -265,7 +266,7 @@
     $("manage").hidden = !canManage;
     $("manage-note").hidden = !canManage;
     $("buy").hidden = Boolean(plan) || me.manages;
-    if (!plan) $("buy").href = `buy.html?plan=pro&account=${encodeURIComponent(me.account)}&email=${encodeURIComponent(me.email)}`;
+    if (!plan) $("buy").href = `buy?plan=pro&account=${encodeURIComponent(me.account)}&email=${encodeURIComponent(me.email)}`;
     $("key-box").hidden = !me.license;
     $("key").value = me.license ?? "";
 
@@ -500,8 +501,12 @@
     history.replaceState(null, "", location.pathname + location.search);
     failed(GOOGLE_ERRORS[hash.get("google_error")] ?? "Google sign-in didn't work. Try again, or use your email.");
   } else if (session?.token) {
-    step("wait");
-    $("wait-note").textContent = "Opening your account…";
-    show().catch((err) => signedOut(err.message));
+    // Straight to the account (the page's head already hid the sign-in screen); fill it as it loads.
+    $("signin").hidden = true;
+    $("account").hidden = false;
+    show()
+      .then(reveal)
+      .catch((err) => signedOut(err.message))
+      .finally(() => document.documentElement.classList.remove("has-session"));
   }
 })();

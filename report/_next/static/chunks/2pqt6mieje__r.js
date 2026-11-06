@@ -21,9 +21,9 @@ To check speed too, load-test one request with goals, and compare with a baselin
 
     npx --yes apitestcenter run "${t?`${t}/`:""}<request name>" --data ${n}${i} --p95 500 --errors 1 --baseline ${n}/baseline.json --max-slower 10
 
-Guide: https://apitestcenter.com/docs/ci-walkthrough.html
+Guide: https://apitestcenter.com/docs/ci-walkthrough
 `}({collection:e,environment:t,secrets:l}),r[".github/workflows/api-checks.yml"]=(a=(s={collection:e,environment:t}).collection||"requests outside a collection",`# Runs the "${a}" API checks on every push. Made by APITestCenter.
-# Guide: https://apitestcenter.com/docs/ci-walkthrough.html
+# Guide: https://apitestcenter.com/docs/ci-walkthrough
 name: API checks
 
 on:
