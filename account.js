@@ -33,7 +33,10 @@
       return null;
     }
   };
-  const keep = (value) => write(STORE, value ? JSON.stringify(value) : null);
+  const keep = (value) => {
+    write(STORE, value ? JSON.stringify(value) : null);
+    window.atcHeader?.refresh(); // the site header's Sign in / badge / Admin link
+  };
   let session = saved();
   let me = null;
 
@@ -241,8 +244,6 @@
     $("avatar").textContent = (me.email[0] ?? "?").toUpperCase();
     $("hello-email").textContent = me.email;
     $("hello-sub").replaceChildren(el("span", { className: `tag ${plan ? "plan" : ""}`, textContent: planLabel }), document.createTextNode(`Member since ${day(me.created_at) || "–"}`));
-    $("hello-admin").hidden = !me.admin;
-    $("menu-admin").hidden = !me.admin;
 
     // Profile
     $("me-email").textContent = me.email;
@@ -428,6 +429,7 @@
       $("key").select();
     }
   });
+  $("hello-signout").addEventListener("click", () => $("signout").click());
   $("signout").addEventListener("click", (e) =>
     busy(e.currentTarget, null, async () => {
       await call("POST", "/v1/auth/signout", {}).catch(() => undefined);

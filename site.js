@@ -209,77 +209,107 @@ document.addEventListener("click", (e) => {
   }, 6000);
 });
 
-// The header's Sign in button. Signed in (on the account page), it becomes a round badge with the
-// email's first letter, and a menu: the account, the Admin dashboard (owner only; Cloudflare still
-// asks who you are there), and Sign out.
+// Phones: the menu button opens the links.
 (() => {
-  let session = null;
-  try {
-    session = JSON.parse(localStorage.getItem("atc-account") ?? "null");
-  } catch {
-    /* storage blocked */
-  }
-  const link = document.querySelector(".nav-signin");
-  if (!link || !session?.token || !session.email) return;
-  const href = link.getAttribute("href");
-  const wrap = document.createElement("div");
-  wrap.className = "acct-menu";
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = "avatar";
-  button.textContent = session.email[0].toUpperCase();
-  button.setAttribute("aria-haspopup", "menu");
-  button.setAttribute("aria-expanded", "false");
-  button.setAttribute("aria-label", `Your account (${session.email})`);
-  const pop = document.createElement("div");
-  pop.className = "acct-pop";
-  pop.setAttribute("role", "menu");
-  pop.hidden = true;
-  const who = document.createElement("div");
-  who.className = "acct-who";
-  who.textContent = session.email;
-  const item = (tag, text, attrs = {}) => {
-    const n = document.createElement(tag);
-    n.textContent = text;
-    n.setAttribute("role", "menuitem");
+  const menu = document.querySelector(".menu-btn");
+  const links = document.getElementById("site-menu");
+  if (!menu || !links) return;
+  const set = (open) => {
+    links.classList.toggle("open", open);
+    menu.setAttribute("aria-expanded", String(open));
+  };
+  menu.addEventListener("click", (e) => {
+    e.stopPropagation();
+    set(!links.classList.contains("open"));
+  });
+  links.addEventListener("click", (e) => e.target.closest("a") && set(false));
+  document.addEventListener("click", (e) => !links.contains(e.target) && set(false));
+  document.addEventListener("keydown", (e) => e.key === "Escape" && set(false));
+})();
+
+// Signed in (on the account page): Sign in becomes a round badge with the email's first letter
+// and a menu (your account, sign out); the owner also gets "Admin dashboard ↗" first in the
+// links (Cloudflare still checks who you are there). The account page calls
+// window.atcHeader.refresh() when you sign in or out, so it changes at once.
+(() => {
+  const ADMIN = "https://admin.apitestcenter.com";
+  const signin = document.querySelector(".nav-signin");
+  if (!signin) return;
+  const href = signin.getAttribute("href");
+  const links = document.getElementById("site-menu");
+  let badge = null;
+  let admin = null;
+  const read = () => {
+    try {
+      return JSON.parse(localStorage.getItem("atc-account") ?? "null");
+    } catch {
+      return null;
+    }
+  };
+  const make = (tag, props = {}, attrs = {}) => {
+    const n = Object.assign(document.createElement(tag), props);
     for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
     return n;
   };
-  pop.append(who, item("a", "Your account", { href }));
-  if (session.admin) pop.append(item("a", "Admin dashboard ↗", { href: "https://admin.apitestcenter.com" }));
-  const out = item("button", "Sign out", { type: "button" });
-  out.addEventListener("click", async () => {
-    try {
-      await fetch("https://license.apitestcenter.com/v1/auth/signout", { method: "POST", headers: { authorization: `Bearer ${session.token}` } });
-    } catch {
-      /* signed out here anyway */
+
+  function build(session) {
+    const wrap = make("div", { className: "acct-menu" });
+    const button = make("button", { type: "button", className: "avatar", textContent: session.email[0].toUpperCase() }, { "aria-haspopup": "menu", "aria-expanded": "false", "aria-label": `Your account (${session.email})` });
+    const pop = make("div", { className: "acct-pop", hidden: true }, { role: "menu" });
+    pop.append(make("div", { className: "acct-who", textContent: session.email }), make("a", { textContent: "Your account" }, { role: "menuitem", href }));
+    const out = make("button", { type: "button", textContent: "Sign out" }, { role: "menuitem" });
+    out.addEventListener("click", async () => {
+      try {
+        await fetch("https://license.apitestcenter.com/v1/auth/signout", { method: "POST", headers: { authorization: `Bearer ${session.token}` } });
+      } catch {
+        /* signed out here anyway */
+      }
+      try {
+        localStorage.removeItem("atc-account");
+      } catch {
+        /* storage blocked */
+      }
+      location.href = href;
+    });
+    pop.append(out);
+    const toggle = (open) => {
+      pop.hidden = !open;
+      button.setAttribute("aria-expanded", String(open));
+      if (open) pop.querySelector("[role=menuitem]")?.focus();
+    };
+    button.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggle(pop.hidden);
+    });
+    document.addEventListener("click", (e) => !wrap.contains(e.target) && toggle(false));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !pop.hidden) {
+        toggle(false);
+        button.focus();
+      }
+    });
+    wrap.append(button, pop);
+    return wrap;
+  }
+
+  function refresh() {
+    const session = read();
+    const signedIn = Boolean(session?.token && session.email);
+    if (badge) badge.remove();
+    badge = null;
+    if (signedIn) {
+      badge = build(session);
+      signin.after(badge);
     }
-    try {
-      localStorage.removeItem("atc-account");
-    } catch {
-      /* storage blocked */
+    signin.hidden = signedIn;
+    if (signedIn && session.admin && links && !admin) {
+      admin = make("a", { className: "nav-admin", href: ADMIN, innerHTML: 'Admin dashboard <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>' });
+      links.prepend(admin);
+    } else if (!(signedIn && session.admin) && admin) {
+      admin.remove();
+      admin = null;
     }
-    location.href = href;
-  });
-  pop.append(out);
-  const toggle = (open) => {
-    pop.hidden = !open;
-    button.setAttribute("aria-expanded", String(open));
-    if (open) pop.querySelector("[role=menuitem]")?.focus();
-  };
-  button.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggle(pop.hidden);
-  });
-  document.addEventListener("click", (e) => {
-    if (!wrap.contains(e.target)) toggle(false);
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !pop.hidden) {
-      toggle(false);
-      button.focus();
-    }
-  });
-  wrap.append(button, pop);
-  link.replaceWith(wrap);
+  }
+  window.atcHeader = { refresh };
+  refresh();
 })();

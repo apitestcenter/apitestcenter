@@ -82,6 +82,12 @@
     .menu .admin svg { color: var(--accent); }
     .sections { display: grid; gap: 18px; }
     .sections > section { scroll-margin-top: 96px; }
+    /* Wide screens: two cards side by side (Profile and Plan, Devices and Emails) */
+    @media (min-width: 1200px) {
+      .sections { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+      .sections > .hello, .sections > #team, .sections > #ask, .sections > #delete, .sections > p { grid-column: 1 / -1; }
+      .sections > #profile, .sections > #plan, .sections > #devices, .sections > #emails { align-self: stretch; }
+    }
     .card { border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; background: var(--panel); }
     .card h2 { font-size: 18px; margin: 0 0 4px; letter-spacing: -.01em; }
     .card p { margin: 0; color: var(--mute); font-size: 15px; }
@@ -161,18 +167,19 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap nav">
-      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="30" height="30">APITestCenter</a>
-      <nav class="nav-links" aria-label="Main">
-        <a href="./#features">Features</a>
-        <a href="./#download">Download</a>
+      <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="30" height="30"><span>APITestCenter</span></a>
+      <nav class="nav-links" id="site-menu" aria-label="Main">
+        <a href="./#ways">Product</a>
+        <a href="./#pricing">Pricing</a>
         <a href="docs/">Docs</a>
+        <a href="docs/templates.html">Templates</a>
         <a href="learn/">Learn</a>
         <a href="whats-new.html">What&rsquo;s new</a>
-        <a href="./#faq">FAQ</a>
       </nav>
-      <a class="nav-signin" href="account.html" aria-current="page">Sign in</a>
       <button class="theme-btn" type="button" aria-label="Switch theme">☾</button>
       <a class="btn btn-primary btn-sm" href="./#download">Download</a>
+      <a class="nav-signin" href="account.html" aria-current="page">Sign in</a>
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </header>
 
@@ -258,7 +265,6 @@
           <a class="item" href="#delete"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>Delete account</a>
         </nav>
         <hr>
-        <a class="item admin side-only" id="menu-admin" href="https://admin.apitestcenter.com" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg>Admin dashboard ↗</a>
         <button class="item side-only" type="button" id="signout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></svg>Sign out</button>
       </aside>
 
@@ -267,7 +273,7 @@
           <span class="avatar-lg" id="avatar" aria-hidden="true"></span>
           <div class="who"><b id="hello-email"></b><span id="hello-sub"></span></div>
           <div class="acts">
-            <a class="btn btn-ghost btn-sm" id="hello-admin" href="https://admin.apitestcenter.com" hidden>Admin dashboard ↗</a>
+            <button class="btn btn-ghost btn-sm" type="button" id="hello-signout">Sign out</button>
           </div>
         </section>
 
