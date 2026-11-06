@@ -208,3 +208,10 @@ document.addEventListener("click", (e) => {
     if (note) note.hidden = false;
   }, 6000);
 });
+
+// Signed in on the account page: the menu says "Account" instead of "Sign in".
+try {
+  if (JSON.parse(localStorage.getItem("atc-account") ?? "null")?.token) document.querySelectorAll(".nav-signin").forEach((a) => (a.textContent = "Account"));
+} catch {
+  /* storage blocked */
+}

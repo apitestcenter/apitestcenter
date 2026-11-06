@@ -85,6 +85,7 @@ code, .mono { font-family: ui-monospace, "Cascadia Code", "SF Mono", Consolas, m
 .theme-btn { background: none; border: 1px solid var(--line); color: var(--mute); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
 .theme-btn:hover { color: var(--ink); border-color: var(--mute); }
 @media (max-width: 760px) { .nav-links { display: none; } .nav .btn { margin-left: auto; } }
+@media (max-width: 760px) { .nav { gap: 12px; } .brand { flex: none; } .nav .nav-signin { margin-left: auto; } .nav .nav-signin ~ .btn { margin-left: 0; } }
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid transparent; cursor: pointer; }
