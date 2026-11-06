@@ -40,7 +40,7 @@
 
     <h2>The app</h2>
     <ul>
-      <li><strong>No account.</strong> You never sign up or sign in to use APITestCenter.</li>
+      <li><strong>No account needed.</strong> Free works without signing up or signing in. An account is optional, for Pro and Team: see <a href="#account">Your account</a> below.</li>
       <li><strong>Anonymous usage counts, on unless you turn them off.</strong> The app tells you once, before anything is sent, and offers to turn them off; Settings turns them off any time, and an organisation can turn them off for every user with <code>ATC_NO_USAGE=1</code>. When they're on, once a day the app sends: a random install number, the app version, your operating system, and four counts — requests sent, load tests run, compares, imports. Never URLs, request or response contents, results, names, tokens, or anything you type. The app shows the exact data that is sent. If you turn it off, nothing is sent, the app stops counting, and any counts it had kept on your computer are deleted. If you had already said no, it stays off.</li>
       <li><strong>Update checks.</strong> The app asks GitHub whether a newer version exists, a few times a day. That request carries no information about you or your tests.</li>
       <li><strong>Requests go only where you send them.</strong> When you press Send or run a load test, traffic goes from your computer straight to the API you entered — never through our servers.</li>
@@ -51,10 +51,19 @@
 
     <h2>This website</h2>
     <ul>
-      <li><strong>No cookies, no trackers, no outside fonts, no third-party analytics.</strong></li>
+      <li><strong>No tracking cookies, no trackers, no outside fonts, no third-party analytics.</strong> The only cookie is a short-lived one while you use Continue with Google (see <a href="#account">Your account</a>).</li>
       <li><strong>Page views are counted — anonymously.</strong> Each page you open sends us: which page it is, the name of the site that linked to it (like <code>google.com</code>, never the full address), whether the screen is a phone's, and the country Cloudflare works out from the connection. The connection's IP address is not stored, and nothing identifies you or links one page view to another. If your browser asks sites not to track you (Do Not Track or Global Privacy Control), nothing is sent. We use the totals to see which pages help people.</li>
       <li>The version number and file sizes come from a file on this website. Downloads come from GitHub Releases; GitHub sees those as it would for any visitor (see GitHub's privacy statement).</li>
       <li>Your light or dark choice is remembered in your browser only.</li>
+    </ul>
+
+    <h2 id="account">Your account (optional)</h2>
+    <ul>
+      <li><strong>What we keep:</strong> your email; the names of the computers you sign in to the app from, and of the browsers you use the account page in (like &ldquo;Chrome on Windows&rdquo;), with when each was last used; and which emails you want from us. Sign-in codes and session keys are stored only in scrambled (hashed) form.</li>
+      <li><strong>Continue with Google:</strong> we ask Google only for your email address and whether Google has confirmed it &mdash; not your name, photo or contacts. While you sign in, a cookie on <code>license.apitestcenter.com</code> (deleted after 10 minutes, or as soon as you're back) checks that Google's answer returns to the browser that asked.</li>
+      <li><strong>Staying signed in:</strong> the account page keeps its sign-in in your browser's local storage for up to 90 days. Sign out removes it.</li>
+      <li><strong>Payments:</strong> Paddle, our reseller, handles payments, invoices and your card. We never see card details.</li>
+      <li><strong>Delete it any time</strong> on the <a href="account.html">account page</a>: your email, sign-ins and email choices are removed.</li>
     </ul>
 
     <h2>&ldquo;Tell me when Pro launches&rdquo;</h2>

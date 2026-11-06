@@ -1,29 +1,39 @@
-// The account page. Sign in with an emailed code or the link in the same email; then Profile
-// (change the email), Plan & billing, Team (or Ask for access), Devices (every computer and
-// browser, sign out one or all), Emails (which ones to get) and Delete account. All of it is the
-// license server's (services/license-worker); this page only shows it. A website sign-in lasts
-// 90 days and isn't one of the 3 computers.
+// The account page. Signing in: Continue with Google (when the server has it set up), or an
+// emailed code (six boxes) or the link in that email. Signed in: Profile (change the email),
+// Plan & billing, Team (or Ask for access), Devices (every computer and browser; sign out one or
+// all), Emails (which ones to get) and Delete account; the owner also sees the Admin dashboard.
+// All of it is the license server's (services/license-worker); this page only shows it. A
+// website sign-in lasts 90 days and isn't one of the 3 computers.
 (() => {
   const LICENSE_SERVER = "https://license.apitestcenter.com";
   const STORE = "atc-account";
+  const LAST_EMAIL = "atc-last-email";
   const $ = (id) => document.getElementById(id);
   const params = new URLSearchParams(location.search);
 
-  const saved = () => {
+  const read = (key) => {
     try {
-      return JSON.parse(localStorage.getItem(STORE) ?? "null");
+      return localStorage.getItem(key);
     } catch {
       return null;
     }
   };
-  const keep = (value) => {
+  const write = (key, value) => {
     try {
-      if (value) localStorage.setItem(STORE, JSON.stringify(value));
-      else localStorage.removeItem(STORE);
+      if (value == null) localStorage.removeItem(key);
+      else localStorage.setItem(key, value);
     } catch {
       /* storage blocked: signed in until the page closes */
     }
   };
+  const saved = () => {
+    try {
+      return JSON.parse(read(STORE) ?? "null");
+    } catch {
+      return null;
+    }
+  };
+  const keep = (value) => write(STORE, value ? JSON.stringify(value) : null);
   let session = saved();
   let me = null;
 
@@ -97,7 +107,7 @@
   }
 
   function step(name) {
-    for (const s of ["email", "code", "link"]) $(`step-${s}`).hidden = s !== name;
+    for (const s of ["email", "code", "wait", "done"]) $(`step-${s}`).hidden = s !== name;
   }
   function signedOut(message = "") {
     session = null;
@@ -110,16 +120,56 @@
   }
 
   // ---- Sign in ----
-  let email = "";
+  // Continue with Google appears only when the server has it set up.
+  call("GET", "/v1/auth/providers")
+    .then((p) => {
+      $("google").hidden = !p.google;
+      $("or").hidden = !p.google;
+    })
+    .catch(() => undefined);
+
+  let email = read(LAST_EMAIL) ?? "";
+  $("email").value = email;
+
+  const boxes = [...$("otp").querySelectorAll("input")];
+  const typed = () => boxes.map((b) => b.value).join("");
+  function fillCode(digits) {
+    const d = digits.replace(/\D/g, "").slice(0, 6).split("");
+    boxes.forEach((b, i) => (b.value = d[i] ?? ""));
+    (boxes[Math.min(d.length, 5)] ?? boxes[5]).focus();
+    if (d.length === 6) $("code-form").requestSubmit();
+  }
+  boxes.forEach((box, i) => {
+    box.addEventListener("input", () => {
+      $("otp").classList.remove("bad");
+      const v = box.value.replace(/\D/g, "");
+      if (v.length > 1) return fillCode(typed().slice(0, i) + v); // pasted or autofilled
+      box.value = v;
+      if (v && i < 5) boxes[i + 1].focus();
+      if (typed().length === 6) $("code-form").requestSubmit();
+    });
+    box.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !box.value && i > 0) boxes[i - 1].focus();
+      if (e.key === "ArrowLeft" && i > 0) boxes[i - 1].focus();
+      if (e.key === "ArrowRight" && i < 5) boxes[i + 1].focus();
+    });
+    box.addEventListener("paste", (e) => {
+      e.preventDefault();
+      fillCode((e.clipboardData?.getData("text") ?? "").trim());
+    });
+    box.addEventListener("focus", () => box.select());
+  });
+
   async function sendCode(line) {
     try {
       const out = await call("POST", "/v1/auth/start", { email, web: true });
+      write(LAST_EMAIL, email);
       $("sent-to").textContent = email;
       step("code");
       status($("code-status"), "");
       countdown($("resend"), $("resend-note"), out.resend_in ?? 60, out.codes_left);
-      $("code").value = "";
-      $("code").focus();
+      fillCode("");
+      return true;
     } catch (err) {
       status(line, err.message, "bad");
       if (err.wait) countdown($("resend"), $("resend-note"), Math.min(err.wait, 3600), err.wait > 120 ? 0 : null);
@@ -128,17 +178,20 @@
         $("sent-to").textContent = email;
         step("code");
         status($("code-status"), err.message);
+        boxes[0].focus();
       }
+      return false;
     }
   }
   $("email-form").addEventListener("submit", (e) => {
     e.preventDefault();
     email = $("email").value.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return status($("email-status"), "Type your email address.", "bad");
     busy(e.submitter, $("email-status"), () => sendCode($("email-status")));
   });
-  $("resend").addEventListener("click", (e) => {
+  $("resend").addEventListener("click", async (e) => {
     e.currentTarget.disabled = true;
-    sendCode($("code-status")).then(() => status($("code-status"), "A new code is on the way. The one before no longer works.", "good"));
+    if (await sendCode($("code-status"))) status($("code-status"), "A new code is on the way. The one before no longer works.", "good");
   });
   $("other-email").addEventListener("click", () => {
     step("email");
@@ -148,31 +201,56 @@
   async function signedIn(out) {
     session = { email: out.email, token: out.token };
     keep(session);
-    await show();
+    write(LAST_EMAIL, out.email);
+    step("done");
+    await Promise.all([show(true), new Promise((r) => setTimeout(r, 700))]);
+    reveal();
   }
   $("code-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    busy(e.submitter, $("code-status"), async () => signedIn(await call("POST", "/v1/auth/verify", { email, code: $("code").value.replace(/\s/g, ""), web: true })));
-  });
-  $("code").addEventListener("input", (e) => {
-    const v = e.target.value.replace(/\D/g, "");
-    if (v.length === 6) $("code-form").requestSubmit();
+    if (typed().length !== 6) return status($("code-status"), "Type all 6 digits.", "bad");
+    busy($("code-submit"), $("code-status"), async () => {
+      try {
+        await signedIn(await call("POST", "/v1/auth/verify", { email, code: typed(), web: true }));
+      } catch (err) {
+        step("code");
+        $("otp").classList.add("bad");
+        throw err;
+      }
+    });
   });
 
   // ---- Signed in ----
-  async function show() {
-    me = await call("GET", "/v1/me");
+  function reveal() {
     $("signin").hidden = true;
     $("account").hidden = false;
-    $("menu-email").textContent = me.email;
+    const target = location.hash && document.querySelector(location.hash);
+    if (target && target.closest("#account")) target.scrollIntoView();
+    else window.scrollTo(0, 0);
+    lightMenu();
+  }
+  async function show(quiet = false) {
+    me = await call("GET", "/v1/me");
+    session = { ...session, email: me.email, admin: Boolean(me.admin) };
+    keep(session);
+    const plan = me.plan;
+    const ending = plan?.status === "ending";
+    const planLabel = !plan ? (me.manages ? "Team admin" : "Free") : plan.tier === "team" ? `Team · ${plan.seats} seats` : "Pro";
+
+    // The header card
+    $("avatar").textContent = (me.email[0] ?? "?").toUpperCase();
+    $("hello-email").textContent = me.email;
+    $("hello-sub").replaceChildren(el("span", { className: `tag ${plan ? "plan" : ""}`, textContent: planLabel }), document.createTextNode(`Member since ${day(me.created_at) || "–"}`));
+    $("hello-admin").hidden = !me.admin;
+    $("menu-admin").hidden = !me.admin;
+
+    // Profile
     $("me-email").textContent = me.email;
     $("me-since").textContent = day(me.created_at) || "–";
 
     // Plan & billing
-    const plan = me.plan;
-    const ending = plan?.status === "ending";
     $("plan-name").replaceChildren(
-      document.createTextNode(!plan ? (me.manages ? "Team admin" : "Free") : plan.tier === "team" ? `Team · ${plan.seats} seats` : "Pro"),
+      document.createTextNode(planLabel),
       ...(plan ? [el("span", { className: `tag ${plan.status === "past_due" || ending ? "warn" : "ok"}`, textContent: plan.status === "past_due" ? "payment failed" : ending ? "ending" : "active" })] : []),
     );
     $("plan-detail").textContent = !plan
@@ -200,9 +278,7 @@
     $("delete-confirm").value = "";
     $("delete").disabled = true;
     await Promise.all([drawDevices(), drawPrefs()]);
-    watchSections();
-    const target = location.hash && document.querySelector(location.hash);
-    if (target && target.closest("#account")) target.scrollIntoView();
+    if (!quiet) reveal();
   }
 
   // ---- Profile: change the email ----
@@ -238,8 +314,9 @@
       const out = await call("POST", "/v1/account/email/verify", { email: newEmail, code: $("change-code").value.replace(/\s/g, "") });
       session = { ...session, email: out.email };
       keep(session);
+      write(LAST_EMAIL, out.email);
       $("change").hidden = true;
-      await show();
+      await show(true);
       status($("profile-status"), `Done: you now sign in with ${out.email}. We've told your old address.`, "good");
     });
   });
@@ -256,7 +333,7 @@
           busy(remove, $("team-status"), async () => {
             drawTeam(await call("POST", "/v1/team/members/remove", { email: m.email }));
             status($("team-status"), `${m.email} removed.`, "good");
-            if (isMe(m.email)) await show();
+            if (isMe(m.email)) await show(true);
           });
         });
         return el("li", {}, el("div", { className: "what" }, el("b", { textContent: m.email }), el("small", { textContent: m.signed_in ? "Signed in to the app" : `Added ${day(m.added_at)}, not signed in yet` })), remove);
@@ -270,7 +347,7 @@
       drawTeam(await call("POST", "/v1/team/members", { email: who }));
       $("add-email").value = "";
       status($("team-status"), isMe(who) ? "You're on the Team: sign in to the app with this email to use it." : `${who} added. We've emailed them what to do.`, "good");
-      if (isMe(who)) await show();
+      if (isMe(who)) await show(true);
     });
   });
   $("ask-form").addEventListener("submit", (e) => {
@@ -291,9 +368,10 @@
       ...sessions.map((s) => {
         const ic = el("span", { className: "ic" });
         ic.innerHTML = ICON[s.kind];
-        const name = el("b", { textContent: s.name });
+        // Browsers signed in before names were kept are all called "Web browser".
+        const name = el("b", { textContent: s.name === "Web browser" ? "A browser" : s.name });
         if (s.current) name.append(el("span", { className: "tag ok", textContent: "this browser" }));
-        const detail = `${s.kind === "app" ? "The app" : "Website"} · last used ${ago(s.seen_at)} · signed in ${day(s.created_at)}${s.expires_at ? ` · until ${day(s.expires_at)}` : ""}`;
+        const detail = `${s.kind === "app" ? "The app" : "Website"} · last used ${ago(s.seen_at)} · signed in ${day(s.created_at)}${s.expires_at ? ` · until ${day(s.expires_at)}` : ""}${s.name === "Web browser" ? " · from before we kept browser names" : ""}`;
         const out = el("button", { className: "btn btn-ghost btn-sm", type: "button", textContent: "Sign out" });
         out.addEventListener("click", () =>
           busy(out, $("devices-status"), async () => {
@@ -302,7 +380,7 @@
               return signedOut();
             }
             await call("POST", "/v1/auth/signout", { computer: s.id });
-            status($("devices-status"), `${s.name} is signed out.`, "good");
+            status($("devices-status"), `${s.name === "Web browser" ? "That browser" : s.name} is signed out.`, "good");
             await drawDevices();
           }),
         );
@@ -363,43 +441,65 @@
     e.preventDefault();
     busy(e.submitter, $("delete-status"), async () => {
       await call("POST", "/v1/account/delete", {});
+      write(LAST_EMAIL, null);
       signedOut();
       status($("email-status"), "Your account is deleted.", "good");
     });
   });
 
-  // The section in view lights up in the menu.
-  let watcher = null;
-  function watchSections() {
-    if (!("IntersectionObserver" in window) || watcher) return;
-    const links = [...document.querySelectorAll(".menu nav a")];
-    watcher = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          for (const a of links) a.classList.toggle("on", a.getAttribute("href") === `#${e.target.id}`);
-        }
-      },
-      { rootMargin: "-90px 0px -55% 0px" },
-    );
-    document.querySelectorAll(".sections > section").forEach((s) => watcher.observe(s));
+  // The section in view lights up in the menu: the last one whose top has passed the menu.
+  const links = [...document.querySelectorAll(".menu nav a")];
+  function lightMenu() {
+    if ($("account").hidden) return;
+    const visible = links.filter((a) => !a.hidden);
+    let current = visible[0];
+    for (const a of visible) {
+      const s = document.querySelector(a.getAttribute("href"));
+      if (s && s.getBoundingClientRect().top < 160) current = a;
+    }
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) current = visible.at(-1);
+    for (const a of links) a.classList.toggle("on", a === current);
   }
+  window.addEventListener("scroll", lightMenu, { passive: true });
 
   // From the admin's "asks to join" email: ?add=… fills in the person to add.
   if (params.get("add")) $("add-email").value = params.get("add");
 
-  // From the sign-in email's link: #signin=<email>&link=<token>. Taken out of the address at once.
+  // Coming back: #signin=<email>&link=<token> (the email's link), #google=<handoff> or
+  // #google_error=<why> (Continue with Google). Taken out of the address at once.
   const hash = new URLSearchParams(location.hash.slice(1));
+  const GOOGLE_ERRORS = {
+    cancelled: "Google sign-in was cancelled. Try again, or use your email.",
+    unverified: "Google didn't confirm that email address. Use your email instead.",
+    unavailable: "Continue with Google isn't available yet. Use your email.",
+    busy: "Too many sign-in tries from here. Wait a little, or use your email.",
+  };
+  const failed = (message) => {
+    if (session?.token) return show().catch(() => signedOut(message));
+    signedOut(message);
+  };
   if (hash.get("signin") && hash.get("link")) {
     email = hash.get("signin").toLowerCase();
     history.replaceState(null, "", location.pathname + location.search);
-    step("link");
+    step("wait");
     call("POST", "/v1/auth/verify", { email, link: hash.get("link"), web: true })
       .then(signedIn)
       .catch((err) => {
-        if (session?.token) return show().catch(() => signedOut(err.message));
-        signedOut(err.message);
+        failed(err.message);
         $("email").value = email;
       });
-  } else if (session?.token) show().catch((err) => signedOut(err.message));
+  } else if (hash.get("google")) {
+    history.replaceState(null, "", location.pathname + location.search);
+    step("wait");
+    call("POST", "/v1/auth/google/finish", { handoff: hash.get("google") })
+      .then(signedIn)
+      .catch((err) => failed(err.message));
+  } else if (hash.get("google_error")) {
+    history.replaceState(null, "", location.pathname + location.search);
+    failed(GOOGLE_ERRORS[hash.get("google_error")] ?? "Google sign-in didn't work. Try again, or use your email.");
+  } else if (session?.token) {
+    step("wait");
+    $("wait-note").textContent = "Opening your account…";
+    show().catch((err) => signedOut(err.message));
+  }
 })();
