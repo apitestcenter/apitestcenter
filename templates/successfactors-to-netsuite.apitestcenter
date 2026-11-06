@@ -1,0 +1,215 @@
+{
+  "format": "apitestcenter.collection/1",
+  "name": "SuccessFactors to NetSuite",
+  "description": "Run it as a collection: the first request saves the employee from SuccessFactors, the last checks NetSuite has the same values. Set employeeId to E1009 to see a difference: that person's job title changed after the copy.",
+  "variables": [
+    {
+      "key": "employeeId",
+      "value": "E1004",
+      "secret": false,
+      "note": "The person to check. E1001 to E1010 are in both practice systems."
+    },
+    {
+      "key": "odataUrl",
+      "value": "{{practiceApi}}/odata/v2",
+      "secret": false,
+      "note": "SuccessFactors: https://<api-server>/odata/v2"
+    },
+    {
+      "key": "odataUser",
+      "value": "practice-user",
+      "secret": false,
+      "note": "SuccessFactors: username@companyId"
+    },
+    {
+      "key": "odataPassword",
+      "value": "demo",
+      "secret": false,
+      "note": "A real one: mark it secret"
+    },
+    {
+      "key": "nsUrl",
+      "value": "{{practiceApi}}/netsuite",
+      "secret": false,
+      "note": "Your account: https://<account-id>.suitetalk.api.netsuite.com"
+    },
+    {
+      "key": "clientId",
+      "value": "practice",
+      "secret": false
+    },
+    {
+      "key": "clientSecret",
+      "value": "demo",
+      "secret": false,
+      "note": "A real one: mark it secret"
+    }
+  ],
+  "requests": [
+    {
+      "name": "1. The employee in SuccessFactors",
+      "request": {
+        "method": "GET",
+        "url": "{{odataUrl}}/Employees('{{employeeId}}')",
+        "params": [
+          {
+            "key": "$format",
+            "value": "json"
+          }
+        ],
+        "authMode": "basic",
+        "username": "{{odataUser}}",
+        "password": "{{odataPassword}}",
+        "description": "The source record. Save values keeps the whole of it as {{employee}}, so later requests can use any field: {{employee.FirstName}}.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "d.EmployeeID",
+            "op": "exists",
+            "value": ""
+          }
+        ],
+        "saveValues": [
+          {
+            "name": "employee",
+            "from": "json",
+            "path": "d"
+          }
+        ]
+      }
+    },
+    {
+      "ref": "sign-in",
+      "name": "Sign in to NetSuite",
+      "request": {
+        "method": "POST",
+        "url": "{{nsUrl}}/services/rest/auth/oauth2/v1/token",
+        "bodyMode": "form",
+        "formRows": [
+          {
+            "key": "grant_type",
+            "value": "client_credentials",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "client_id",
+            "value": "{{clientId}}",
+            "kind": "text",
+            "file": null
+          },
+          {
+            "key": "client_secret",
+            "value": "{{clientSecret}}",
+            "kind": "text",
+            "file": null
+          }
+        ],
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "access_token",
+            "op": "exists",
+            "value": ""
+          }
+        ],
+        "description": "The token for the NetSuite request."
+      }
+    },
+    {
+      "name": "2. The same person in NetSuite",
+      "request": {
+        "method": "POST",
+        "url": "{{nsUrl}}/services/rest/query/v1/suiteql",
+        "headers": [
+          {
+            "key": "Prefer",
+            "value": "transient"
+          }
+        ],
+        "authMode": "bearer",
+        "token": "{{nsToken}}",
+        "bodyMode": "json",
+        "bodyText": "{\n  \"q\": \"SELECT id, externalid, firstname, lastname, email, title, hiredate, isinactive FROM employee WHERE externalid = '{{employeeId}}'\"\n}",
+        "description": "Finds the copy by its external ID (the SuccessFactors EmployeeID) and checks each field against the saved record, each the way the two systems write it: dates as the same day, the email ignoring case, Active true as isinactive F.",
+        "checks": [
+          {
+            "type": "status",
+            "expect": "200"
+          },
+          {
+            "type": "json",
+            "path": "items",
+            "op": "length",
+            "value": "1"
+          },
+          {
+            "type": "fields",
+            "rows": [
+              {
+                "path": "items[0].externalid",
+                "value": "{{employee.EmployeeID}}",
+                "as": "text",
+                "map": ""
+              },
+              {
+                "path": "items[0].firstname",
+                "value": "{{employee.FirstName}}",
+                "as": "text",
+                "map": ""
+              },
+              {
+                "path": "items[0].lastname",
+                "value": "{{employee.LastName}}",
+                "as": "text",
+                "map": ""
+              },
+              {
+                "path": "items[0].email",
+                "value": "{{employee.Email}}",
+                "as": "loose",
+                "map": ""
+              },
+              {
+                "path": "items[0].title",
+                "value": "{{employee.JobTitle}}",
+                "as": "text",
+                "map": ""
+              },
+              {
+                "path": "items[0].hiredate",
+                "value": "{{employee.HireDate}}",
+                "as": "date",
+                "map": ""
+              },
+              {
+                "path": "items[0].isinactive",
+                "value": "{{employee.Active}}",
+                "as": "text",
+                "map": "true=F, false=T"
+              }
+            ]
+          }
+        ]
+      },
+      "runFirst": {
+        "ref": "sign-in",
+        "extract": [
+          {
+            "name": "nsToken",
+            "from": "json",
+            "path": "access_token"
+          }
+        ]
+      }
+    }
+  ]
+}

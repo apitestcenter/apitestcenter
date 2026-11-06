@@ -1,10 +1,73 @@
 {
-  "generatedAt": "2026-11-06T19:31:22.541Z",
+  "generatedAt": "2026-11-06T23:39:19.325Z",
   "releases": [
+    {
+      "version": "0.20.0",
+      "date": "2026-11-06T23:38:27Z",
+      "latest": true,
+      "notesHtml": "<p><strong>Test business systems end to end: check that data arrived correctly in the other system, field by field, in JSON or SOAP.</strong></p>\n<h4 id=\"check-values-across-systems\">Check values across systems</h4>\n<ul><li><strong>A check can compare with a value from another request.</strong> Write <code>{{employeeId}}</code> as a check's expected value: <code>externalId</code> <em>equals</em> <code>{{employeeId}}</code>, where <code>employeeId</code> was saved from an earlier request (another system), a test-data column or the environment. It works in Send, collection runs, the command line and performance tests. When nothing saved the value, the check says <em>{{employeeId}} has no value</em> instead of comparing with the text <code>{{employeeId}}</code>.</li><li><strong>Save a whole record, use any field of it.</strong> Save <code>$</code> (the whole answer) or <code>d.results[0]</code> (an OData record) as <code>{{employee}}</code>, then use <code>{{employee.firstName}}</code> or <code>{{employee.address.city}}</code> in later requests and checks.</li><li><strong>Field mapping check.</strong> One check for many fields: each field of this answer, what it should be (usually <code>{{employee.…}}</code>), and how to compare it: <strong>Exact</strong>, <strong>Ignore case</strong>, <strong>Number</strong> (5200 matches &quot;5200.00&quot;) or <strong>Same day</strong> (2024-01-31, 31.01.2024, 1/31/2024 and SAP's <code>/Date(…)/</code> all match). <strong>Translate</strong> converts code lists first, such as <code>M=Male, F=Female</code>. <strong>Add the last answer's fields</strong> fills in the rows. When some differ, it lists them: <em>2 of 14 differ: $.firstname is &quot;Anna&quot;, should be &quot;Ana&quot;</em>.</li><li><strong>New template: SuccessFactors to NetSuite.</strong> It reads an employee in the practice SuccessFactors, finds the copy in the practice NetSuite and checks 7 fields, so you can see it work in a minute. Set <code>employeeId</code> to E1009 to see it catch a difference.</li></ul>\n<h4 id=\"soap-and-xml\">SOAP and XML</h4>\n<ul><li><strong>XML answers work like JSON ones.</strong> Checks, Save values and Field mapping read SOAP and other XML answers with the same paths: <code>Envelope.Body.GetEmployeeResponse.Employee.FirstName</code>. <code>@id</code> reads an attribute, and an element that appears more than once is a list (<code>Phone[1]</code>).</li><li><strong>Import a WSDL.</strong> A SOAP service's WSDL (SAP, NetSuite SuiteTalk, SuccessFactors SFAPI) becomes one request per operation. Each has the service's address as <code>{{serviceUrl}}</code>, the SOAPAction, a sample envelope built from the WSDL, and checks for no SOAP Fault and the expected answer. Set Auth on the folder: a WSDL doesn't say how to sign in.</li><li><strong>A practice SOAP service</strong> to try it on: import its WSDL from <code>{{practiceApi}}/soap/employees?wsdl</code>.</li></ul>\n<h4 id=\"also-new\">Also new</h4>\n<ul><li><strong>Sign in: Send again with a countdown.</strong> After a code is emailed, <em>Send again</em> shows when another can be sent and how many codes are left this hour.</li><li><strong>Share opens the report viewer.</strong> The Share window links to the report viewer at apitestcenter.com/report, where anyone can open an exported report in a browser, with nothing uploaded.</li><li><strong>Shorter links</strong> to the website and the guide (apitestcenter.com/docs/checks, without <code>.html</code>).</li></ul>",
+      "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.20.0",
+      "files": [
+        {
+          "kind": "setup",
+          "platform": "Windows",
+          "label": "Installer",
+          "detail": "Windows 10 and 11, 64-bit — recommended",
+          "name": "APITestCenter-Setup-0.20.0.exe",
+          "size": 122454673,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.20.0/APITestCenter-Setup-0.20.0.exe"
+        },
+        {
+          "kind": "portable",
+          "platform": "Windows",
+          "label": "Portable",
+          "detail": "One file, no install",
+          "name": "APITestCenter-Portable-0.20.0.exe",
+          "size": 114122076,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.20.0/APITestCenter-Portable-0.20.0.exe"
+        },
+        {
+          "kind": "macArm",
+          "platform": "macOS",
+          "label": "Apple Silicon",
+          "detail": "M1 and later · preview",
+          "name": "APITestCenter-0.20.0-mac-arm64.dmg",
+          "size": 123080096,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.20.0/APITestCenter-0.20.0-mac-arm64.dmg"
+        },
+        {
+          "kind": "macIntel",
+          "platform": "macOS",
+          "label": "Intel",
+          "detail": "Intel Macs · preview",
+          "name": "APITestCenter-0.20.0-mac-x64.dmg",
+          "size": 128599338,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.20.0/APITestCenter-0.20.0-mac-x64.dmg"
+        },
+        {
+          "kind": "appimage",
+          "platform": "Linux",
+          "label": "AppImage",
+          "detail": "Most distributions, 64-bit · preview",
+          "name": "APITestCenter-0.20.0-linux-x86_64.AppImage",
+          "size": 111516740,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.20.0/APITestCenter-0.20.0-linux-x86_64.AppImage"
+        },
+        {
+          "kind": "deb",
+          "platform": "Linux",
+          "label": ".deb",
+          "detail": "Ubuntu and Debian, 64-bit · preview",
+          "name": "APITestCenter-0.20.0-linux-amd64.deb",
+          "size": 113257824,
+          "url": "https://github.com/apitestcenter/apitestcenter/releases/download/v0.20.0/APITestCenter-0.20.0-linux-amd64.deb"
+        }
+      ]
+    },
     {
       "version": "0.19.0",
       "date": "2026-11-03T11:06:12Z",
-      "latest": true,
+      "latest": false,
       "notesHtml": "<p><strong>Templates: ready-made requests that run straight away.</strong></p>\n<h4 id=\"templates\">Templates</h4>\n<ul><li><strong>Start from a template.</strong> Find it on the Home page, in Ctrl+K (<em>New from template</em>), or under Import. There are six to start with: REST basics; signing in and passing values along; Salesforce objects and SOQL; NetSuite SuiteQL; OData in the SAP SuccessFactors style; and speed and reliability checks.</li><li><strong>Each one runs at once</strong> against the practice systems built into the app, so you need no account. To use one on your own system, change its environment's values. The Import window says what each template needs.</li><li><strong>On the website,</strong> the new Templates page (apitestcenter.com/docs/templates.html) has an <strong>Open in APITestCenter</strong> button that opens the template in the desktop app, and a download for each one.</li><li><strong>From a terminal:</strong> <code>atc import template:&lt;name&gt;</code> imports one, and <code>atc templates</code> lists them.</li></ul>\n<h4 id=\"fixed\">Fixed</h4>\n<ul><li><strong>Form fields now fill in <code>{{variables}}</code> from the environment.</strong> Before, a form body (such as an OAuth token request) sent <code>{{clientId}}</code> as it was written. Values saved from an earlier request were already filled in.</li><li><strong>A collection file's query parameters are kept.</strong> A shared <code>.apitestcenter</code> file that listed its parameters apart from the URL now adds them to the URL, instead of dropping them.</li></ul>",
       "url": "https://github.com/apitestcenter/apitestcenter/releases/tag/v0.19.0",
       "files": [
