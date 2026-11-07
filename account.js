@@ -266,7 +266,7 @@
     $("manage").hidden = !canManage;
     $("manage-note").hidden = !canManage;
     $("buy").hidden = Boolean(plan) || me.manages;
-    if (!plan) $("buy").href = `buy?plan=pro&account=${encodeURIComponent(me.account)}&email=${encodeURIComponent(me.email)}`;
+    if (!plan) $("buy").href = `buy?plan=pro${me.checkout ? `&ref=${encodeURIComponent(me.checkout)}` : ""}&email=${encodeURIComponent(me.email)}`;
     $("key-box").hidden = !me.license;
     $("key").value = me.license ?? "";
 

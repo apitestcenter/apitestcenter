@@ -22,7 +22,8 @@
   const pick = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
   const seats = () => Math.min(500, Math.max(3, Math.round(Number($("seats").value) || 3)));
   // From the signed-in app (Settings → Plan → Buy Pro): the plan goes to that account.
-  const accountId = /^acc_[\w-]{8,40}$/.test(params.get("account") ?? "") ? params.get("account") : null;
+  // A reference the license server signed for that account (not its bare id, which anyone could put in a link).
+  const accountRef = /^acc_[\w-]{8,80}\.\d{1,12}\.[\w-]{20,64}$/.test(params.get("ref") ?? "") ? params.get("ref") : null;
   const email = /^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,}$/i.test(params.get("email") ?? "") ? params.get("email") : null;
 
   if (ENV === "sandbox") $("test-banner").hidden = false;
@@ -154,7 +155,7 @@
       const billing = pick("billing");
       window.Paddle.Checkout.open({
         items: [{ priceId: account.prices[plan][billing], quantity: plan === "team" ? seats() : 1 }],
-        ...(accountId ? { customData: { account_id: accountId } } : {}),
+        ...(accountRef ? { customData: { account_ref: accountRef } } : {}),
         ...(email ? { customer: { email } } : {}),
         settings: { displayMode: "overlay", theme: document.documentElement.dataset.theme === "light" ? "light" : "dark", variant: "one-page" },
       });
